@@ -1,0 +1,536 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+	<section id="home" class="welcome-hero">
+
+		<!-- top-area Start -->
+		
+		<!-- top-area End -->
+
+		<div class="container">
+			<div class="welcome-hero-txt">
+				<h2>get a flight to your dream destination today!</h2>
+				<p>
+				Explore a wide range of flight options tailored to your preferences. Choose your departure and arrival locations, select dates, and let us help you find the best deals.
+				</p>
+				<button class="welcome-btn" onclick="window.location.href='#'">contact us</button>
+			</div>
+		</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				
+
+				<form class="model-search-content" action="search_results.html" method="GET">
+
+
+					<div class="row">
+
+
+						<div class="col-md-offset-1 col-md-2 col-sm-12">
+							<div class="single-model-search">
+								<h2>Select Travel Date</h2>
+								<div class="model-select-icon">
+									<input type="date" class="form-control" placeholder="Select Date" name="travel_date" required>
+								</div><!-- /.model-select-icon -->
+							</div>
+							<div class="single-model-search">
+								<h2>Flight Class</h2>
+								<div class="model-select-icon">
+									<select class="form-control" name="flight_class" required>
+										<option value="">Select Class</option>
+										<option value="economy">Economy</option>
+										<option value="business">Business</option>
+										<option value="first">First Class</option>
+									</select><!-- /.select-->
+								</div><!-- /.model-select-icon -->
+							</div>
+						</div>
+
+
+						<div class="col-md-offset-1 col-md-2 col-sm-12">
+							<div class="single-model-search">
+								<h2>Departure Location</h2>
+								<div class="model-select-icon">
+									<select class="form-control" name="departure_location" required>
+										<option value="">Select Location</option>
+										<option value="karachi">Karachi</option>
+										<option value="lahore">Lahore</option>
+										<option value="islamabad">Islamabad</option>
+										<option value="peshawar">Peshawar</option>
+										<option value="quetta">Quetta</option>
+										<option value="abu-dhabi">Abu Dhabi</option>
+										<option value="doha">Doha</option>
+										<option value="riyadh">Riyadh</option>
+										<option value="dubai">Dubai</option>
+										<option value="manama">Bahrain</option>
+										<option value="muscat">Muscat</option>
+									</select><!-- /.select-->
+								</div><!-- /.model-select-icon -->
+							</div>
+							<div class="single-model-search">
+								<h2>Return Option</h2>
+								<div class="model-select-icon">
+									<select class="form-control" name="arrival_location" required>
+										<option value="">Select Location</option>
+										<option value="lahore">Lahore</option>
+										<option value="karachi">Karachi</option>
+										<option value="islamabad">Islamabad</option>
+										<option value="doha">Doha</option>
+										<option value="dubai">Dubai</option>
+										<option value="riyadh">Riyadh</option>
+										<option value="abudhabi">Abu Dhabi</option>
+										<option value="istanbul">Istanbul</option>
+										<option value="jeddah">Jeddah</option>
+										<option value="melbourne">Melbourne</option>
+										<option value="sydney">Sydney</option>
+										<option value="new-york">New York</option>
+										<option value="los-angeles">Los Angeles</option>
+										<option value="london">London</option>
+										<option value="paris">Paris</option>
+										<option value="berlin">Berlin</option>
+									</select><!-- /.select-->
+								</div><!-- /.model-select-icon -->
+							</div>
+						</div>
+
+
+						<div class="col-md-offset-1 col-md-2 col-sm-12">
+							<div class="single-model-search">
+								<h2>Arrival Location</h2>
+								<div class="model-select-icon">
+									<select class="form-control" name="arrival_location" required>
+										<option value="">Select Location</option>
+										<option value="miami">Miami</option>
+										<option value="orlando">Orlando</option>
+										<option value="las-vegas">Las Vegas</option>
+									</select><!-- /.select-->
+								</div><!-- /.model-select-icon -->
+							</div>
+							<div class="single-model-search">
+								<h2>Price Range</h2>
+								<div class="model-select-icon">
+									<select class="form-control" name="price_range" required>
+										<option value="">Select Price Range</option>
+										<option value="$100-$500">$100 - $500</option>
+										<option value="$500-$1000">$500 - $1000</option>
+										<option value="$1000+">$1000+</option>
+									</select><!-- /.select-->
+								</div><!-- /.model-select-icon -->
+							</div>
+						</div>
+
+
+						<div class="col-md-2 col-sm-12">
+							<div class="single-model-search text-center">
+								<button class="welcome-btn model-search-btn" type="submit">
+									Search Flights
+								</button>
+							</div>
+						</div>
+					</div>
+
+
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+
+
+	</section><!--/.welcome-hero-->
+	<!--welcome-hero end -->
+	<!--service start -->
+
+
+
+<section id="service" class="service">
+	<div class="container">
+		<div class="service-content">
+			<div class="row">
+				<div class="col-md-4 col-sm-6">
+					<div class="single-service-item">
+						<div class="single-service-icon">
+							<i class="flaticon-airplane"></i>
+						</div>
+						<h2><a href="#">Extensive Flight Options</a></h2>
+						<p>
+							We offer a wide range of flights to South Asia, the Middle East, Australia, Europe, and the USA to meet all your travel needs.
+						</p>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="single-service-item">
+						<div class="single-service-icon">
+							<i class="flaticon-boarding-pass"></i>
+						</div>
+						<h2><a href="#">Hassle-Free Booking</a></h2>
+						<p>
+							Enjoy a seamless booking experience with our user-friendly platform, ensuring you get the best deals on flights.
+						</p>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6">
+					<div class="single-service-item">
+						<div class="single-service-icon">
+							<i class="flaticon-support"></i>
+						</div>
+						<h2><a href="#">24/7 Customer Support</a></h2>
+						<p>
+							Our dedicated customer support team is available around the clock to assist you with any inquiries or issues.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!--/.container-->
+
+</section><!--/.service-->
+<!--service end-->
+
+
+
+<!--lastest flights -->
+<section id="new-cars" class="new-cars">
+	<div class="container">
+		<div class="section-header">
+			<p>checkout <span>the</span> latest flights</p>
+			<h2>popular flight options</h2>
+		</div><!--/.section-header-->
+		<div class="new-cars-content">
+			<div class="owl-carousel owl-theme" id="new-cars-carousel">
+				<div class="new-cars-item">
+					<div class="single-new-cars-item">
+						<div class="row">
+							<div class="col-md-7 col-sm-12">
+								<div class="new-cars-img">
+									<img src="~/images/new-cars-model/ba.png" alt="British Airways" />
+								</div>
+							</div>
+							<div class="col-md-5 col-sm-12">
+								<div class="new-cars-txt">
+									<h2><a href="#">British Airways <span>to London</span></a></h2>
+									<p>
+										Experience world-class comfort and service on your journey to London with British Airways, offering direct flights from major cities.
+									</p>
+									<p class="new-cars-para2">
+										Indulge in a selection of gourmet meals and enjoy a wide range of entertainment options for an exceptional travel experience.
+									</p>
+									<button class="welcome-btn new-cars-btn" onclick="window.location.href='#'">
+										view details
+									</button>
+								</div>
+
+							</div><!--/.col-->
+						</div><!--/.row-->
+					</div>
+				</div>
+				<div class="new-cars-item">
+					<div class="single-new-cars-item">
+						<div class="row">
+							<div class="col-md-7 col-sm-12">
+								<div class="new-cars-img">
+									<img src="~/images/new-cars-model/emirates.jpg" alt="Emirates Airlines" />
+								</div>
+							</div>
+							<div class="col-md-5 col-sm-12">
+								<div class="new-cars-txt">
+									<h2><a href="#">Emirates Airlines <span>to Dubai</span></a></h2>
+									<p>
+										Fly with Emirates for a seamless travel experience from Pakistan to Dubai, with outstanding service and luxurious amenities.
+									</p>
+									<p class="new-cars-para2">
+										Explore a variety of entertainment options and premium dining experiences on board.
+									</p>
+									<button class="welcome-btn new-cars-btn" onclick="window.location.href='#'">
+										view details
+									</button>
+								</div>
+							</div><!--/.col-->
+						</div><!--/.row-->
+					</div>
+				</div>
+				<div class="new-cars-item">
+					<div class="single-new-cars-item">
+						<div class="row">
+							<div class="col-md-7 col-sm-12">
+								<div class="new-cars-img">
+									<img src="~/images/new-cars-model/qatar.png" alt="Qatar Airways" />
+								</div>
+							</div>
+							<div class="col-md-5 col-sm-12">
+								<div class="new-cars-txt">
+									<h2><a href="#">Qatar Airways <span>to New York</span></a></h2>
+									<p>
+										Experience world-class service on your flight from Pakistan to New York with Qatar Airways, known for their hospitality.
+									</p>
+									<p class="new-cars-para2">
+										Enjoy comfortable seating, fine dining, and an extensive entertainment library during your flight.
+									</p>
+									<button class="welcome-btn new-cars-btn" onclick="window.location.href='#'">
+										view details
+									</button>
+								</div>
+							</div><!--/.col-->
+						</div><!--/.row-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!--/.container-->
+</section>
+
+
+
+<section id="featured-cars" class="featured-cars">
+	<div class="container">
+		<div class="section-header">
+			<p>checkout <span>the</span> featured planes</p>
+			<h2>featured planes</h2>
+		</div><!--/.section-header-->
+		<div class="featured-cars-content">
+			<div class="row">
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="single-featured-cars">
+						<div class="featured-img-box">
+							<div class="featured-cars-img">
+								<img src="~/images/featured-cars/fc1.png" alt="planes">
+							</div>
+							<div class="featured-model-info">
+								<p>
+									model: 2017
+									<span class="featured-mi-span"> 3100 mi</span>
+									<span class="featured-hp-span"> 240HP</span>
+									automatic
+								</p>
+							</div>
+						</div>
+						<div class="featured-cars-txt">
+							<h2><a href="#">Boeing 737 Max</a></h2>
+							<h3>$89,395</h3>
+							<p>
+								Experience unparalleled comfort and efficiency with the Boeing 737 Max, designed for short to medium-haul flights.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="single-featured-cars">
+						<div class="featured-img-box">
+							<div class="featured-cars-img">
+								<img src="~/images/featured-cars/fc2.png" alt="planes">
+							</div>
+							<div class="featured-model-info">
+								<p>
+									model: 2017
+									<span class="featured-mi-span"> 3100 mi</span>
+									<span class="featured-hp-span"> 240HP</span>
+									automatic
+								</p>
+							</div>
+						</div>
+						<div class="featured-cars-txt">
+							<h2><a href="#">Airbus A320</a></h2>
+							<h3>$66,575</h3>
+							<p>
+								The Airbus A320 is a versatile aircraft perfect for short-haul flights, offering efficiency and comfort.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="single-featured-cars">
+						<div class="featured-img-box">
+							<div class="featured-cars-img">
+								<img src="~/images/featured-cars/fc3.png" alt="planes">
+							</div>
+							<div class="featured-model-info">
+								<p>
+									model: 2017
+									<span class="featured-mi-span"> 3100 mi</span>
+									<span class="featured-hp-span"> 240HP</span>
+									automatic
+								</p>
+							</div>
+						</div>
+						<div class="featured-cars-txt">
+							<h2><a href="#">Gulfstream G650</a></h2>
+							<h3>$125,250</h3>
+							<p>
+								Travel in luxury and style with the Gulfstream G650, featuring long-range capabilities and top-notch amenities.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<div class="single-featured-cars">
+						<div class="featured-img-box">
+							<div class="featured-cars-img">
+								<img src="~/images/featured-cars/fc4.png" alt="planes">
+							</div>
+							<div class="featured-model-info">
+								<p>
+									model: 2017
+									<span class="featured-mi-span"> 3100 mi</span>
+									<span class="featured-hp-span"> 240HP</span>
+									automatic
+								</p>
+							</div>
+						</div>
+						<div class="featured-cars-txt">
+							<h2><a href="#">Cessna Citation</a></h2>
+							<h3>$95,500</h3>
+							<p>
+								Experience the agility and efficiency of the Cessna Citation, ideal for both business and personal travel.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div><!--/.container-->
+</section><!--/.featured-cars-->
+	
+	<!--featured-cars end -->
+	@* <!-- clients-say strat -->
+	<section id="clients-say" class="clients-say">
+		<div class="container">
+			<div class="section-header">
+				<h2>what our clients say</h2>
+			</div><!--/.section-header-->
+			<div class="row">
+				<div class="owl-carousel testimonial-carousel">
+					<div class="col-sm-3 col-xs-12">
+						<div class="single-testimonial-box">
+							<div class="testimonial-description">
+								<div class="testimonial-info">
+									<div class="testimonial-img">
+										<img src="~/images/clients/c1.png" alt="image of clients person" />
+									</div><!--/.testimonial-img-->
+								</div><!--/.testimonial-info-->
+								<div class="testimonial-comment">
+									<p>
+										Sed ut pers unde omnis iste natus error sit voluptatem accusantium dolor laudan rem aperiam, eaque ipsa quae ab illo inventore verit.
+									</p>
+								</div><!--/.testimonial-comment-->
+								<div class="testimonial-person">
+									<h2><a href="#">tomas lili</a></h2>
+									<h4>new york</h4>
+								</div><!--/.testimonial-person-->
+							</div><!--/.testimonial-description-->
+						</div><!--/.single-testimonial-box-->
+					</div><!--/.col-->
+					<div class="col-sm-3 col-xs-12">
+						<div class="single-testimonial-box">
+							<div class="testimonial-description">
+								<div class="testimonial-info">
+									<div class="testimonial-img">
+										<img src="~/images/clients/c2.png" alt="image of clients person" />
+									</div><!--/.testimonial-img-->
+								</div><!--/.testimonial-info-->
+								<div class="testimonial-comment">
+									<p>
+										Sed ut pers unde omnis iste natus error sit voluptatem accusantium dolor laudan rem aperiam, eaque ipsa quae ab illo inventore verit.
+									</p>
+								</div><!--/.testimonial-comment-->
+								<div class="testimonial-person">
+									<h2><a href="#">romi rain</a></h2>
+									<h4>london</h4>
+								</div><!--/.testimonial-person-->
+							</div><!--/.testimonial-description-->
+						</div><!--/.single-testimonial-box-->
+					</div><!--/.col-->
+					<div class="col-sm-3 col-xs-12">
+						<div class="single-testimonial-box">
+							<div class="testimonial-description">
+								<div class="testimonial-info">
+									<div class="testimonial-img">
+										<img src="~/images/clients/c3.png" alt="image of clients person" />
+									</div><!--/.testimonial-img-->
+								</div><!--/.testimonial-info-->
+								<div class="testimonial-comment">
+									<p>
+										Sed ut pers unde omnis iste natus error sit voluptatem accusantium dolor laudan rem aperiam, eaque ipsa quae ab illo inventore verit.
+									</p>
+								</div><!--/.testimonial-comment-->
+								<div class="testimonial-person">
+									<h2><a href="#">john doe</a></h2>
+									<h4>washington</h4>
+								</div><!--/.testimonial-person-->
+							</div><!--/.testimonial-description-->
+						</div><!--/.single-testimonial-box-->
+					</div><!--/.col-->
+				</div><!--/.testimonial-carousel-->
+			</div><!--/.row-->
+		</div><!--/.container-->
+
+	</section><!--/.clients-say--> *@
+	<!-- clients-say end -->
+	<!--brand strat -->
+	<section id="brand" class="brand">
+		<div class="container">
+			<div class="brand-area">
+				<div class="owl-carousel owl-theme brand-item">
+					<div class="item">
+						<a href="#">
+							<img src="~/images/brand/airblue.png" alt="brand-image" />
+						</a>
+					</div><!--/.item-->
+					<div class="item">
+						<a href="#">
+							<img src="~/images/brand/Alaska-Airlines-Logo.png" alt="brand-image" />
+						</a>
+					</div><!--/.item-->
+					<div class="item">
+						<a href="#">
+							<img src="~/images/brand/fly-emirates-logo-black-and-white.png" alt="brand-image" />
+						</a>
+					</div><!--/.item-->
+					<div class="item">
+						<a href="#">
+							<img src="~/images/brand/flying-turkish-airlines-logo-26.png" alt="brand-image" />
+						</a>
+					</div><!--/.item-->
+
+					<div class="item">
+						<a href="#">
+							<img src="~/images/brand/br5.png" alt="brand-image" />
+						</a>
+					</div><!--/.item-->
+
+					<div class="item">
+						<a href="#">
+							<img src="~/images/brand/Qatar_Airlines_Or.png" alt="brand-image" />
+						</a>
+					</div><!--/.item-->
+					<div class="item">
+						<a href="#">
+							<img src="~/images/brand/British_Airways-Logo.wine.png" alt="brand-image" />
+						</a>
+					</div>
+					<div class="item">
+						<a href="#">
+							<img src="~/images/brand/br2.png" alt="brand-image" />
+						</a>
+					</div>
+					
+
+				</div><!--/.owl-carousel-->
+			</div><!--/.clients-area-->
+
+		</div><!--/.container-->
+
+	</section><!--/brand-->
+	<!--brand end -->
+	<!--blog start -->
+	<section id="blog" class="blog"></section><!--/.blog-->
+	<!--blog end -->
+	<!--contact start-->
+
+	
+
+

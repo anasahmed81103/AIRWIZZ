@@ -1,0 +1,136 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+ul.nav {
+    display: flex;
+    flex-direction: row; /* Ensures horizontal layout */
+    list-style-type: none; /* Removes bullet points */
+}
+
+    ul.nav li {
+        margin-right: 20px; /* Adds spacing between items */
+    }
+
+
+.top {
+    display: inline-block;
+    margin-right: 10px; /* Optional spacing between elements */
+    vertical-align: middle; /* Aligns elements vertically */
+}
+
+.header-area {
+    background-color: black;
+}
+
+.navbar {
+    background-color: black;
+}
+
+    .navbar .nav > li > a {
+        color: white; /* Set the text color to white for better contrast */
+    }
+
+        .navbar .nav > li > a:hover {
+            color: #f0ad4e; /* Optional: Change color on hover (e.g., gold or any other color) */
+        }
+
+.header-area .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px; /* Add some horizontal padding */
+}
+
+.navbar-header {
+    flex: 0 1 auto; /* Ensure the brand has enough space */
+    margin-right: 10px; /* Add a small margin to the right of the brand */
+}
+
+.navbar-collapse {
+    flex: 1; /* Allow the navbar to grow and fill remaining space */
+}
+
+.navbar-nav {
+    display: flex; /* Align menu items horizontally */
+    flex-wrap: nowrap; /* Prevent wrapping to a new line */
+    justify-content: flex-end; /* Align menu to the right */
+}
+
+.navbar-nav li {
+    margin-left: 10px; /* Decrease space between menu items */
+}
+
+.navbar-brand {
+    font-size: 24px;
+    color: white;
+}
+
+.navbar {
+    background-color: black; /* Ensure the top background is black */
+}
+
+.navbar-nav li a {
+    color: white; /* Menu text color */
+    font-size: 14px;
+}
+
+.navbar-nav li a:hover {
+    color: #f0ad4e; /* Optional hover effect */
+}
+
+.navbar-header {
+    width: auto; /* Allow the header to size based on its contents */
+    padding: 0; /* Remove padding from navbar-header */
+    margin: 0; /* Reset margin */
+}
+
+.navbar-brand {
+    padding: 15px 5px; /* Adjust the padding of the brand */
+}
+
+.navbar-toggle {
+    padding: 10px 5px; /* Adjust the padding of the toggle button */
+}
+
+.btn-login {
+    background-color: #f39c12; /* Background color */
+    color: #fff; /* Text color */
+    padding: 10px 15px; /* Padding for the button */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* No underline */
+    margin-left: 15px; /* Space between menu items */
+    display: inline-block; /* Keep it inline with other items */
+    line-height: 50px; /* Center vertically in the navbar */
+}
+
+    /* Optional hover effect for the button */
+    .btn-login:hover {
+        background-color: #e67e22; /* Darker color on hover */
+        transition: background-color 0.3s; /* Smooth transition */
+    }
+    .btn-login:focus {
+        outline: none; /* Remove outline */
+        box-shadow: none; /* Remove any shadow */
+    }
+

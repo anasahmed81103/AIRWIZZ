@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AIRWIZZ</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AIRWIZZ.styles.css" asp-append-version="true" />
+    <!-- meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!--font-family-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Rufina:400,700" rel="stylesheet">
+
+    <!-- title of site -->
+    <title>CarVilla</title>
+
+    <!-- For favicon png -->
+    <link rel="shortcut icon" type="image/icon" href="~/logo/favicon.png" />
+
+    <!--font-awesome.min.css-->
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+
+    <!--linear icon css-->
+    <link rel="stylesheet" href="~/css/linearicons.css">
+
+    <!--flaticon.css-->
+    <link rel="stylesheet" href="~/css/flaticon.css">
+
+    <!--animate.css-->
+    <link rel="stylesheet" href="~/css/animate.css">
+
+    <!--owl.carousel.css-->
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css">
+
+    <!--bootstrap.min.css-->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+
+    <!-- bootsnav -->
+    <link rel="stylesheet" href="~/css/bootsnav.css">
+
+    <!--style.css-->
+    <link rel="stylesheet" href="~/css/style.css">
+
+    <!--responsive.css-->
+    <link rel="stylesheet" href="~/css/responsive.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>.
+	<!--[if lte IE 9]>
+		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+	<![endif]-->
+	<!--welcome-hero start -->
+    <header>
+		<div class="top-area">
+			<div class="header-area">
+				<!-- Start Navigation -->
+				<nav class="navbar navbar-default bootsnav navbar-sticky navbar-scrollspy" data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
+					
+						<!-- Start Header Navigation -->
+					<div class="row">
+
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+								<i class="fa fa-bars"></i>
+							</button>
+							<a class="navbar-brand" href="index.html">AirWizz</a>
+						</div><!--/.navbar-header-->
+							<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse" id="navbar-menu">
+							<ul class="nav navbar-nav navbar-right">
+								<li class="scroll"><a href="#home" style="color: white;">Home</a></li>
+								<li class="scroll"><a href="#flight-search" style="color: white;">Flight Search</a></li>
+								<li class="scroll"><a href="#special-offers" style="color: white;">Special Offers</a></li>
+								<li class="scroll"><a href="#manage-profile" style="color: white;">Manage Profile</a></li>
+								<li class="scroll"><a href="#booking-history" style="color: white;">Booking History</a></li>
+								<li><a href="#login" class="btn btn-login">Login/Register</a></li>
+							</ul><!--/.nav -->
+						</div><!--/.navbar-collapse -->
+						
+						
+
+					</div>
+				</nav><!--/nav-->
+				<!-- End Navigation -->
+			</div><!--/.header-area-->
+			<div class="clearfix"></div>
+
+
+		</div><!-- /.top-area-->
+    </header>
+    
+    @RenderBody()
+
+
+	<footer id="contact" class="contact">
+		<div class="container">
+			<div class="footer-top">
+				<div class="row">
+					<div class="col-md-3 col-sm-6">
+						<div class="single-footer-widget">
+							<div class="footer-logo">
+								<a href="index.html">AirWizz</a>
+							</div>
+							<p>
+								Experience the thrill of flying with AirWizz. We provide comprehensive information and booking options for all your aviation needs.
+							</p>
+							<div class="footer-contact">
+								<p>info@airwizz.com</p>
+								<p>+92 (304) 251-7490</p>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 col-sm-6">
+						<div class="single-footer-widget">
+							<h2>About AirWizz</h2>
+							<ul>
+								<li><a href="#">About Us</a></li>
+								<li><a href="#">Career Opportunities</a></li>
+								<li><a href="#">Terms of Service</a></li>
+								<li><a href="#">Privacy Policy</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-3 col-xs-12">
+						<div class="single-footer-widget">
+							<h2>Top Aircraft Brands</h2>
+							<div class="row">
+								<div class="col-md-7 col-xs-6">
+									<ul>
+										<li><a href="#">Boeing</a></li>
+										<li><a href="#">Airbus</a></li>
+										<li><a href="#">Cessna</a></li>
+										<li><a href="#">Gulfstream</a></li>
+										<li><a href="#">Bombardier</a></li>
+										<li><a href="#">Embraer</a></li>
+									</ul>
+								</div>
+								<div class="col-md-5 col-xs-6">
+									<ul>
+										<li><a href="#">Lockheed Martin</a></li>
+										<li><a href="#">Piper</a></li>
+										<li><a href="#">Beechcraft</a></li>
+										<li><a href="#">Dassault Aviation</a></li>
+										<li><a href="#">Pilatus</a></li>
+										<li><a href="#">Honda Aircraft</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-offset-1 col-md-3 col-sm-6">
+						<div class="single-footer-widget">
+							<h2>Newsletter</h2>
+							<div class="footer-newsletter">
+								<p>
+									Subscribe to receive the latest news, updates, and offers in aviation.
+								</p>
+							</div>
+							<div class="hm-foot-email">
+								<div class="foot-email-box">
+									<input type="text" class="form-control" placeholder="Add Email">
+								</div><!--/.foot-email-box-->
+								<div class="foot-email-subscribe">
+									<span><i class="fa fa-arrow-right"></i></span>
+								</div><!--/.foot-email-icon-->
+							</div><!--/.hm-foot-email-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer-copyright">
+				<div class="row">
+					<div class="col-sm-6">
+						<p>
+							Developed by Anas, Zain, and Ibrahim
+						</p>
+					</div>
+					<div class="col-sm-6">
+						<div class="footer-social">
+							<a href="#"><i class="fa fa-facebook"></i></a>
+							<a href="#"><i class="fa fa-instagram"></i></a>
+							<a href="#"><i class="fa fa-linkedin"></i></a>
+							<a href="#"><i class="fa fa-pinterest-p"></i></a>
+							<a href="#"><i class="fa fa-behance"></i></a>
+						</div>
+					</div>
+				</div>
+			</div><!--/.footer-copyright-->
+		</div><!--/.container-->
+
+		<div id="scroll-Top">
+			<div class="return-to-top">
+				<i class="fa fa-angle-up" id="scroll-top" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
+			</div>
+		</div><!--/.scroll-Top-->
+	</footer><!--/.contact-->
+
+</body>
+	
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+	<!--contact end-->
+	<!-- Include all js compiled plugins (below), or include individual files as needed -->
+
+	<script src="~/js/jquery.js"></script>
+
+	<!--modernizr.min.js-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+
+	<!--bootstrap.min.js-->
+	<script src="~/js/bootstrap.min.js"></script>
+
+	<!-- bootsnav js -->
+	<script src="~/js/bootsnav.js"></script>
+
+	<!--owl.carousel.js-->
+	<script src="~/js/owl.carousel.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+	<!--Custom JS-->
+	<script src="~/js/custom.js"></script>
+
+</html>
