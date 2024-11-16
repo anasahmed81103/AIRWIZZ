@@ -217,3 +217,11 @@ a.signupLink {
 a.signupLink:hover {
    color:greenyellow;
 }
+
+
+.signupBody {
+    background-image: url('../images/sign.jpg'); /* Path to your image */
+    background-size: cover; /* Makes the image cover the entire background */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image */
+}
