@@ -62,7 +62,7 @@
 
 </head>
 
-<body>.
+<body>
 	<!--[if lte IE 9]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
 	<![endif]-->
@@ -80,17 +80,17 @@
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 								<i class="fa fa-bars"></i>
 							</button>
-							<a class="navbar-brand" href="index.html">AirWizz</a>
+							<a class="navbar-brand" href="@Url.Action("Index","Home")">AirWizz</a>
 						</div><!--/.navbar-header-->
 							<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse" id="navbar-menu">
 							<ul class="nav navbar-nav navbar-right">
-								<li class="scroll"><a href="#home" style="color: white;">Home</a></li>
-								<li class="scroll"><a href="#flight-search" style="color: white;">Flight Search</a></li>
-								<li class="scroll"><a href="#special-offers" style="color: white;">Special Offers</a></li>
-								<li class="scroll"><a href="#manage-profile" style="color: white;">Manage Profile</a></li>
-								<li class="scroll"><a href="#booking-history" style="color: white;">Booking History</a></li>
-								<li><a href="#login" class="btn btn-login">Login/Register</a></li>
+								<li class=""><a href="@Url.Action("Index","Home")" style="color: white;">Home</a></li> <!-- Goes to the homepage -->
+								<li class=""><a href="#flight-search" style="color: white;">Flight Search</a></li>
+								<li class=""><a href="#special-offers" style="color: white;">Special Offers</a></li>
+								<li class=""><a href="#manage-profile" style="color: white;">Manage Profile</a></li>
+								<li class=""><a href="#booking-history" style="color: white;">Booking History</a></li>
+								<li><a href="@Url.Action("Login","Authorization")" class="btn btn-login">Login/Register</a></li>
 							</ul><!--/.nav -->
 						</div><!--/.navbar-collapse -->
 						
@@ -212,7 +212,7 @@
 		</div><!--/.scroll-Top-->
 	</footer><!--/.contact-->
 
-</body>
+
 	
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -241,4 +241,7 @@
 	<!--Custom JS-->
 	<script src="~/js/custom.js"></script>
 
+
+
+</body>
 </html>

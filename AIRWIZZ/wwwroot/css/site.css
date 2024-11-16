@@ -134,3 +134,86 @@ ul.nav {
         box-shadow: none; /* Remove any shadow */
     }
 
+.loginBody {
+    background-image: url('../images/log2.jpg'); /* Path to your image */
+    background-size: cover; /* Makes the image cover the entire background */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image */
+}
+
+.form1 {
+    padding-top:900px;
+    height: 440px;
+    width: 380px;
+    background-color: rgba(255,255,255,0.13);
+    margin: auto;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+
+    .form1 h3 {
+        text-align: center;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+        margin-bottom: 20px;
+    }
+
+    /* Labels */
+    .form1 label {
+        display: block;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    /* Inputs */
+    .form1 input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        font-size: 14px;
+    }
+
+        /* Placeholder styling */
+        .form1 input::placeholder {
+            color: #bbbbbb;
+            font-style: italic;
+        }
+
+    /* Button */
+    .form1 button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        background-color: #00001a;
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .form1 button:hover {
+            background-color: #330066;
+        }
+
+/* Signup link */
+a.signupLink {
+    color: aliceblue;
+}
+
+/* Hover effect for Signup link */
+a.signupLink:hover {
+   color:greenyellow;
+}
