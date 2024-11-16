@@ -1,9 +1,20 @@
+using AIRWIZZ.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<AirwizzContext>(options =>
+    options.UseSqlServer("Data Source=DESKTOP-3A7NVU7\\SQLEXPRESS;Initial Catalog=AirWizzDB;Integrated Security=True;Pooling=False;Encrypt=False;Trust Server Certificate=True"));
+
+
+
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
