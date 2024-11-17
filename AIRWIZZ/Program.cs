@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AirwizzContext>(options =>
-    options.UseSqlServer("Data Source=DESKTOP-3A7NVU7\\SQLEXPRESS;Initial Catalog=AirWizzDB;Integrated Security=True;Pooling=False;Encrypt=False;Trust Server Certificate=True"));
+    options.UseSqlServer("Data Source=DESKTOP-B9L8PKU\\SQLEXPRESS;Initial Catalog=AirWizzDB;Integrated Security=True;Pooling=False;Encrypt=False;Trust Server Certificate=True"));
 
 
 

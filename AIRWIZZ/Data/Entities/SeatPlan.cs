@@ -19,9 +19,9 @@ namespace AIRWIZZ.Data.Entities
         [Required , ForeignKey(nameof(Flight))]
         public int Flight_Id { get; set; }
 
-        public virtual required Flight Flight { get; set; }
+        public virtual  Flight Flight { get; set; }
 
 
-           
+        public virtual ICollection<Booking> Seat_Bookings { get; set; }   
     }
 }

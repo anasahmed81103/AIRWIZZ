@@ -31,8 +31,7 @@ namespace AIRWIZZ.Data
 
         public DbSet<User> Users { get; set; }
 
-       
-
+        
 
     }
 }
