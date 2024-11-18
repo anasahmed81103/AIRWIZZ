@@ -1,0 +1,57 @@
+﻿@model AIRWIZZ.Models.BookingHistoryModel
+
+@{
+    ViewData["Title"] = "Booking History";
+}
+
+<div class="container mt-5 pt-5">
+    <h3 class="text-center mb-5">Booking History</h3>
+
+    @if (Model.Bookings_history_list != null && Model.Bookings_history_list.Any())
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Booking ID</th>
+                        <th>Booking Date</th>
+                        <th>Total Amount</th>
+                        <th>Currency</th>
+                        <th>Flight Number</th>
+                        <th>Airline</th>
+                        <th>Passenger Name</th>
+                        <th>Seat Class</th>
+                        <th>Seat Number</th>
+                        <th>Booking Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model.Bookings_history_list)
+                    {
+                        <tr>
+                            <td>@Model.Bookings_history_list.IndexOf(booking) + 1</td>
+                            <td>@booking.Bookid</td>
+                            <td>@booking.Bookdate.ToString("yyyy-MM-dd")</td>
+                            <td>@booking.total_amount</td>
+                            <td>@booking.currency_type</td>
+                            <td>@booking.FlightNumber</td>
+                            <td>@booking.Airline</td>
+                            <td>@booking.PassengerName</td>
+                            <td>@booking.Seat_class_type</td>
+                            <td>@booking.SeatNum</td>
+                            <td>@booking.Booking_Status</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            No booking history available.
+        </div>
+    }
+</div>
+

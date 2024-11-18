@@ -17,5 +17,8 @@ namespace AIRWIZZ.Data.Entities
         public Currency currency_preference { get; set; }    
 
         public DateTime? Date_joined { get; set; }
+
+
+        public virtual ICollection<Booking> User_Bookings { get; set; }
     }
 }

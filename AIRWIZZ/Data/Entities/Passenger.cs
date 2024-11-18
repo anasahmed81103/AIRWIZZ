@@ -18,19 +18,16 @@ namespace AIRWIZZ.Data.Entities
         [Key,Required]
         public int Passenger_Id { get; set; }
 
-        [Required, ForeignKey(nameof(Booking))]
-
-        public int Booking_Id { get; set; }
-
+      
 
         [Required,ForeignKey(nameof(User))]
 
         public int  User_Id { get; set; }
 
 
-        public virtual required User User  { get; set; }
+        public virtual  User  User  { get; set; }
 
-        public virtual required Booking Booking { get; set; }
+        public virtual ICollection<Booking> Passenger_Bookings { get; set; }
 
 
     }

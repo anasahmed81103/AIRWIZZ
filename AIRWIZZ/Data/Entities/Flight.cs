@@ -13,5 +13,7 @@ namespace AIRWIZZ.Data.Entities
 
         public float Total_Price { get; set; }
 
+        public virtual ICollection<Booking> Flights_Bookings { get; set; } 
+
     }
 }
