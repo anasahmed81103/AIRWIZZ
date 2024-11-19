@@ -6,22 +6,25 @@ namespace AIRWIZZ.Data.Entities
 {
     public class SeatPlan
     {
+        [Key]
+        [Required]
+        public int SeatId { get; set; }
 
-        [Key, Required]
-        public int Seat_Id { get; set; }
+        [Required]
+        public int SeatNumber { get; set; }
 
-        public int Seat_Number { get; set; }
+        [Required]
+        public SeatClass SeatClassType { get; set; }
 
-        public SeatClass Seat_Class_type { get; set; }   
+        [Required]
+        public bool IsAvailable { get; set; }
 
-        public bool Seat_status {  get; set; }
+        [Required]
+        public int FlightId { get; set; }
+        public virtual Flight Flight { get; set; }
 
-        [Required , ForeignKey(nameof(Flight))]
-        public int Flight_Id { get; set; }
-
-        public virtual  Flight Flight { get; set; }
-
-
-        public virtual ICollection<Booking> Seat_Bookings { get; set; }   
+        // Navigation Property
+        public virtual ICollection<Booking> Bookings { get; set; }
     }
+
 }

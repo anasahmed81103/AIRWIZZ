@@ -6,31 +6,32 @@ namespace AIRWIZZ.Data.Entities
 {
     public class Payment
     {
-        [Key ,Required]
-        public int Payment_Id { get; set; }
+        [Key]
+        [Required]
+        public int PaymentId { get; set; }
 
-        public DateTime Payment_Date { get; set; }
+        [Required]
+        public DateTime PaymentDate { get; set; }
 
+        [Required]
         public float Amount { get; set; }
 
-        public Currency Currency_Type { get; set; }  
+        [Required]
+        public Currency CurrencyType { get; set; }
 
-        public PaymentMethod Payment_Method_type { get; set; } 
+        [Required]
+        public PaymentMethod PaymentMethodType { get; set; }
 
-        public PaymentStatus Payment_status_result { get; set; }
+        [Required]
+        public PaymentStatus PaymentStatus { get; set; }
 
-        [Required,ForeignKey(nameof(Booking))]
-        public int Booking_Id { get; set; }
-        
+        [Required]
+        public int BookingId { get; set; }
+        public virtual Booking Booking { get; set; }
 
-        [Required, ForeignKey(nameof(User))]
-        public int User_Id { get; set; }
-
-
+        [Required]
+        public int UserId { get; set; }
         public virtual User User { get; set; }
-
-        public virtual Booking Booking {  get; set; }
-
-
     }
+
 }
