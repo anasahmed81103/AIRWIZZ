@@ -5,22 +5,29 @@ namespace AIRWIZZ.Data.Entities
 {
     public class Departure
     {
-        [Key, Required]
-        public int Departure_id { get; set; }
+        [Key]
+        [Required]
+        public int DepartureId { get; set; }
 
-        public string? Departure_city { get; set; }
+        [Required]
+        public string DepartureCity { get; set; }
 
-        public DateTime Departure_time { get; set;}
+        [Required]
+        public DateTime DepartureTime { get; set; }
 
-        public float Duration {  get; set;}
+        [Required]
+        public float Duration { get; set; }
 
-        public float Price { get; set;}
+        [Required]
+        public float Price { get; set; }
 
-        [Required , ForeignKey(nameof(Flight))]
-        public int Flight_Id { get; set;}
+        // Foreign Key to Flight
+        [Required]
+        public int FlightId { get; set; }
+        public virtual Flight Flight { get; set; }
 
-
-        public virtual required Flight Flight { get; set;}
-
+        // Navigation Property
+        public virtual ICollection<Booking> Bookings { get; set; }
     }
+
 }

@@ -4,12 +4,14 @@ namespace AIRWIZZ.Data.Entities
 {
     public class CurrencyConversion
     {
-
         [Key, Required]
-        public int Currency_Code { get; set; }
+        public int CurrencyId { get; set; }
 
-        public float Currency_Rate { get; set; }
+        [Required]
+        public float ConversionRate { get; set; }
 
-        public DateTime Last_Updated { get; set; }
+        [Required]
+        public DateTime LastUpdated { get; set; }
     }
+
 }

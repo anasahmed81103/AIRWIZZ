@@ -225,3 +225,71 @@ a.signupLink:hover {
     background-repeat: no-repeat; /* Prevents the image from repeating */
     background-position: center; /* Centers the image */
 }
+
+
+.form2 {
+    padding-top: 900px;
+    height: 470px;
+    width: 380px;
+    background-color: rgba(255,255,255,0.13);
+    margin: auto;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+
+.form2 h3 {
+    text-align: center;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+.form2 label {
+    display: block;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Inputs */
+.form2 input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+}
+
+    /* Placeholder styling */
+    .form2 input::placeholder {
+        color: #bbbbbb;
+        font-style: italic;
+    }
+
+/* Button */
+.form2 button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #00001a;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .form2 button:hover {
+        background-color: #330066;
+    }

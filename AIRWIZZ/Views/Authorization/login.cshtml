@@ -3,12 +3,26 @@
 *@
 @{
     ViewData["Title"] = "Privacy Policy";
+    // Get the TempData messages
+    var successMessage = TempData["SuccessMessage"];
+    var errorMessage = TempData["ErrorMessage"];
 }
 
 
 <body class="loginBody">
 
-    <section style="padding-top:29%; padding-left:20%;">
+    <div style="padding-top:10%; width:60%; padding-left:38%;">
+        @if (successMessage != null)
+        {
+            <div class="alert alert-success" >
+                @successMessage
+            </div>
+        }
+    </div>
+   
+
+
+    <section style="padding-top:19%; padding-left:20%;">
 
 
         <form id="log" class="form1" method="post" action="LoginUser">

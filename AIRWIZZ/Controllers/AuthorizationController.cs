@@ -23,6 +23,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using Microsoft.Identity.Client;
 using System.Reflection;
+using AIRWIZZ.Data;
+using AIRWIZZ.Data.Entities;
+using AIRWIZZ.Data.enums;
 //using AIRWIZZ.Services.Caching;
 
 
@@ -31,6 +34,15 @@ namespace AIRWIZZ.Controllers
 {
     public class AuthorizationController : Controller
     {
+        private readonly ILogger<HomeController> _logger;
+
+        private readonly AirwizzContext _airwizzContext;
+
+        public AuthorizationController( AirwizzContext airwizzContext)
+        {
+            _airwizzContext = airwizzContext;
+        }
+
         public IActionResult Index()
         {
             return RedirectToAction("Index", "Home");
@@ -47,6 +59,43 @@ namespace AIRWIZZ.Controllers
         public async Task<IActionResult> Signup()
         {
             return View();
+        }
+
+
+
+        [HttpPost]
+        [Route("SigninUser")]
+        public async Task<IActionResult> SigninUser(string name, string email, string password, string currency)
+        {
+            try
+            {
+                
+                var newUser = new User
+                {
+                    user_name = name,
+                    email = email,
+                    password = password, 
+                    currency_preference = Currency.PKR,
+                    User_role = Role.naive_user, 
+                    Date_joined = DateTime.Now
+                };
+
+               
+                await _airwizzContext.Users.AddAsync(newUser); 
+                await _airwizzContext.SaveChangesAsync();
+
+                //_logger.LogInformation($"New user registered: {email}");
+
+                TempData["SuccessMessage"] = "User registered successfully! Please log in.";
+
+                return RedirectToAction("Login");
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, "Error occurred during user signup.");
+                TempData["ErrorMessage"] = "An error occurred while processing your request. Please try again later.";
+                return RedirectToAction("Signup");
+            }
         }
 
 

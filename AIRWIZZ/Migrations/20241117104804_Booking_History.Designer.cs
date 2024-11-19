@@ -4,6 +4,7 @@ using AIRWIZZ.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AIRWIZZ.Migrations
 {
     [DbContext(typeof(AirwizzContext))]
-    partial class AirwizzContextModelSnapshot : ModelSnapshot
+    [Migration("20241117104804_Booking_History")]
+    partial class Booking_History
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,27 +27,27 @@ namespace AIRWIZZ.Migrations
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Arrival", b =>
                 {
-                    b.Property<int>("ArrivalId")
+                    b.Property<int>("Arrival_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ArrivalId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Arrival_Id"));
 
-                    b.Property<string>("ArrivalCity")
+                    b.Property<string>("Arrival_City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ArrivalTime")
+                    b.Property<DateTime>("Arrival_Time")
                         .HasColumnType("datetime2");
 
                     b.Property<float>("Duration")
                         .HasColumnType("real");
 
-                    b.Property<int>("FlightId")
+                    b.Property<int>("Flight_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("ArrivalId");
+                    b.HasKey("Arrival_Id");
 
-                    b.HasIndex("FlightId");
+                    b.HasIndex("Flight_Id");
 
                     b.ToTable("Arrivals");
                 });
@@ -57,10 +60,10 @@ namespace AIRWIZZ.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Booking_Id"));
 
-                    b.Property<int>("Arrival_Id")
+                    b.Property<int>("Arrival_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Book_Status_Result")
+                    b.Property<int>("Book_status_result")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Booking_Date")
@@ -78,12 +81,12 @@ namespace AIRWIZZ.Migrations
                     b.Property<int>("Seat_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("User_Id")
+                    b.Property<int>("User_id")
                         .HasColumnType("int");
 
                     b.HasKey("Booking_Id");
 
-                    b.HasIndex("Arrival_Id");
+                    b.HasIndex("Arrival_id");
 
                     b.HasIndex("Departure_Id");
 
@@ -93,79 +96,79 @@ namespace AIRWIZZ.Migrations
 
                     b.HasIndex("Seat_Id");
 
-                    b.HasIndex("User_Id");
+                    b.HasIndex("User_id");
 
                     b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.CurrencyConversion", b =>
                 {
-                    b.Property<int>("CurrencyId")
+                    b.Property<int>("Currency_Code")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CurrencyId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Currency_Code"));
 
-                    b.Property<float>("ConversionRate")
+                    b.Property<float>("Currency_Rate")
                         .HasColumnType("real");
 
-                    b.Property<DateTime>("LastUpdated")
+                    b.Property<DateTime>("Last_Updated")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("CurrencyId");
+                    b.HasKey("Currency_Code");
 
                     b.ToTable("CurrencyConversions");
                 });
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Departure", b =>
                 {
-                    b.Property<int>("DepartureId")
+                    b.Property<int>("Departure_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartureId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Departure_Id"));
 
-                    b.Property<string>("DepartureCity")
+                    b.Property<string>("Departure_City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DepartureTime")
+                    b.Property<DateTime>("Departure_Time")
                         .HasColumnType("datetime2");
 
                     b.Property<float>("Duration")
                         .HasColumnType("real");
 
-                    b.Property<int>("FlightId")
+                    b.Property<int>("Flight_Id")
                         .HasColumnType("int");
 
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
-                    b.HasKey("DepartureId");
+                    b.HasKey("Departure_Id");
 
-                    b.HasIndex("FlightId");
+                    b.HasIndex("Flight_Id");
 
                     b.ToTable("Departures");
                 });
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Flight", b =>
                 {
-                    b.Property<int>("FlightId")
+                    b.Property<int>("Flight_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FlightId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Flight_Id"));
 
                     b.Property<string>("Airline")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FlightNumber")
+                    b.Property<int>("Flight_Number")
                         .HasColumnType("int");
 
-                    b.Property<float>("TotalPrice")
+                    b.Property<float>("Total_Price")
                         .HasColumnType("real");
 
-                    b.HasKey("FlightId");
+                    b.HasKey("Flight_Id");
 
                     b.ToTable("Flights");
                 });
@@ -181,10 +184,10 @@ namespace AIRWIZZ.Migrations
                     b.Property<DateOnly>("Date_Of_Birth")
                         .HasColumnType("date");
 
-                    b.Property<string>("First_Name")
+                    b.Property<string>("First_name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Last_Name")
+                    b.Property<string>("Last_name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nationality")
@@ -193,106 +196,109 @@ namespace AIRWIZZ.Migrations
                     b.Property<string>("Passport_Number")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("User_Id")
+                        .HasColumnType("int");
+
                     b.HasKey("Passenger_Id");
+
+                    b.HasIndex("User_Id");
 
                     b.ToTable("Passengers");
                 });
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Payment", b =>
                 {
-                    b.Property<int>("PaymentId")
+                    b.Property<int>("Payment_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PaymentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Payment_Id"));
 
                     b.Property<float>("Amount")
                         .HasColumnType("real");
 
-                    b.Property<int>("BookingId")
+                    b.Property<int>("Booking_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("CurrencyType")
+                    b.Property<int>("Currency_Type")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PaymentDate")
+                    b.Property<DateTime>("Payment_Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentMethodType")
+                    b.Property<int>("Payment_Method_type")
                         .HasColumnType("int");
 
-                    b.Property<int>("PaymentStatus")
+                    b.Property<int>("Payment_status_result")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("User_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("PaymentId");
+                    b.HasKey("Payment_Id");
 
-                    b.HasIndex("BookingId")
+                    b.HasIndex("Booking_Id")
                         .IsUnique();
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("User_Id");
 
                     b.ToTable("payments");
                 });
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.SeatPlan", b =>
                 {
-                    b.Property<int>("SeatId")
+                    b.Property<int>("Seat_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeatId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Seat_Id"));
 
-                    b.Property<int>("FlightId")
+                    b.Property<int>("Flight_Id")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsAvailable")
+                    b.Property<int>("Seat_Class_type")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Seat_Number")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Seat_status")
                         .HasColumnType("bit");
 
-                    b.Property<int>("SeatClassType")
-                        .HasColumnType("int");
+                    b.HasKey("Seat_Id");
 
-                    b.Property<int>("SeatNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("SeatId");
-
-                    b.HasIndex("FlightId");
+                    b.HasIndex("Flight_Id");
 
                     b.ToTable("SeatPlans");
                 });
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("user_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("user_id"));
 
-                    b.Property<int>("CurrencyPreference")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DateJoined")
+                    b.Property<DateTime?>("Date_joined")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Role")
+                    b.Property<int>("User_role")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserName")
+                    b.Property<int>("currency_preference")
+                        .HasColumnType("int");
+
+                    b.Property<string>("email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.Property<string>("password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("user_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("user_id");
 
                     b.ToTable("Users");
                 });
@@ -300,8 +306,8 @@ namespace AIRWIZZ.Migrations
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Arrival", b =>
                 {
                     b.HasOne("AIRWIZZ.Data.Entities.Flight", "Flight")
-                        .WithMany("Arrivals")
-                        .HasForeignKey("FlightId")
+                        .WithMany()
+                        .HasForeignKey("Flight_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -311,19 +317,19 @@ namespace AIRWIZZ.Migrations
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Booking", b =>
                 {
                     b.HasOne("AIRWIZZ.Data.Entities.Arrival", "Arrival")
-                        .WithMany("Bookings")
-                        .HasForeignKey("Arrival_Id")
+                        .WithMany("Arrival_Bookings")
+                        .HasForeignKey("Arrival_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AIRWIZZ.Data.Entities.Departure", "Departure")
-                        .WithMany("Bookings")
+                        .WithMany("Departure_Bookings")
                         .HasForeignKey("Departure_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AIRWIZZ.Data.Entities.Flight", "Flight")
-                        .WithMany("Bookings")
+                        .WithMany("Flights_Bookings")
                         .HasForeignKey("Flight_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -335,14 +341,14 @@ namespace AIRWIZZ.Migrations
                         .IsRequired();
 
                     b.HasOne("AIRWIZZ.Data.Entities.SeatPlan", "SeatPlan")
-                        .WithMany("Bookings")
+                        .WithMany("Seat_Bookings")
                         .HasForeignKey("Seat_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AIRWIZZ.Data.Entities.User", "User")
-                        .WithMany("Bookings")
-                        .HasForeignKey("User_Id")
+                        .WithMany("User_Bookings")
+                        .HasForeignKey("User_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -362,25 +368,36 @@ namespace AIRWIZZ.Migrations
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Departure", b =>
                 {
                     b.HasOne("AIRWIZZ.Data.Entities.Flight", "Flight")
-                        .WithMany("Departures")
-                        .HasForeignKey("FlightId")
+                        .WithMany()
+                        .HasForeignKey("Flight_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Flight");
                 });
 
+            modelBuilder.Entity("AIRWIZZ.Data.Entities.Passenger", b =>
+                {
+                    b.HasOne("AIRWIZZ.Data.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("User_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Payment", b =>
                 {
                     b.HasOne("AIRWIZZ.Data.Entities.Booking", "Booking")
                         .WithOne("Payment")
-                        .HasForeignKey("AIRWIZZ.Data.Entities.Payment", "BookingId")
+                        .HasForeignKey("AIRWIZZ.Data.Entities.Payment", "Booking_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("AIRWIZZ.Data.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("User_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -392,8 +409,8 @@ namespace AIRWIZZ.Migrations
             modelBuilder.Entity("AIRWIZZ.Data.Entities.SeatPlan", b =>
                 {
                     b.HasOne("AIRWIZZ.Data.Entities.Flight", "Flight")
-                        .WithMany("SeatPlans")
-                        .HasForeignKey("FlightId")
+                        .WithMany()
+                        .HasForeignKey("Flight_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -402,7 +419,7 @@ namespace AIRWIZZ.Migrations
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Arrival", b =>
                 {
-                    b.Navigation("Bookings");
+                    b.Navigation("Arrival_Bookings");
                 });
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Booking", b =>
@@ -413,18 +430,12 @@ namespace AIRWIZZ.Migrations
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Departure", b =>
                 {
-                    b.Navigation("Bookings");
+                    b.Navigation("Departure_Bookings");
                 });
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Flight", b =>
                 {
-                    b.Navigation("Arrivals");
-
-                    b.Navigation("Bookings");
-
-                    b.Navigation("Departures");
-
-                    b.Navigation("SeatPlans");
+                    b.Navigation("Flights_Bookings");
                 });
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.Passenger", b =>
@@ -434,12 +445,12 @@ namespace AIRWIZZ.Migrations
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.SeatPlan", b =>
                 {
-                    b.Navigation("Bookings");
+                    b.Navigation("Seat_Bookings");
                 });
 
             modelBuilder.Entity("AIRWIZZ.Data.Entities.User", b =>
                 {
-                    b.Navigation("Bookings");
+                    b.Navigation("User_Bookings");
                 });
 #pragma warning restore 612, 618
         }
