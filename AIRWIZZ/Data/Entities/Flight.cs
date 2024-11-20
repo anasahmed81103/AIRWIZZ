@@ -6,7 +6,7 @@ namespace AIRWIZZ.Data.Entities
     {
         [Key]
         [Required]
-        public int FlightId { get; set; }
+        public int Flight_Id { get; set; }
 
         [Required]
         public int FlightNumber { get; set; }

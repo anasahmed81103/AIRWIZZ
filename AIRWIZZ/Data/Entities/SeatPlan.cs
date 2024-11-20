@@ -8,7 +8,7 @@ namespace AIRWIZZ.Data.Entities
     {
         [Key]
         [Required]
-        public int SeatId { get; set; }
+        public int Seat_Id { get; set; }
 
         [Required]
         public int SeatNumber { get; set; }

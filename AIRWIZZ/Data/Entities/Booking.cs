@@ -32,12 +32,12 @@ namespace AIRWIZZ.Data.Entities
         // Foreign Key to Arrival (Many-to-One Relationship)
         [Required]
         [ForeignKey(nameof(Arrival))]
-        public int Arrival_Id { get; set; }
+        public int ArrivalId { get; set; }
 
         // Foreign Key to Departure (Many-to-One Relationship)
         [Required]
         [ForeignKey(nameof(Departure))]
-        public int Departure_Id { get; set; }
+        public int DepartureId { get; set; }
 
         // Foreign Key to SeatPlan (Many-to-One Relationship)
         [Required]

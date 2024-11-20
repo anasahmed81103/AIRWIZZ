@@ -5,7 +5,7 @@
 namespace AIRWIZZ.Migrations
 {
     /// <inheritdoc />
-    public partial class mymig : Migration
+    public partial class FifthMg : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -7,7 +7,7 @@ namespace AIRWIZZ.Data.Entities
     {
         [Key]
         [Required]
-        public int ArrivalId { get; set; }
+        public int Arrival_Id { get; set; }
 
         [Required]
         public DateTime ArrivalTime { get; set; }

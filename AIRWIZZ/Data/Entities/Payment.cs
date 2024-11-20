@@ -8,7 +8,7 @@ namespace AIRWIZZ.Data.Entities
     {
         [Key]
         [Required]
-        public int PaymentId { get; set; }
+        public int Payment_Id { get; set; }
 
         [Required]
         public DateTime PaymentDate { get; set; }

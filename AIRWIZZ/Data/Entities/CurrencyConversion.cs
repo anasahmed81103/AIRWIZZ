@@ -5,7 +5,7 @@ namespace AIRWIZZ.Data.Entities
     public class CurrencyConversion
     {
         [Key, Required]
-        public int CurrencyId { get; set; }
+        public int Currency_Code { get; set; }
 
         [Required]
         public float ConversionRate { get; set; }
