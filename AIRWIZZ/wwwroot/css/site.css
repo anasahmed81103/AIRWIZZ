@@ -293,3 +293,11 @@ a.signupLink:hover {
     .form2 button:hover {
         background-color: #330066;
     }
+
+
+.dropmenu:hover {
+    color:darkmagenta;
+    background-color:blueviolet;
+}
+/* Styling the dropdown menu items */
+.

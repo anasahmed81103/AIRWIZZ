@@ -3,6 +3,8 @@ using AIRWIZZ.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;          // For HttpContext.Session methods (SetInt32, GetInt32, etc.)
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AIRWIZZ.Controllers
 {

@@ -18,6 +18,12 @@
                 @successMessage
             </div>
         }
+        @if (errorMessage != null)
+        {
+            <div class="alert alert-success">
+                @errorMessage
+            </div>
+        }
     </div>
    
 
@@ -36,7 +42,7 @@
             <input type="password" id="password" placeholder="Password" name="password" requirted>
             
             <div style="padding-top:20px;">
-                <button type="button" onclick="validateForm()">Log In</button>
+                <button type="submit">Log In</button>
             </div>
             
 

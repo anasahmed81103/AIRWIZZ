@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 
 <html lang="en">
 
@@ -90,7 +93,28 @@
 								<li class=""><a href="#special-offers" style="color: white;">Special Offers</a></li>
 								<li class=""><a href="#manage-profile" style="color: white;">Manage Profile</a></li>
 								<li class=""><a href=@Url.Action("BookingHistory","Home") style="color: white;">Booking History</a></li>
-								<li><a href="@Url.Action("Login","Authorization")" class="btn btn-login">Login/Register</a></li>
+
+								<li class="nav-item dropdown">
+									@if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
+									{
+										<!-- Display Dropdown with Welcome Message -->
+										<a class="nav-link dropdown-toggle btn btn-login" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+											@HttpContextAccessor.HttpContext.Session.GetString("UserName")
+										</a>
+										<ul class="dropdown-menu" aria-labelledby="userDropdown">
+											
+											<li><a class="dropdown-item dropmenu" href="@Url.Action("Logout", "Authorization")">Logout</a></li>
+										</ul>
+									}
+									else
+									{
+										<!-- Display Login/Register Button -->
+										<a href="@Url.Action("Login", "Authorization")" class="btn btn-login">Login/Register</a>
+									}
+								</li>
+
+
+
 							</ul><!--/.nav -->
 						</div><!--/.navbar-collapse -->
 						

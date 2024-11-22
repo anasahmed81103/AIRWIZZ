@@ -26,6 +26,8 @@ using System.Reflection;
 using AIRWIZZ.Data;
 using AIRWIZZ.Data.Entities;
 using AIRWIZZ.Data.enums;
+using Microsoft.AspNetCore.Http;          // For HttpContext.Session methods (SetInt32, GetInt32, etc.)
+using Microsoft.Extensions.DependencyInjection; // For configuring session services in Program.cs or Startup.cs
 //using AIRWIZZ.Services.Caching;
 
 
@@ -69,13 +71,23 @@ namespace AIRWIZZ.Controllers
         {
             try
             {
-                
+
+                Currency parsedCurrency;
+
+                // Attempt to parse the string to the Currency enum
+                bool isValidCurrency = Enum.TryParse<Currency>(currency, true, out parsedCurrency);
+
+                if (!isValidCurrency)
+                {
+                    throw new Exception("Currency Value not recognized!");
+                }
+
                 var newUser = new User
                 {
                     user_name = name,
                     email = email,
                     password = password, 
-                    currency_preference = Currency.PKR,
+                    currency_preference = parsedCurrency,
                     User_role = Role.naive_user, 
                     Date_joined = DateTime.Now
                 };
@@ -100,47 +112,54 @@ namespace AIRWIZZ.Controllers
 
 
 
-        //[HttpPost]
-        //[Route("LoginUser")]
-        //public async Task<IActionResult> LoginUser(IFormCollection collection)
-        //{
 
-        //    var userName = collection["email"];
-        //    var password = collection["password"];
+        [HttpPost]
+        [Route("LoginUser")]
+        public async Task<IActionResult> LoginUser (string email, string password)
+        {
+            try
+            {
 
-        //    try
-        //    {
-        //        var checkUser = _context.GameReviews.Any(x => x.Name == userName);
+                var user = await _airwizzContext.Users.Where(x => x.email == email).FirstOrDefaultAsync();
 
-        //        if (checkUser != null)
-        //        {
-        //            if (userAccess.IsVerified)
-        //            {
-        //                var userRoles = await _dataContext.UserRoles.Include(x => x.Role)
-        //                    .Where(x => x.UserId == checkUser.Id)
-        //                    .Select(x => x.Role.Name.ToLower())
-        //                    .ToListAsync();
+                if (user == null)
+                {
+                    throw new Exception("No such User!");
+                }
+                else if (user.password != password)
+                {
+                    throw new Exception("Wrong Password!");
+                }
 
-        //                SetLoginValues(checkUser.Id, checkUser.UID,
-        //                    checkUser.Email, userAccess.SessionId, userRoles);
-        //                _cache.SetUserBySessionId(new Models.Cache.CacheUser()
-        //                {
-        //                    Id = checkUser.Id,
-        //                    SessionId = userAccess.SessionId,
-        //                    UID = checkUser.UID,
-        //                    Roles = userRoles
-        //                }, userAccess.SessionId);
-        //                return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
-        //            }
-        //        }
-        //        throw new Exception("Login failed!");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        TempData["error"] = "Login Failed!";
-        //        return RedirectToAction("Login", "Auth");
-        //    }
-        //}
+                HttpContext.Session.SetInt32("UserId", user.user_id);
+                HttpContext.Session.SetString("UserName", user.email);
+
+                //TempData["SuccessMessage"] = "Logged in successfully!";
+
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, "Error occurred during user signup.");
+                TempData["ErrorMessage"] = "Login Error!";
+                return RedirectToAction("Login");
+            }
+        }
+
+
+        [Route("Logout")]
+        public IActionResult Logout()
+        {
+            // Clear the session
+            HttpContext.Session.Clear();
+
+            TempData["SuccessMessage"] = "Logged out successfully!";
+            return RedirectToAction("Login");
+        }
+
+
+        //var userId = HttpContext.Session.GetInt32("UserId");   for ibrahim bhai
 
 
 
@@ -152,101 +171,6 @@ namespace AIRWIZZ.Controllers
         //    TempData["alert"] = "You Have been Logged Out!";
         //    return RedirectToAction("Index", "Home");
 
-        //}
-
-
-
-
-        //// POST: AuthController/Create
-        //[HttpPost]
-        //// [ValidateAntiForgeryToken]
-        //[Route("CreateUser")]
-        //public async Task<IActionResult> CreateUser(IFormCollection collection)
-        //{
-
-
-        //    try
-        //    {
-
-        //        string email = collection["email"];
-
-        //        if (await _userStore.FindByNameAsync(email, cts.Token) == null)
-        //        {
-
-        //            //_userStore.FindByNameAsync("email", cts.Token);
-
-        //            var salt = _configuration.GetValue<long>("Settings:IntSalt");
-        //            //  put in values of each property in below line
-
-
-        //            string pass = collection["password"];
-        //            string name = collection["fullName"];
-        //            string date = collection["dob"];
-        //            string gen = collection["Gender"];
-
-        //            DateTime d = DateTime.Now;
-        //            DateTime.TryParse(date, out d);
-        //            Gender gend = ConvertToGender(gen);
-
-        //            UserModel newUser = new UserModel(email, pass, name, d, gend, salt);
-
-
-        //            var normalRole = await _roleStore.FindByNameAsync("normalUser", cts.Token);
-
-        //            User toRegister = new User()
-        //            {
-        //                DateOfBirth = newUser.DateOfBirth,
-        //                Email = newUser.Email,
-        //                FullName = newUser.FullName,
-        //                Gender = newUser.Gender,
-        //                PasswordHash = newUser.PasswordHash,
-        //                UID = newUser.UID,
-        //            };
-
-        //            await _dataContext.Users.AddAsync(toRegister);
-
-        //            await _dataContext.UserRoles.AddAsync(new UserRole()
-        //            {
-        //                Role = normalRole,
-        //                User = toRegister
-        //            });
-        //            await _dataContext.SaveChangesAsync();
-
-
-        //            TempData["success"] = " ID Succesfully created. Login Now!";
-
-
-        //            return RedirectToAction("Login", "Auth");
-
-
-        //        }
-        //        else
-        //        {
-        //            throw new Exception("Username Exists!");
-        //        }
-
-
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-        //        TempData["error"] = " Someting went Wrong. Try Again!";
-
-        //        return RedirectToAction("Login", "Auth");
-
-        //    }
-
-
-        //}
-
-
-        //private void SetLoginValues(int userId, Guid UID, string email, string sessionId, List<string> roles)
-        //{
-        //    var name = email.Split("@")[0];
-        //    HttpContext.Session.SetString("SessionId", sessionId);
-        //    HttpContext.Session.SetString("UserName", name);
-        //    HttpContext.Session.SetString("Roles", string.Join(", ", roles));
-        //    HttpContext.Session.SetInt32("LoggedId", 1);
         //}
 
 
