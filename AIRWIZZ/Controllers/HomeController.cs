@@ -39,7 +39,7 @@ namespace AIRWIZZ.Controllers
 
         public async Task<IActionResult> BookingHistory()
         {
-            var user_id = 6;  // user id is done after confimring login page
+            var user_id = HttpContext.Session.GetInt32("UserId");
 
             var booking_history = await _airwizzContext.Bookings
                     .Include(b => b.Flight)

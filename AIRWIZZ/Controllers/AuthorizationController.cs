@@ -163,26 +163,6 @@ namespace AIRWIZZ.Controllers
 
 
 
-        //[Route("Logout")]
-        //public async Task<IActionResult> Logout()
-        //{
-
-        //    LogoutAndClear();
-        //    TempData["alert"] = "You Have been Logged Out!";
-        //    return RedirectToAction("Index", "Home");
-
-        //}
-
-
-        //private void LogoutAndClear()
-        //{
-        //    HttpContext.Session.Remove("SessionId");
-        //    HttpContext.Session.Remove("UserName");
-        //    HttpContext.Session.Remove("Roles");
-        //    HttpContext.Session.Remove("LoggedId");
-
-        //}
-
 
     }
 }
