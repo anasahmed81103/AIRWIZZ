@@ -1,10 +1,12 @@
 using AIRWIZZ.Data;
+using AIRWIZZ.Service;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<FlightTrackingService>();               //registration of service of real time flight data
 builder.Services.AddControllersWithViews();
 
 // Register IHttpContextAccessor
