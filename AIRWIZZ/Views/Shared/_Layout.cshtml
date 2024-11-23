@@ -91,8 +91,8 @@
 						<div class="collapse navbar-collapse" id="navbar-menu">
 							<ul class="nav navbar-nav navbar-right">
 								<li class=""><a href="@Url.Action("Index","Home")" style="color: white;">Home</a></li> <!-- Goes to the homepage -->
-								<li class=""><a href="#flight-search" style="color: white;">Flight Search</a></li>
-								<li class=""><a href="#special-offers" style="color: white;">Special Offers</a></li>
+								<li class=""><a href="#fligh" style="color: white;">Flight Search</a></li>
+								<li class=""><a href="@Url.Action("RealTimeFlightMap","FlightTracking")" style="color: white;">Flight Track</a></li>
 								<li class="">
 									@if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
 									{
