@@ -43,7 +43,7 @@
 
             <div class="form-group">
                 <label>Currency Preference</label>
-                <select name="Currency" class="form-control">
+                <select asp-for="Currency" class="form-control">
                     <option value="USD">United States Dollar (USD)</option>
                     <option value="EUR">Euro (EUR)</option>
                     <option value="INR">Indian Rupee (INR)</option>
@@ -81,6 +81,7 @@
                     <option value="EGP">Egyptian Pound (EGP)</option>
                 </select>
             </div>
+
 
             <button type="submit" class="btn btn-primary w-100 mt-3">Update Profile</button>
         </form>
