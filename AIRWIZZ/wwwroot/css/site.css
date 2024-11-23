@@ -300,4 +300,11 @@ a.signupLink:hover {
     background-color:blueviolet;
 }
 /* Styling the dropdown menu items */
-.
+
+.history {
+    background-color: #000000;
+}
+
+.historytable {
+    background-color: #00001a;
+}
