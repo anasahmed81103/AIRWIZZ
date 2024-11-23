@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 //using AIRWIZZ.Data.Entities;
 using System.Threading;
-//using AIRWIZZ.Data.Enums;
+using AIRWIZZ.Data.enums;
 using Microsoft.VisualBasic;
 using Microsoft.EntityFrameworkCore;
 //using AIRWIZZ.Models.Login;
@@ -176,7 +176,6 @@ namespace AIRWIZZ.Controllers
 
                 var user = await _airwizzContext.Users.Where(x => x.user_id == userId).FirstOrDefaultAsync();
 
-
                 if (user == null)
                 {
                     throw new Exception("No such User!");
@@ -184,75 +183,69 @@ namespace AIRWIZZ.Controllers
 
                 var user_data = new ManageProfileModel
                 {
-
                     User_Name = user.user_name,
                     Password = user.password,
-                    Currency_Preference = user.currency_preference,
-
+                    Currency = user.currency_preference.ToString() // Ensure this is enum, or just store it as a string if needed.
                 };
 
                 return View(user_data);
-
-
             }
-
             catch (Exception ex)
             {
-                //_logger.LogError(ex, "Error occurred during user signup.");
                 TempData["ErrorMessage"] = "Login Error!";
                 return RedirectToAction("Login");
             }
-
-
         }
+
 
 
 
         [HttpPost]
-        public async Task<IActionResult> ManageProfilePost(ManageProfileModel model)
+        [Route("ManageProfilePost")]
+        public async Task<IActionResult> ManageProfilePost(string User_Name, string Password, string Currency)
         {
             try
             {
-                if (ModelState.IsValid)
+                var userId = HttpContext.Session.GetInt32("UserId");
+
+                var user = await _airwizzContext.Users.Where(x => x.user_id == userId).FirstOrDefaultAsync();
+
+                if (user == null)
                 {
+                    throw new Exception("No such User!");
+                }
 
-                    var userId = HttpContext.Session.GetInt32("UserId");
+                // Update user fields
+                user.user_name = User_Name;
+                user.password = Password;
 
-                    var user = await _airwizzContext.Users.Where(x => x.user_id == userId).FirstOrDefaultAsync();
-
-                    if (user == null)
-                    {
-                        throw new Exception("No such User!");
-                    }
-
-                    // Update fields
-                    user.user_name = model.User_Name;
-
-                    // Ensure password is hashed in real apps
-                    user.password = model.Password;
-
-                    user.currency_preference = model.Currency_Preference;
-
-                    // Save changes asynchronously
-                    await _airwizzContext.SaveChangesAsync();
-
-                    TempData["SuccessMessage"] = "Data Successfully Updated!";
-
-
-                    return RedirectToAction("ManageProfile");
+                // Parse the selected currency and assign it to the user
+                Currency parsedCurrency;
+                bool isValidCurrency = Enum.TryParse(Currency, out parsedCurrency); // parse to enum
+                if (isValidCurrency)
+                {
+                    user.currency_preference = parsedCurrency;
                 }
                 else
                 {
-                    throw new Exception("Model does not exist!");
+                    // If invalid, set a default or handle the error
+                    TempData["ErrorMessage"] = "Invalid Currency Selection.";
+                    return RedirectToAction("ManageProfile");
                 }
+
+                // Save the changes
+                await _airwizzContext.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Data Successfully Updated!";
+                return RedirectToAction("ManageProfile");
             }
             catch (Exception ex)
             {
+                TempData["ErrorMessage"] = "Error occurred while updating profile.";
                 return RedirectToAction("ManageProfile");
             }
-
-
         }
+
 
 
 

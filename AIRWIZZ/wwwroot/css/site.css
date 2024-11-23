@@ -308,3 +308,26 @@ a.signupLink:hover {
 .historytable {
     background-color: #00001a;
 }
+
+/* Apply the background only to .profile-page */
+.profile-page {
+    background: linear-gradient(-45deg, #4b2c62, #1e1b26, #2d2a38, #6a3d91);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+}
+
+/* Define the animation */
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}

@@ -12,7 +12,7 @@ namespace AIRWIZZ.Models
         
         public string Password { get; set; }
 
-        public Currency Currency_Preference { get; set; }
+        public string Currency { get; set; }
 
 
 

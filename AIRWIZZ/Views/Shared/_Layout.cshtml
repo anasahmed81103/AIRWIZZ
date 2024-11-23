@@ -93,7 +93,18 @@
 								<li class=""><a href="@Url.Action("Index","Home")" style="color: white;">Home</a></li> <!-- Goes to the homepage -->
 								<li class=""><a href="#flight-search" style="color: white;">Flight Search</a></li>
 								<li class=""><a href="#special-offers" style="color: white;">Special Offers</a></li>
-								<li class=""><a href="@Url.Action("ManageProfile","Authorization")" style="color: white;">Manage Profile</a></li>
+								<li class="">
+									@if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
+									{
+										<!-- Display Booking History if logged in -->
+										<a href="@Url.Action("ManageProfile","Authorization")" style="color: white;">Manage Profile</a>
+									}
+									else
+									{
+										<!-- Redirect to Login if not logged in -->
+										<a href="@Url.Action("Login", "Authorization")" style="color: white;" onclick="alert('Please log in first to view booking history!')">Manage Profile</a>
+									}
+								</li>
 								<li class="">
 									@if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
 									{
