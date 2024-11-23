@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 //using AIRWIZZ.Services;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using AIRWIZZ.Models;
 using Microsoft.Extensions.Logging;
@@ -27,7 +27,8 @@ using AIRWIZZ.Data;
 using AIRWIZZ.Data.Entities;
 using AIRWIZZ.Data.enums;
 using Microsoft.AspNetCore.Http;          // For HttpContext.Session methods (SetInt32, GetInt32, etc.)
-using Microsoft.Extensions.DependencyInjection; // For configuring session services in Program.cs or Startup.cs
+using Microsoft.Extensions.DependencyInjection;
+using System.Security.Claims; // For configuring session services in Program.cs or Startup.cs
 //using AIRWIZZ.Services.Caching;
 
 
@@ -80,6 +81,10 @@ namespace AIRWIZZ.Controllers
                 if (!isValidCurrency)
                 {
                     throw new Exception("Currency Value not recognized!");
+                }
+                else if (await _airwizzContext.Users.Where(x=> x.email == email).FirstOrDefaultAsync() != null){
+                    TempData["ErrorMessage"] = "This Email is already Used !";
+                    return RedirectToAction("Signup");
                 }
 
                 var newUser = new User
@@ -162,7 +167,114 @@ namespace AIRWIZZ.Controllers
         //var userId = HttpContext.Session.GetInt32("UserId");   for ibrahim bhai
 
 
+        [Route("ManageProfile")]
+        public async Task<IActionResult> ManageProfile()
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId");
+
+                var user = await _airwizzContext.Users.Where(x => x.user_id == userId).FirstOrDefaultAsync();
+
+
+                if (user == null)
+                {
+                    throw new Exception("No such User!");
+                }
+
+                var user_data = new ManageProfileModel
+                {
+
+                    User_Name = user.user_name,
+                    Password = user.password,
+                    Currency_Preference = user.currency_preference,
+
+                };
+
+                return View(user_data);
+
+
+            }
+
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex, "Error occurred during user signup.");
+                TempData["ErrorMessage"] = "Login Error!";
+                return RedirectToAction("Login");
+            }
+
+
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> ManageProfilePost(ManageProfileModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+
+                    var userId = HttpContext.Session.GetInt32("UserId");
+
+                    var user = await _airwizzContext.Users.Where(x => x.user_id == userId).FirstOrDefaultAsync();
+
+                    if (user == null)
+                    {
+                        throw new Exception("No such User!");
+                    }
+
+                    // Update fields
+                    user.user_name = model.User_Name;
+
+                    // Ensure password is hashed in real apps
+                    user.password = model.Password;
+
+                    user.currency_preference = model.Currency_Preference;
+
+                    // Save changes asynchronously
+                    await _airwizzContext.SaveChangesAsync();
+
+                    TempData["SuccessMessage"] = "Data Successfully Updated!";
+
+
+                    return RedirectToAction("ManageProfile");
+                }
+                else
+                {
+                    throw new Exception("Model does not exist!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("ManageProfile");
+            }
+
+
+        }
+
+
+
+
+
+
+
 
 
     }
 }
+
+            
+
+
+
+
+
+        
+
+
+
+
+    
+
