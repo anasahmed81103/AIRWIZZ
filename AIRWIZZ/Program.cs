@@ -1,12 +1,14 @@
 using AIRWIZZ.Data;
 using AIRWIZZ.Service;
+//using AIRWIZZ.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<FlightTrackingService>();               //registration of service of real time flight data
+builder.Services.AddScoped<FlightTrackingService>();               // Registration of service for real-time flight data
+
 builder.Services.AddControllersWithViews();
 
 // Register IHttpContextAccessor
@@ -15,7 +17,6 @@ builder.Services.AddHttpContextAccessor();
 // Add session services
 builder.Services.AddDistributedMemoryCache();
 
-
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30); // Session timeout
@@ -23,14 +24,8 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;             // Ensure cookie is created
 });
 
-
-
-
 builder.Services.AddDbContext<AirwizzContext>(options =>
-    options.UseSqlServer("Data Source=DESKTOP-3A7NVU7\\SQLEXPRESS;Initial Catalog=AirWizzDB;Integrated Security=True;Pooling=False;Encrypt=False;Trust Server Certificate=True"));
-    //options.UseSqlServer("Server=DESKTOP-2QHVFM9\\SQLEXPRESS;Database=AirWizzDB;Integrated Security=SSPI;TrustServerCertificate=True;"));
-
-
+    options.UseSqlServer("Server=DESKTOP-2QHVFM9\\SQLEXPRESS;Database=AirWizzDB;Integrated Security=SSPI;TrustServerCertificate=True;"));
 
 var app = builder.Build();
 
@@ -40,12 +35,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

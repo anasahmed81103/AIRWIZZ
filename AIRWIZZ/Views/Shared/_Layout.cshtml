@@ -52,6 +52,7 @@
     <!-- bootsnav -->
     <link rel="stylesheet" href="~/css/bootsnav.css">
 
+
     <!--style.css-->
     <link rel="stylesheet" href="~/css/style.css">
 
@@ -106,7 +107,12 @@
 									}
 								</li>
 								<li class="">
-									@if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
+									@if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null && HttpContextAccessor.HttpContext.Session.GetString("Role") == "admin")
+									{
+										<!-- Display Booking History if logged in -->
+										<a href="@Url.Action("mainPortal", "Admin")" style="color: white;">Admin Portal</a>
+									}
+									else if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
 									{
 										<!-- Display Booking History if logged in -->
 										<a href="@Url.Action("BookingHistory", "Home")" style="color: white;">Booking History</a>
