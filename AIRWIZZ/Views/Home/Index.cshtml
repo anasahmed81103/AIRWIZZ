@@ -1,7 +1,9 @@
 ﻿@model AIRWIZZ.Models.SearchFlightModel
 
 @{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
+
+	var existingCities = new HashSet<string>();
 }
 
 <section id="fligh" class="welcome-hero">
@@ -47,7 +49,12 @@
 										<option value="">Select Location</option>
 										@foreach (var city in Model.arrival_cities)
 										{
-											<option value ="@city">@city</option>
+											if(!existingCities.Contains(city))
+											{
+												existingCities.Add(city);
+												<option value ="@city">@city</option>
+
+											}
 										}
 									</select>
 								</div>
@@ -63,7 +70,11 @@
 										<option value="">Select Location</option>
 										@foreach (var city in Model.departure_cities)
 										{
-											<option value="@city">@city</option>
+											if(!existingCities.Contains(city)){
+
+												existingCities.Add(city);
+												<option value="@city">@city</option>
+											}
 										}
 										
 									</select>
