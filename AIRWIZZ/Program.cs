@@ -2,6 +2,7 @@ using AIRWIZZ.Data;
 using AIRWIZZ.Service;
 //using AIRWIZZ.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +26,8 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddDbContext<AirwizzContext>(options =>
-    options.UseSqlServer("Server=DESKTOP-B9L8PKU\\SQLEXPRESS;Database=AirWizzDB;Integrated Security=SSPI;TrustServerCertificate=True;"));
+    //options.UseSqlServer("Server=DESKTOP-B9L8PKU\\SQLEXPRESS;Database=AirWizzDB;Integrated Security=SSPI;TrustServerCertificate=True;"));
+    options.UseSqlServer("server=desktop-2qhvfm9\\sqlexpress;database=airwizzdb;integrated security=sspi;trustservercertificate=true;"));
 
 var app = builder.Build();
 
