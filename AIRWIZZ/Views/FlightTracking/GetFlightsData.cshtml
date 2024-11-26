@@ -1,0 +1,100 @@
+﻿@model AIRWIZZ.Models.FlightAPI
+
+@{
+    ViewData["Title"] = "Flight Data Map";
+}
+
+<h2>Flight Data Map</h2>
+
+@if (Model?.Data == null || !Model.Data.Any())
+{
+    <p>No flight data available.</p>
+}
+else
+{
+    <!-- Container for the map -->
+    <div id="flightMap" style="height: 600px; border: 1px solid #ccc; margin: 20px 0;"></div>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize the map
+            var map = L.map('flightMap').setView([20.0, 0.0], 2); // Center map globally
+
+            // Add OpenStreetMap tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Define ocean regions for random placement (Example regions: Atlantic, Pacific, Indian Ocean)
+            var oceanRegions = [
+                { latMin: 5, latMax: 15, lonMin: -40, lonMax: -20 }, // Atlantic Ocean
+                { latMin: -30, latMax: 10, lonMin: 120, lonMax: 160 }, // Pacific Ocean
+                { latMin: -40, latMax: 10, lonMin: 60, lonMax: 110 }  // Indian Ocean
+            ];
+
+            // Define custom icons
+            var blueMarkerIcon = L.icon({
+                iconUrl: '/images/FlightsApi/blackmarker.png', // Replace with blue marker icon
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+            });
+
+            var redMarkerIcon = L.icon({
+                iconUrl: '/images/FlightsApi/redmarker.png', // Replace with red marker icon
+                iconSize: [40, 40],
+                iconAnchor: [20, 40],
+            });
+
+            // Generate random coordinates within the ocean region
+            function generateRandomOceanCoordinates() {
+                var region = oceanRegions[Math.floor(Math.random() * oceanRegions.length)];
+                var randomLat = region.latMin + Math.random() * (region.latMax - region.latMin);
+                var randomLon = region.lonMin + Math.random() * (region.lonMax - region.lonMin);
+                return { lat: randomLat, lon: randomLon };
+            }
+
+            // Flight data from the model
+            var flightData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Data));
+
+            // Loop through flight data
+            flightData.forEach(function (flight) {
+                var latitude = flight.Live?.Latitude;
+                var longitude = flight.Live?.Longitude;
+
+                if (latitude && longitude) {
+                    // Flight with live coordinates: use blue marker
+                    var marker = L.marker([latitude, longitude], { icon: blueMarkerIcon }).addTo(map);
+
+                    // Add popup with flight information
+                    marker.bindPopup(`
+                                <b>Flight Number:</b> ${flight.Flight?.Iata || 'Unknown'}<br>
+                                <b>Airline:</b> ${flight.Airline?.Name || 'Unknown'}<br>
+                                <b>Departure:</b> ${flight.Departure?.Airport || 'Unknown'}<br>
+                                <b>Arrival:</b> ${flight.Arrival?.Airport || 'Unknown'}<br>
+                                <b>Status:</b> ${flight.FlightStatus || 'Unknown'}<br>
+                                 <b>Latitude:</b> ${flight.Live?.Latitude || 'Unknown'}<br>
+                                <b>Longitude:</b> ${flight.Live?.Longitude || 'Unknown'}<br>
+                            `);
+                } else {
+                    // Flight without live coordinates: place it randomly over the ocean
+                    var randomCoords = generateRandomOceanCoordinates();
+                    var marker = L.marker([randomCoords.lat, randomCoords.lon], { icon: redMarkerIcon }).addTo(map);
+
+                    // Add popup with flight information
+                    marker.bindPopup(`
+                                <b>Flight Number:</b> ${flight.Flight?.Iata || 'Unknown'}<br>
+                                <b>Airline:</b> ${flight.Airline?.Name || 'Unknown'}<br>
+                                <b>Departure:</b> ${flight.Departure?.Airport || 'Unknown'}<br>
+                                <b>Arrival:</b> ${flight.Arrival?.Airport || 'Unknown'}<br>
+                                <b>Status:</b> ${flight.FlightStatus || 'Unknown'}<br>
+                                         <b>Latitude:</b> ${flight.Live?.Latitude || 'Unknown'}<br>
+                                        <b>Longitude:</b> ${flight.Live?.Longitude || 'Unknown'}<br>
+                            `);
+                }
+            });
+        });
+    </script>
+}

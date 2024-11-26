@@ -92,7 +92,7 @@
 							<ul class="nav navbar-nav navbar-right">
 								<li class=""><a href="@Url.Action("Index","Home")" style="color: white;">Home</a></li> <!-- Goes to the homepage -->
 								<li class=""><a href="#fligh" style="color: white;">Flight Search</a></li>
-								<li class=""><a href="@Url.Action("RealTimeFlightMap","FlightTracking")" style="color: white;">Flight Track</a></li>
+								<li class=""><a href="@Url.Action("GetFlightsData","FlightTracking")" style="color: white;">Flight Track</a></li>
 								<li class="">
 									@if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
 									{

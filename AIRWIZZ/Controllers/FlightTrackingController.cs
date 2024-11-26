@@ -31,8 +31,9 @@ using AIRWIZZ.Data.Entities;
 using AIRWIZZ.Data.enums;
 using Microsoft.AspNetCore.Http;          // For HttpContext.Session methods (SetInt32, GetInt32, etc.)
 using Microsoft.Extensions.DependencyInjection;
-using System.Security.Claims; // For configuring session services in Program.cs or Startup.cs
-//using AIRWIZZ.Services.Caching;
+using System.Security.Claims;
+using Newtonsoft.Json; // For configuring session services in Program.cs or Startup.cs
+				   //using AIRWIZZ.Services.Caching;
 
 
 namespace AIRWIZZ.Controllers
@@ -51,21 +52,46 @@ namespace AIRWIZZ.Controllers
 
 
         [HttpGet]
-        //[Route("GetFlightsData")]
+        [Route("GetFlightsData")]
         public async Task<IActionResult> GetFlightsData()
         {
-            var flightData = await _flightTrackingService.GetRealTimeFlightsAsync();
+            try
+            {
+                var flightData = await _flightTrackingService.GetRealTimeFlightsAsync();
 
-            return Json(flightData);            // Return the flight data as JSON
+                var rawData = JsonConvert.DeserializeObject<FlightAPI>(flightData);
+
+                
+            ;
+
+                return View(rawData);
+
+            }
+
+
+            catch (Exception ex)
+            {
+                // Handle errors gracefully and return an error response
+               ViewBag.ErrorMessage = ex.Message;
+
+                return View("Error");
+
+            }
+
+
+
 
         }
 
-        [HttpGet]
-        public IActionResult RealTimeFlightMap()
-        {
-            return View();
-        }
 
+
+
+       // [HttpGet]
+
+        //public IActionResult RealTimeFlightMap()
+        //{
+        //    return View();
+        //}
 
 
 
