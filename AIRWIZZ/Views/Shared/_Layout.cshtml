@@ -178,7 +178,7 @@
 							</p>
 							<div class="footer-contact">
 								<p>info@airwizz.com</p>
-								<p>+92 (304) 251-7490</p>
+								<p>+92 (111) 111-1111</p>
 							</div>
 						</div>
 					</div>
@@ -186,10 +186,21 @@
 						<div class="single-footer-widget">
 							<h2>About AirWizz</h2>
 							<ul>
-								<li><a href="#">About Us</a></li>
-								<li><a href="#">Career Opportunities</a></li>
-								<li><a href="#">Terms of Service</a></li>
-								<li><a href="#">Privacy Policy</a></li>
+								<li><a href="@Url.Action("AboutUs","Home")">About Us</a></li>
+								<li><a href="@Url.Action("GetFlightsData","FlightTracking")">Flight Tracker</a></li>
+								<li>
+									@if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
+									{
+									<!-- Display Booking History if logged in -->
+									<a href="@Url.Action("BookingHistory", "Home")">Booking History</a>
+									}
+									else
+									{
+									<!-- Redirect to Login if not logged in -->
+									<a href="@Url.Action("Login", "Authorization")" onclick="alert('Please log in first to view booking history!')">Booking History</a>
+									}
+								</li>
+								<li><a href="@Url.Action("Login", "Authorization")" >Login/Register</a></li>
 							</ul>
 						</div>
 					</div>
@@ -207,20 +218,10 @@
 										<li><a href="#">Embraer</a></li>
 									</ul>
 								</div>
-								<div class="col-md-5 col-xs-6">
-									<ul>
-										<li><a href="#">Lockheed Martin</a></li>
-										<li><a href="#">Piper</a></li>
-										<li><a href="#">Beechcraft</a></li>
-										<li><a href="#">Dassault Aviation</a></li>
-										<li><a href="#">Pilatus</a></li>
-										<li><a href="#">Honda Aircraft</a></li>
-									</ul>
-								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-offset-1 col-md-3 col-sm-6">
+					<div class="col-md-offset-0 col-md-3 col-sm-6">
 						<div class="single-footer-widget">
 							<h2>Newsletter</h2>
 							<div class="footer-newsletter">

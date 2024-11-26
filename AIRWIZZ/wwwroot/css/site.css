@@ -438,77 +438,156 @@ html, body {
 
 
 
+/* General Styles */
 .about-page-body {
+    background-color: #141414; /* Dark background */
+    color: #fff; /* White text color */
     font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
+    padding: 60px 0;
 }
 
-.about-header {
-    text-align: center;
-    background-color: #007bff;
-    color: white;
-    padding: 20px 0;
-    margin-bottom: 30px;
-}
 
     .about-header h1 {
-        margin: 0;
-        font-size: 2.5rem;
+        font-size: 5rem; /* Larger heading */
+        margin-bottom: 20px;
+        color: #1e90ff; /* Vibrant cool blue for the header */
     }
 
+    .about-header p {
+        font-size: 2rem; /* Larger subheading */
+        color: #00bfff; /* Bright cool blue */
+    }
+
+/* About Container */
 .about-container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
+    margin: 50px 10%;
+    padding: 60px;
+    background-color: #222; /* Slightly lighter dark background */
+    border-radius: 15px;
 }
 
+/* About Section */
 .about-section {
-    background: white;
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 80px;
+    padding: 40px;
+    border-radius: 12px;
+    background-color: #2c2c2c; /* Slightly lighter dark background */
 }
 
     .about-section h2 {
-        color: #007bff;
-        margin-bottom: 10px;
+        color: #1e90ff; /* Vibrant cool blue for section titles */
+        font-size: 3rem; /* Larger section title */
+        margin-bottom: 25px;
     }
 
+    .about-section p {
+        color: #fff; /* White for the text */
+        font-size: 1.6rem; /* Larger and more readable text */
+        line-height: 2;
+    }
+
+    /* Subheadings */
+    .about-section h3 {
+        color: #1e90ff; /* Cool blue for subheadings */
+        font-size: 2.2rem; /* Bigger subheadings */
+        margin-top: 30px;
+    }
+
+    .about-section ul {
+        font-size: 1.6rem; /* Larger list items */
+        color: #fff; /* White list items */
+        line-height: 1.8;
+    }
+
+    .about-section li {
+        margin-bottom: 15px; /* Space between list items */
+    }
+
+/* Team Section */
 .about-team-card {
     display: flex;
-    gap: 15px;
-    margin-top: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
 }
 
 .about-team-member {
-    flex: 1;
+    width: 30%;
     text-align: center;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #f8f8f8;
+    margin-bottom: 50px;
 }
 
     .about-team-member img {
+        width: 100%;
         border-radius: 50%;
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        margin-bottom: 10px;
+        max-width: 250px; /* Larger image size */
+        margin-bottom: 20px;
+        border: 5px solid #1e90ff; /* Cool blue border around the images */
     }
 
     .about-team-member h4 {
-        margin: 10px 0;
-        color: #333;
+        color: #1e90ff; /* Cool blue for names */
+        font-size: 2rem; /* Larger name font size */
+        margin-bottom: 15px;
     }
 
-.about-footer {
+    .about-team-member p {
+        color: #00bfff; /* Bright cool blue for student IDs */
+        font-size: 1.5rem; /* Slightly larger font size */
+    }
+
+/* Privacy Policy Section */
+.about-section p {
+    color: #fff; /* White for the text */
+    font-size: 1.6rem; /* Larger text for better readability */
+    line-height: 2;
+}
+
+/* Styling for links (if any) */
+a {
+    color: #1e90ff; /* Cool blue for links */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+
+/*my topper for headings*/
+
+.about-header {
+    background-color: #5e2a84; /* Purple header */
+    padding: 80px;
     text-align: center;
-    padding: 10px 0;
-    background-color: #007bff;
-    color: white;
+    color: #fff;
+}
+
+
+.about-head2 {
+    background: linear-gradient(-45deg, #4b2c62, #1e1b26, #2d2a38, #6a3d91);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    padding: 80px;
+    text-align: center;
+    color: #fff;
+    border-radius: 15px; /* Optional: add rounded corners */
+    height: auto; /* Make the height adjust automatically based on content */
+    width: 100%; /* Full width to match the container */
+}
+
+/* Define the animation */
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
