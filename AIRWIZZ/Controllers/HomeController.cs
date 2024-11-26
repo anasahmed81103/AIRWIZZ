@@ -6,6 +6,8 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Http;          // For HttpContext.Session methods (SetInt32, GetInt32, etc.)
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
+using Microsoft.Identity.Client;
+using AIRWIZZ.Data.Entities;
 
 namespace AIRWIZZ.Controllers
 {
@@ -22,8 +24,20 @@ namespace AIRWIZZ.Controllers
         }
 
         public IActionResult Index()
+
         {
-            return View();
+
+			var model = new SearchFlightModel
+			{
+				arrival_cities = _airwizzContext.Arrivals.Select(a => a.ArrivalCity).ToList(),
+
+				departure_cities = _airwizzContext.Departures.Select(d => d.DepartureCity).ToList(),
+
+			};
+
+			return View(model);
+
+			
         }
 
         public IActionResult AboutUs()
@@ -88,6 +102,30 @@ namespace AIRWIZZ.Controllers
             return View(model);
 
     }
+
+
+
+        [HttpPost]
+        public IActionResult Receive_Fligths_Data(SearchFlightModel searchFlightModel)
+        {
+
+            var result_flights = _airwizzContext.Flights.Where(f => f.Arrivals.Any(a => a.ArrivalCity == searchFlightModel.arrival_location)
+
+                                 && f.Departures.Any(d => d.DepartureCity == searchFlightModel.departure_location)).
+                                 Where(f => f.Departures.Any(d => d.DepartureTime.Date == searchFlightModel.travel_date)).Include(f=>f.TotalPrice).ToList();
+
+            var model = new ResultModel
+            {
+
+                Flights = result_flights,
+                
+
+            }; 
+            return View(model);
+           
+            
+
+        }
 
 
 
