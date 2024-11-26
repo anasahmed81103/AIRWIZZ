@@ -331,3 +331,106 @@ a.signupLink:hover {
         background-position: 0% 50%;
     }
 }
+
+.admin {
+    background-color: #000000;
+}
+
+.admintable {
+    background-color: aliceblue;
+}
+
+/* Make sure body takes full height */
+/* Ensure that HTML and body both cover full height */
+/* Ensure that HTML and body both cover full height */
+html, body {
+    height: 100%;
+    margin: 0; /* Remove default margin */
+    background-color: #000000; /* Set background to black */
+}
+
+    /* Ensure the currency conversion page has a white background for the content */
+    body.currency-conversion-page {
+        background-color: #000000; /* Black background for this page */
+    }
+
+/* Ensure that the currency container is styled correctly */
+.currency-container {
+    padding-top: 5%; /* Keeps space at the top */
+    text-align: center;
+    color: #ffffff; /* Set text color to white */
+}
+
+/* Make sure the currency form layout has enough space and doesn't overflow */
+.currency-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center the form elements */
+    gap: 20px;
+    width: 100%;
+}
+
+/* Grid style to arrange the currency input cards */
+.currency-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Ensure responsive grid */
+    gap: 20px;
+    width: 100%;
+}
+
+/* Styling the individual currency cards */
+.currency-card {
+    background-color: #f4f4f9; /* Light background for the card */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header of each currency card */
+.currency-card-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Body of each currency card */
+.currency-card-body {
+    text-align: center;
+}
+
+/* Label and input field styling inside the cards */
+.currency-label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.currency-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Styling for the submit button */
+.currency-submit-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.currency-save-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .currency-save-btn:hover {
+        background-color: #0056b3;
+    }

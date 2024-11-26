@@ -135,6 +135,14 @@ namespace AIRWIZZ.Controllers
                 {
                     throw new Exception("Wrong Password!");
                 }
+                if (user.User_role == Role.admin)
+                {
+                    HttpContext.Session.SetInt32("UserId", user.user_id);
+                    HttpContext.Session.SetString("UserName", user.email);
+                    HttpContext.Session.SetString("Role", "admin");
+
+                    return RedirectToAction("mainPortal", "Admin");
+                }
 
                 HttpContext.Session.SetInt32("UserId", user.user_id);
                 HttpContext.Session.SetString("UserName", user.email);

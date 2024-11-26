@@ -1,0 +1,188 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = "Admin Portal";
+}
+
+@model AIRWIZZ.Models.MainPortalViewModel
+
+<body class="admin">
+    <div class="container-fluid" style="margin-top: 150px;">
+        <h1 class="text-center mb-4" style="font-family: 'Roboto Mono', monospace; color: aliceblue; font-size: 30px;">
+            Welcome to Admin Portal
+        </h1>
+    </div>
+
+    <!-- Admin Buttons Row -->
+    <div class="row mx-2" style="padding-bottom: 25px;">
+        <!-- Set Currency Conversions Button -->
+        <div class="col-12 col-md-4">
+            <button class="btn btn-primary w-100" style="padding: 15px; font-size: 16px;" onclick="window.location.href='@Url.Action("CurrencyConversion", "Admin")'">
+                Set Currency Conversions
+            </button>
+        </div>
+
+        <!-- Add Flights and Related Data Button -->
+        <div class="col-12 col-md-4 mt-3 mt-md-0">
+            <button class="btn btn-success w-100" style="padding: 15px; font-size: 16px;" onclick="window.location.href='@Url.Action("AddFlight", "Admin")'">
+                Add Flights and Related Data
+            </button>
+        </div>
+
+        <!-- Delete Flights and Related Data Button -->
+        <div class="col-12 col-md-4 mt-3 mt-md-0">
+            <button class="btn btn-danger w-100" style="padding: 15px; font-size: 16px;">
+                Delete Flights and Related Data
+            </button>
+        </div>
+    </div>
+
+    <!-- Flight and Passenger Related Data -->
+    <div class="container-fluid mb-4 px-3">
+        <!-- Flights, Departures, and Arrivals -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                Flights, Departures, and Arrivals
+            </div>
+            <div class="card-body">
+                <div class="table-responsive border rounded p-1">
+                    <table class="table">
+                        <thead style="background-color: white; color: black;">
+                            <tr>
+                                <th class="font-weight-bold">Flight Number</th>
+                                <th class="font-weight-bold">Airline</th>
+                                <th class="font-weight-bold">Departure City</th>
+                                <th class="font-weight-bold">Departure Time</th>
+                                <th class="font-weight-bold">Arrival City</th>
+                                <th class="font-weight-bold">Arrival Time</th>
+                            </tr>
+                        </thead>
+                        <tbody style="background-color: white; color: black;">
+                            @if (Model.Flights != null && Model.Flights.Any())
+                            {
+                                foreach (var flight in Model.Flights)
+                                {
+                                    foreach (var departure in flight.Departures)
+                                    {
+                                        foreach (var arrival in flight.Arrivals)
+                                        {
+                                            if (departure.DepartureCity != arrival.ArrivalCity)
+                                            {
+                                                <tr>
+                                                    <td>@flight.FlightNumber</td>
+                                                    <td>@flight.Airline</td>
+                                                    <td>@departure.DepartureCity</td>
+                                                    <td>@departure.DepartureTime</td>
+                                                    <td>@arrival.ArrivalCity</td>
+                                                    <td>@arrival.ArrivalTime</td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center">No flights found.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bookings Table -->
+        <div class="card mt-4">
+            <div class="card-header bg-success text-white">
+                All Bookings Made
+            </div>
+            <div class="card-body">
+                <div class="table-responsive border rounded p-1">
+                    <table class="table">
+                        <thead style="background-color: white; color: black;">
+                            <tr>
+                                <th class="font-weight-bold">Booking ID</th>
+                                <th class="font-weight-bold">Booking Date</th>
+                                <th class="font-weight-bold">Booking Status</th>
+                                <th class="font-weight-bold">Flight Number</th>
+                                <th class="font-weight-bold">Departure City</th>
+                                <th class="font-weight-bold">Arrival City</th>
+                            </tr>
+                        </thead>
+                        <tbody style="background-color: white; color: black;">
+                            @if (Model.Bookings != null && Model.Bookings.Any())
+                            {
+                                foreach (var booking in Model.Bookings)
+                                {
+                                    <tr>
+                                        <td>@booking.Booking_Id</td>
+                                        <td>@booking.Booking_Date.ToString("g")</td>
+                                        <td>@booking.Book_Status_Result</td>
+                                        <td>@booking.Flight.FlightNumber</td>
+                                        <td>@booking.Departure.DepartureCity</td>
+                                        <td>@booking.Arrival.ArrivalCity</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center">No bookings found.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Current Currency Exchange Rates -->
+    <div class="container-fluid mb-4 px-3">
+        <!-- Currency Exchange Rates Section -->
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                Current Currency Exchange Rates
+            </div>
+            <div class="card-body">
+                <div class="table-responsive border rounded p-1">
+                    <table class="table">
+                        <thead style="background-color: white; color: black;">
+                            <tr>
+                                <th class="font-weight-bold">Currency Pair</th>
+                                <th class="font-weight-bold">Rate</th>
+                                <th class="font-weight-bold">Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody style="background-color: white; color: black;">
+                            @if (Model.CurrencyRates != null && Model.CurrencyRates.Any())
+                            {
+                                foreach (var rate in Model.CurrencyRates)
+                                {
+                                    <tr>
+                                        <td>@rate.CurrencyPair</td>
+                                        <td>@rate.Rate</td>
+                                        <td>@rate.LastUpdated.ToString("g")</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center">No currency rates available.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Button to Create Currency Records -->
+    
+
+</body>

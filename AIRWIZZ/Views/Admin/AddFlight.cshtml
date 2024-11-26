@@ -1,0 +1,150 @@
+﻿@model AIRWIZZ.Models.FlightViewModel
+
+
+<body>
+
+    <section style="background:#000000">
+
+        <div style="padding-top:15%;"></div>
+
+        <div class="container mt-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Add New Flight</h3>
+                </div>
+                <div class="card-body">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">
+                            @TempData["SuccessMessage"]
+                        </div>
+                    }
+                    <form asp-action="AddFlight" method="post">
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label asp-for="FlightNumber" class="form-label">Flight Number</label>
+                                <input asp-for="FlightNumber" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Airline" class="form-label">Airline</label>
+                                <input asp-for="Airline" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="TotalPrice" class="form-label">Total Price</label>
+                                <input asp-for="TotalPrice" class="form-control" />
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Arrival Details</h4>
+                        <hr />
+                        <div id="arrival-section">
+                            <!-- Arrival Template -->
+                            <div class="arrival-entry">
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label>Arrival Time</label>
+                                        <input name="Arrivals[0].ArrivalTime" type="datetime-local" class="form-control" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Arrival City</label>
+                                        <input name="Arrivals[0].ArrivalCity" class="form-control" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Arrival Duration</label>
+                                        <input name="Arrivals[0].ArrivalDuration" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addArrival()">Add Arrival</button>
+
+                        <h4 class="mt-4">Departure Details</h4>
+                        <hr />
+                        <div id="departure-section">
+                            <!-- Departure Template -->
+                            <div class="departure-entry">
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <label>Departure Time</label>
+                                        <input name="Departures[0].DepartureTime" type="datetime-local" class="form-control" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Departure City</label>
+                                        <input name="Departures[0].DepartureCity" class="form-control" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Departure Duration</label>
+                                        <input name="Departures[0].DepartureDuration" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addDeparture()">Add Departure</button>
+
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="submit" class="btn btn-primary">Add Flight</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding-bottom:10%;"></div>
+
+    </section>
+
+</body>
+
+
+
+
+<script>
+    let arrivalIndex = 1;
+    let departureIndex = 1;
+
+    function addArrival() {
+        const arrivalSection = document.getElementById("arrival-section");
+        const newEntry = `
+        <div class="arrival-entry">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label>Arrival Time</label>
+                    <input name="Arrivals[${arrivalIndex}].ArrivalTime" type="datetime-local" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label>Arrival City</label>
+                    <input name="Arrivals[${arrivalIndex}].ArrivalCity" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label>Arrival Duration</label>
+                    <input name="Arrivals[${arrivalIndex}].ArrivalDuration" class="form-control" />
+                </div>
+            </div>
+        </div>`;
+        arrivalSection.insertAdjacentHTML("beforeend", newEntry);
+        arrivalIndex++;
+    }
+
+    function addDeparture() {
+        const departureSection = document.getElementById("departure-section");
+        const newEntry = `
+        <div class="departure-entry">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label>Departure Time</label>
+                    <input name="Departures[${departureIndex}].DepartureTime" type="datetime-local" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label>Departure City</label>
+                    <input name="Departures[${departureIndex}].DepartureCity" class="form-control" />
+                </div>
+                <div class="col-md-4">
+                    <label>Departure Duration</label>
+                    <input name="Departures[${departureIndex}].DepartureDuration" class="form-control" />
+                </div>
+            </div>
+        </div>`;
+        departureSection.insertAdjacentHTML("beforeend", newEntry);
+        departureIndex++;
+    }
+</script>

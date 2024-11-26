@@ -1,0 +1,35 @@
+﻿@model Dictionary<string, float>
+
+@{
+    ViewData["Title"] = "Set Currency Conversion Rates";
+}
+
+<body class="currency-conversion-page">
+    <div class="currency-container" style="padding-top:5%;">
+        <h1 class="currency-title">Set Currency Conversion Rates</h1>
+    </div>
+
+    <form method="post" class="currency-form">
+        <div class="currency-row">
+            @foreach (var currency in Enum.GetValues(typeof(AIRWIZZ.Data.enums.Currency)))
+            {
+                <div class="currency-card">
+                    <div class="currency-card-header">
+                        @currency
+                    </div>
+                    <div class="currency-card-body">
+                        <label for="@currency" class="currency-label">Conversion Rate to USD:</label>
+                        <input type="number" name="rates[ @currency.ToString() ]" id="@currency" class="currency-input" step="0.01"
+                               value="@(Model.ContainsKey(currency.ToString()) ? Model[currency.ToString()] : 0)" />
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="currency-submit-btn">
+            <button type="submit" class="currency-save-btn">Save Conversion Rates</button>
+        </div>
+    </form>
+
+
+</body>
