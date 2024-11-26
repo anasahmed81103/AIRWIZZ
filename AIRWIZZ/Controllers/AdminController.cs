@@ -198,6 +198,75 @@ namespace AIRWIZZ.Controllers
 
 
 
+        [HttpGet]
+        public IActionResult ManageFlights()
+        {
+            var flights = _airwizzContext.Flights.ToList(); // Fetch flights from the database
+            return View(flights);
+        }
+
+
+
+        [HttpPost]
+        public IActionResult DeleteFlight(int flightId)
+        {
+            try
+            {
+                // Retrieve the flight along with related entities
+                var flight = _airwizzContext.Flights
+                    .Include(f => f.Arrivals)
+                    .Include(f => f.Departures)
+                    .Include(f => f.Bookings)
+                    .FirstOrDefault(f => f.Flight_Id == flightId);
+
+                if (flight == null)
+                {
+                    TempData["ErrorMessage"] = "Flight not found!";
+                    return RedirectToAction("ManageFlights");
+                }
+
+                // Explicitly remove related entities
+                if (flight.Arrivals != null)
+                {
+                    _airwizzContext.Arrivals.RemoveRange(flight.Arrivals);
+                }
+
+                if (flight.Departures != null)
+                {
+                    _airwizzContext.Departures.RemoveRange(flight.Departures);
+                }
+
+                if (flight.Bookings != null)
+                {
+                    _airwizzContext.Bookings.RemoveRange(flight.Bookings);
+                }
+
+                // Remove the flight
+                _airwizzContext.Flights.Remove(flight);
+
+                // Save changes
+                _airwizzContext.SaveChanges();
+
+                TempData["SuccessMessage"] = "Flight and all related data deleted successfully!";
+            }
+            catch (DbUpdateException dbEx)
+            {
+                TempData["ErrorMessage"] = "Database error: Unable to delete the flight. Please try again later.";
+                Console.WriteLine($"Database error: {dbEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "An unexpected error occurred. Please try again.";
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return RedirectToAction("ManageFlights");
+        }
+
+
+
+
+
 
 
     }

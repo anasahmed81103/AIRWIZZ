@@ -3,11 +3,11 @@
 
 <body>
 
-    <section style="background:#000000">
+    <section style="background-color:aliceblue;">
 
-        <div style="padding-top:15%;"></div>
+        <div style="padding-top:10%;"></div>
 
-        <div class="container mt-4">
+        <div class="container-fluid mt-4 px-4">
             <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
                     <h3 class="mb-0">Add New Flight</h3>
@@ -21,15 +21,15 @@
                     }
                     <form asp-action="AddFlight" method="post">
                         <div class="row mb-3">
-                            <div class="col-md-4">
+                            <div class="col-lg-4 col-md-6">
                                 <label asp-for="FlightNumber" class="form-label">Flight Number</label>
                                 <input asp-for="FlightNumber" class="form-control" />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-lg-4 col-md-6">
                                 <label asp-for="Airline" class="form-label">Airline</label>
                                 <input asp-for="Airline" class="form-control" />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-lg-4 col-md-6">
                                 <label asp-for="TotalPrice" class="form-label">Total Price</label>
                                 <input asp-for="TotalPrice" class="form-control" />
                             </div>
@@ -41,22 +41,22 @@
                             <!-- Arrival Template -->
                             <div class="arrival-entry">
                                 <div class="row mb-3">
-                                    <div class="col-md-4">
+                                    <div class="col-lg-4 col-md-6">
                                         <label>Arrival Time</label>
                                         <input name="Arrivals[0].ArrivalTime" type="datetime-local" class="form-control" />
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-lg-4 col-md-6">
                                         <label>Arrival City</label>
                                         <input name="Arrivals[0].ArrivalCity" class="form-control" />
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-lg-4 col-md-6">
                                         <label>Arrival Duration</label>
                                         <input name="Arrivals[0].ArrivalDuration" class="form-control" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-secondary" onclick="addArrival()">Add Arrival</button>
+                        <button type="button" class="btn btn-secondary mb-3" onclick="addArrival()">Add Arrival</button>
 
                         <h4 class="mt-4">Departure Details</h4>
                         <hr />
@@ -64,22 +64,22 @@
                             <!-- Departure Template -->
                             <div class="departure-entry">
                                 <div class="row mb-3">
-                                    <div class="col-md-4">
+                                    <div class="col-lg-4 col-md-6">
                                         <label>Departure Time</label>
                                         <input name="Departures[0].DepartureTime" type="datetime-local" class="form-control" />
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-lg-4 col-md-6">
                                         <label>Departure City</label>
                                         <input name="Departures[0].DepartureCity" class="form-control" />
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-lg-4 col-md-6">
                                         <label>Departure Duration</label>
                                         <input name="Departures[0].DepartureDuration" class="form-control" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-secondary" onclick="addDeparture()">Add Departure</button>
+                        <button type="button" class="btn btn-secondary mb-3" onclick="addDeparture()">Add Departure</button>
 
                         <div class="d-flex justify-content-end mt-4">
                             <button type="submit" class="btn btn-primary">Add Flight</button>
@@ -89,7 +89,8 @@
             </div>
         </div>
 
-        <div style="padding-bottom:10%;"></div>
+
+        <div style="padding-bottom:5%%;"></div>
 
     </section>
 

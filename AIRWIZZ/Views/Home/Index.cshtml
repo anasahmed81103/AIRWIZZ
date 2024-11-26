@@ -3,7 +3,7 @@
 }
 
 
-	<section id="home" class="welcome-hero">
+<section id="fligh" class="welcome-hero">
 
 		<!-- top-area Start -->
 		
@@ -21,37 +21,39 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
-				
+			<div class="col-md-12" style="padding-right:15%;">
 
 				<form class="model-search-content" action="search_results.html" method="GET">
 
-
 					<div class="row">
 
+						<div class="col-md-1 col-sm-1">
+							
+						</div>
 
-						<div class="col-md-offset-1 col-md-2 col-sm-12">
+						<!-- First Column (Travel Date + Arrival Location) -->
+						<div class="col-md-4 col-sm-10">
 							<div class="single-model-search">
 								<h2>Select Travel Date</h2>
 								<div class="model-select-icon">
 									<input type="date" class="form-control" placeholder="Select Date" name="travel_date" required>
-								</div><!-- /.model-select-icon -->
+								</div>
 							</div>
 							<div class="single-model-search">
-								<h2>Flight Class</h2>
+								<h2>Arrival Location</h2>
 								<div class="model-select-icon">
-									<select class="form-control" name="flight_class" required>
-										<option value="">Select Class</option>
-										<option value="economy">Economy</option>
-										<option value="business">Business</option>
-										<option value="first">First Class</option>
-									</select><!-- /.select-->
-								</div><!-- /.model-select-icon -->
+									<select class="form-control" name="arrival_location" required>
+										<option value="">Select Location</option>
+										<option value="miami">Miami</option>
+										<option value="orlando">Orlando</option>
+										<option value="las-vegas">Las Vegas</option>
+									</select>
+								</div>
 							</div>
 						</div>
 
-
-						<div class="col-md-offset-1 col-md-2 col-sm-12">
+						<!-- Second Column (Departure Location + Currency Preference) -->
+						<div class="col-md-4 col-sm-10">
 							<div class="single-model-search">
 								<h2>Departure Location</h2>
 								<div class="model-select-icon">
@@ -68,81 +70,39 @@
 										<option value="dubai">Dubai</option>
 										<option value="manama">Bahrain</option>
 										<option value="muscat">Muscat</option>
-									</select><!-- /.select-->
-								</div><!-- /.model-select-icon -->
+									</select>
+								</div>
 							</div>
 							<div class="single-model-search">
-								<h2>Return Option</h2>
-								<div class="model-select-icon">
-									<select class="form-control" name="arrival_location" required>
-										<option value="">Select Location</option>
-										<option value="lahore">Lahore</option>
-										<option value="karachi">Karachi</option>
-										<option value="islamabad">Islamabad</option>
-										<option value="doha">Doha</option>
-										<option value="dubai">Dubai</option>
-										<option value="riyadh">Riyadh</option>
-										<option value="abudhabi">Abu Dhabi</option>
-										<option value="istanbul">Istanbul</option>
-										<option value="jeddah">Jeddah</option>
-										<option value="melbourne">Melbourne</option>
-										<option value="sydney">Sydney</option>
-										<option value="new-york">New York</option>
-										<option value="los-angeles">Los Angeles</option>
-										<option value="london">London</option>
-										<option value="paris">Paris</option>
-										<option value="berlin">Berlin</option>
-									</select><!-- /.select-->
-								</div><!-- /.model-select-icon -->
-							</div>
-						</div>
-
-
-						<div class="col-md-offset-1 col-md-2 col-sm-12">
-							<div class="single-model-search">
-								<h2>Arrival Location</h2>
-								<div class="model-select-icon">
-									<select class="form-control" name="arrival_location" required>
-										<option value="">Select Location</option>
-										<option value="miami">Miami</option>
-										<option value="orlando">Orlando</option>
-										<option value="las-vegas">Las Vegas</option>
-									</select><!-- /.select-->
-								</div><!-- /.model-select-icon -->
-							</div>
-							<div class="single-model-search">
-								<h2>Price Range</h2>
+								<h2>Currency Preference</h2>
 								<div class="model-select-icon">
 									<select class="form-control" name="price_range" required>
 										<option value="">Select Price Range</option>
 										<option value="$100-$500">$100 - $500</option>
 										<option value="$500-$1000">$500 - $1000</option>
 										<option value="$1000+">$1000+</option>
-									</select><!-- /.select-->
-								</div><!-- /.model-select-icon -->
+									</select>
+								</div>
 							</div>
 						</div>
 
-
-						<div class="col-md-2 col-sm-12">
-							<div class="single-model-search text-center">
-								<button class="welcome-btn model-search-btn" type="submit">
-									Search Flights
-								</button>
-							</div>
+						<!-- Submit Button (Third Column) -->
+						<div class="col-md-2 col-sm-12 d-flex align-items-center justify-content-center submit-button-container">
+							<button class="welcome-btn model-search-btn" type="submit">
+								Search Flights
+							</button>
 						</div>
 					</div>
 
-
 				</form>
-
 
 			</div>
 		</div>
 	</div>
 
 
-	</section><!--/.welcome-hero-->
+
+</section><!--/.welcome-hero-->
 	<!--welcome-hero end -->
 	<!--service start -->
 
@@ -534,3 +494,36 @@
 	
 
 
+<script>
+	function scrollToTarget() {
+		const hash = "#fligh"; // Target ID
+		const target = document.querySelector(hash);
+		if (target) {
+			// Smooth scroll to the target section
+			window.scrollTo({
+				top: target.offsetTop + 400, // Adjust offset as needed
+				behavior: "smooth"
+			});
+		}
+	}
+
+	// Scroll on page load if hash is present
+	document.addEventListener("DOMContentLoaded", () => {
+		if (window.location.hash === "#fligh") {
+			scrollToTarget();
+		}
+	});
+
+	// Scroll when hash changes
+	window.addEventListener("hashchange", () => {
+		if (window.location.hash === "#fligh") {
+			scrollToTarget();
+		}
+	});
+
+	// Handle repeated clicks on the link
+	document.querySelector("a[href='#fligh']").addEventListener("click", (event) => {
+		event.preventDefault(); // Prevent default jump behavior
+		scrollToTarget();
+	});
+</script>

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<AIRWIZZ.Data.Entities.Flight>
+
+@{
+    ViewData["Title"] = "Manage Flights";
+}
+
+<section>
+
+    <div style="padding-top:10%;"></div>
+
+    <div class="container-fluid mb-4 px-3">
+        <!-- Manage Flights -->
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                Manage Flights
+            </div>
+            <div class="card-body">
+                <div class="table-responsive border rounded p-1">
+                    <table class="table">
+                        <thead style="background-color: white; color: black;">
+                            <tr>
+                                <th class="font-weight-bold">Flight Number</th>
+                                <th class="font-weight-bold">Airline</th>
+                                <th class="font-weight-bold">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody style="background-color: white; color: black;">
+                            @if (Model != null && Model.Any())
+                            {
+                                foreach (var flight in Model)
+                                {
+                                    <tr>
+                                        <td>@flight.FlightNumber</td>
+                                        <td>@flight.Airline</td>
+                                        <td>
+                                            <form asp-action="DeleteFlight" asp-route-id="@flight.Flight_Id" method="post">
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center">No flights found.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
