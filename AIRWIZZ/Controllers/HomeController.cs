@@ -105,19 +105,62 @@ namespace AIRWIZZ.Controllers
 
     }
 
+		private float? GetConversionRate(string currencyName)
+		{
+			// Fetch the existing conversion rates from the database and filter in memory
+			var existingRates = _airwizzContext.CurrencyConversions
+				.AsEnumerable()  // Load data into memory first
+				.Where(x => Enum.IsDefined(typeof(Currency), x.Currency_Code)) // Filter out invalid currencies
+				.ToDictionary(
+					x => Enum.GetName(typeof(Currency), x.Currency_Code), // Get currency name from Currency_Code
+					x => x.ConversionRate
+				);
+
+			// Return the conversion rate for the selected currency
+			if (existingRates.ContainsKey(currencyName))
+			{
+				return existingRates[currencyName];
+			}
+
+			// If no rate found, return null (or you can default to 1.0 for no conversion)
+			return null;
+		}
 
 
-        [HttpPost]
-        public IActionResult Receive_Fligths_Data(SearchFlightModel searchFlightModel)
+
+		[HttpPost]
+        [Route("Receive_Flights_Data")]
+        public IActionResult Receive_Flights_Data(SearchFlightModel searchFlightModel)
         {
 
-            var result_flights = _airwizzContext.Flights.Where(f => f.Arrivals.Any(a => a.ArrivalCity == searchFlightModel.arrival_location)
-
-                                 && f.Departures.Any(d => d.DepartureCity == searchFlightModel.departure_location)).
-                                 Where(f => f.Departures.Any(d => d.DepartureTime.Date == searchFlightModel.travel_date)).Include(f=>f.TotalPrice).ToList();
-
-            var model = new ResultModel
+            try
             {
+                var result_flights = _airwizzContext.Flights.Where(f => f.Arrivals.Any(a => a.ArrivalCity == searchFlightModel.arrival_location)
+
+                                && f.Departures.Any(d => d.DepartureCity == searchFlightModel.departure_location)).
+                                Where(f => f.Departures.Any(d => d.DepartureTime.Date == searchFlightModel.travel_date)).ToList();
+
+				
+                var preference = searchFlightModel.currency_preference;
+
+				// Fetch the currency conversion rate for the selected currency
+				var conversionRate = GetConversionRate(preference);
+
+				// Apply the conversion rate to the total price of each flight
+				foreach (var flight in result_flights)
+				{
+					// Convert the flight price if the currency is set and a valid rate is available
+					if (conversionRate.HasValue)
+					{
+						flight.TotalPrice = flight.TotalPrice / conversionRate.Value; // Apply conversion
+					}
+				}
+
+
+
+
+				var model = new ResultModel
+                {
 
                 Flights = result_flights,
                 
@@ -219,9 +262,24 @@ namespace AIRWIZZ.Controllers
             }
 
             
+                    Flights = result_flights,
+                    arrival = searchFlightModel.arrival_location,
+                    departure = searchFlightModel.departure_location,
+                    flightDate = searchFlightModel.travel_date,
+                    preference = searchFlightModel.currency_preference,
+
+                };
+
+                return View(model);
+            }
+            catch (Exception ex) {
+                Exception error = ex;
+                return RedirectToAction("Index");
+            }
+           
+            
+
         }
-
-
 
 
 

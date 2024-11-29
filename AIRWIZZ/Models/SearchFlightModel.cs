@@ -11,7 +11,7 @@ namespace AIRWIZZ.Models
 
 		public string departure_location { get; set; }
 
-		public string flight_currency_pereference { get; set; }
+		public string currency_preference { get; set; }
 
 
 		public List<string>	arrival_cities { get; set; }
