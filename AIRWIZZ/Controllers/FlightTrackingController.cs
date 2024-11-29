@@ -62,7 +62,7 @@ namespace AIRWIZZ.Controllers
                 var rawData = JsonConvert.DeserializeObject<FlightAPI>(flightData);
 
                 
-            ;
+            
 
                 return View(rawData);
 

@@ -26,8 +26,8 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddDbContext<AirwizzContext>(options =>
-    //options.UseSqlServer("Server=DESKTOP-B9L8PKU\\SQLEXPRESS;Database=AirWizzDB;Integrated Security=SSPI;TrustServerCertificate=True;"));
-    options.UseSqlServer("server=desktop-2qhvfm9\\sqlexpress;database=airwizzdb;integrated security=sspi;trustservercertificate=true;"));
+    options.UseSqlServer("Server=DESKTOP-B9L8PKU\\SQLEXPRESS;Database=AirWizzDB;Integrated Security=SSPI;TrustServerCertificate=True;"));
+    //options.UseSqlServer("server=desktop-2qhvfm9\\sqlexpress;database=airwizzdb;integrated security=sspi;trustservercertificate=true;"));
 
 var app = builder.Build();
 

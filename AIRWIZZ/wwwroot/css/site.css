@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -590,4 +590,205 @@ a {
     100% {
         background-position: 0% 50%;
     }
+}
+
+/* No Results Section */
+
+/* Global styles */
+resultBody {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7fb;
+}
+
+resulth2 {
+    font-size: 2rem;
+    color: #0056b3;
+    margin-bottom: 20px;
+}
+
+resulta {
+    text-decoration: none;
+}
+
+/* Flight results section */
+.flight-results-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.flight-results-header-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.flight-results-header {
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+/* Flight table styles */
+.flight-results-table-container {
+    margin-top: 30px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.flight-results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+    .flight-results-table th,
+    .flight-results-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .flight-results-table th {
+        background-color: #0056b3;
+        color: white;
+        font-weight: 600;
+    }
+
+    .flight-results-table tr:hover {
+        background-color: #f5f5f5;
+    }
+
+.flight-details {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Custom Button Style */
+/* Custom Button Style */
+.flight-book-button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    color: white; /* White text */
+    background-color: #007bff; /* Blue background */
+    border: 2px solid #007bff; /* Border matching the background */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Remove underline */
+    cursor: pointer; /* Make the button clickable */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth color transition */
+}
+
+    /* Hover state */
+    .flight-book-button:hover {
+        background-color: #0056b3; /* Darker blue for hover */
+        color: white; /* Text stays white on hover */
+        border-color: #0056b3; /* Border color changes with hover */
+    }
+
+    /* Active state (when clicked) */
+    .flight-book-button:active {
+        background-color: #003366; /* Even darker blue for active state */
+        border-color: #003366; /* Matching border for active state */
+    }
+
+    /* Focus state (for accessibility) */
+    .flight-book-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.6); /* Blue shadow to indicate focus */
+    }
+
+/* No results section */
+.no-results-container {
+    text-align: center;
+    padding: 50px 0;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.no-results-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #e74c3c;
+}
+
+.no-results-message {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.no-results-suggestions {
+    margin-top: 20px;
+    font-size: 1rem;
+}
+
+.no-results-tips {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+    .no-results-tips li {
+        margin-bottom: 10px;
+    }
+
+        .no-results-tips li::before {
+            content: "✔️";
+            margin-right: 5px;
+        }
+
+.back-to-search-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+    .back-to-search-button:hover {
+        background-color: #0056b3;
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .flight-results-table th, .flight-results-table td {
+        padding: 10px 12px;
+    }
+
+    .flight-results-header {
+        font-size: 1.8rem;
+    }
+
+    .flight-book-button, .back-to-search-button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+
+.flight-results-table td {
+    text-align: center; /* Centers the content inside the table cells */
+}
+
+.flight-arrow {
+    font-size: 24px; /* Adjust the size of the arrow */
+    color: #007bff; /* Set the color of the arrow (optional) */
+    font-weight: bold; /* Optionally make the arrow bold */
+    transform: scaleX(1.8); /* Elongate horizontally */
 }

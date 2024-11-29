@@ -1,0 +1,82 @@
+﻿@model AIRWIZZ.Models.ResultModel
+
+@{
+    ViewData["Title"] = "Flight Search Results";
+}
+
+<body class="resultBody">
+    
+    <div style="padding-top:10%;"></div>
+
+    <section class="flight-results-section">
+    <div class="flight-results-header-container">
+        <h2 class="flight-results-header">
+            Flights from @Model.departure to @Model.arrival on @Model.flightDate.ToString("MMMM dd, yyyy")
+        </h2>
+    </div>
+
+   @if (Model.Flights != null && Model.Flights.Any())
+   {
+    <div class="flight-results-table-container">
+        <table class="flight-results-table">
+            <thead>
+                <tr>
+                    <th >Flight Number</th>
+                    <th style="padding-left:1%;">Airline</th>
+                    <th style="padding-left:2%;">Departure</th>
+                    <th> </th> <!-- Empty header for the arrow -->
+                    <th style="padding-left:2%;">Arrival</th>
+                    <th style="padding-left:4%;">Price</th>
+                    <th style="padding-left:6%;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var flight in Model.Flights)
+                {
+                    <tr>
+                        <td>@flight.FlightNumber</td>
+                        <td>@flight.Airline</td>
+                        <td>
+                            @Model.departure
+                        </td>
+                        <td class="flight-arrow">
+                            &#8594; <!-- Right arrow (Unicode) -->
+                        </td>
+                        <td>
+                            @Model.arrival
+                        </td>
+                        <td>@flight.TotalPrice<span> @Model.preference</span></td>
+                        <td>
+                            <form action="@Url.Action("BookFlight", "Flight", new { flightId = flight.Flight_Id })" method="post">
+                                <button type="submit" class="flight-book-button">Book Now</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+
+    else
+    {
+        <div class="no-results-container">
+            <h3 class="no-results-title">No Flights Found</h3>
+            <p class="no-results-message">
+                Unfortunately, we couldn't find any flights from <strong>@Model.departure</strong> to 
+                <strong>@Model.arrival</strong> on <strong>@Model.flightDate.ToString("MMMM dd, yyyy")</strong>.
+            </p>
+            <p class="no-results-suggestions">
+                Please try the following:
+            </p>
+            <ul class="no-results-tips">
+                <li>Check your spelling for the departure and arrival cities.</li>
+                <li>Try searching with a different travel date.</li>
+                <li>Ensure flights are available on the chosen route.</li>
+            </ul>
+            <a href="/" class="btn btn-secondary back-to-search-button">Back to Search</a>
+        </div>
+    }
+</section>
+
+</body>
