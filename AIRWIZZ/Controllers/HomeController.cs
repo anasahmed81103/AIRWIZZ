@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.Identity.Client;
 using AIRWIZZ.Data.Entities;
 using AIRWIZZ.Data.enums;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AIRWIZZ.Controllers
 {
@@ -182,9 +183,96 @@ namespace AIRWIZZ.Controllers
 		}
 
 
+		public IActionResult Book_Flight_Processing()
+		{
+			var model = new BookFlightModel
+			{
+				FlightList = _airwizzContext.Flights.Select(f => new SelectListItem
+				{
+					Value = f.Flight_Id.ToString(),
+					Text = f.FlightNumber.ToString()
+				}
+				).ToList(),
+
+				SeatList = _airwizzContext.SeatPlans.Where(s => s.IsAvailable).Select(s => new SelectListItem
+				{
+					Value = s.Seat_Id.ToString(),
+					Text = $"Seat {s.SeatNumber} ({s.SeatClassType})"
+				}).ToList(),
+
+				DepartureList = _airwizzContext.Departures.Select(d => new SelectListItem
+				{
+					Value = d.Departure_id.ToString(),
+					Text = d.DepartureCity
+				}).ToList(),
+
+				ArrivalList = _airwizzContext.Arrivals.Select(a => new SelectListItem
+				{
+					Value = a.Arrival_Id.ToString(),
+					Text = a.ArrivalCity
+				}).ToList()
 
 
 
 
-	}
+
+
+			};
+
+			return View(model);
+		}
+
+
+
+
+		[HttpPost]
+		public IActionResult Book_Flight_Details(BookFlightModel bookFlightModel)
+		{
+
+			try
+			{
+				var model = new Booking
+				{
+					Passenger_Id = bookFlightModel.passenger_id,
+					Flight_Id = bookFlightModel.flight_id,
+					Seat_Id = bookFlightModel.seat_id,
+					Booking_Date = DateTime.Now,
+					Book_Status_Result = BookStatus.Booked,
+					Payment = new Payment
+					{
+						PaymentDate = DateTime.Now,
+						Amount = bookFlightModel.Amount,
+						CurrencyType = bookFlightModel.CurrencyType,
+						PaymentMethodType = bookFlightModel.PaymentMethodType,
+						PaymentStatus = PaymentStatus.Successful,
+
+					},
+					SeatPlan = new SeatPlan
+					{
+						SeatNumber = bookFlightModel.seat_num,
+
+					}
+
+
+				};
+
+				_airwizzContext.Bookings.Add(model);
+				_airwizzContext.SaveChanges();
+
+
+				return View(model);
+
+			}
+			catch (Exception ex)
+			{
+				ViewBag.ErrorMessage = ex.Message;
+
+				return View("Error");
+
+			}
+		}
+
+
+
+		}
 }
