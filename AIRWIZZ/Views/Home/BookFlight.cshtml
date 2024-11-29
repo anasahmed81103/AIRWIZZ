@@ -1,0 +1,114 @@
+﻿@model AIRWIZZ.Models.BookFlightModel
+
+@{
+    ViewData["Title"] = "Book Flight";
+}
+
+<section class="booking-page">
+    <div style="padding-top:10%;"></div>
+    <div class="booking-container">
+        <form asp-action="BookFlightPost" method="post">
+            <!-- Hidden Fields -->
+            <input type="hidden" asp-for="Flight_Id" />
+            <input type="hidden" asp-for="Departure_Id" />
+            <input type="hidden" asp-for="Arrival_Id" />
+            <input type="hidden" asp-for="Amount" />
+
+            <h2>Passenger Details</h2>
+            <div class="form-section">
+                <div class="input-group">
+                    <label for="First_Name">First Name:</label>
+                    <input asp-for="First_Name" type="text" placeholder="First Name" required />
+                    <span asp-validation-for="First_Name" class="text-danger"></span>
+
+                    <label for="Last_Name">Last Name:</label>
+                    <input asp-for="Last_Name" type="text" placeholder="Last Name" required />
+                    <span asp-validation-for="Last_Name" class="text-danger"></span>
+                </div>
+                <label for="Date_Of_Birth">Date of Birth:</label>
+                <input asp-for="Date_Of_Birth" type="date" required />
+                <span asp-validation-for="Date_Of_Birth" class="text-danger"></span>
+
+                <label for="Nationality">Nationality:</label>
+                <input asp-for="Nationality" type="text" placeholder="Nationality" required />
+                <span asp-validation-for="Nationality" class="text-danger"></span>
+            </div>
+
+            <div class="form-section">
+                <label for="Passport_Number">Passport Number:</label>
+                <input asp-for="Passport_Number" type="text" placeholder="Passport Number" required />
+                <span asp-validation-for="Passport_Number" class="text-danger"></span>
+            </div>
+
+            <h2>Seat Selection</h2>
+            <div class="form-section">
+                <label for="SeatNumber">Select Seat:</label>
+                <input asp-for="SeatNumber" type="number" placeholder="Enter Seat Number" required />
+                <span asp-validation-for="SeatNumber" class="text-danger"></span>
+
+                <label for="SeatClassType">Seat Class:</label>
+                <select asp-for="SeatClassType" required>
+                    <option value="Economy">Economy</option>
+                    <option value="Business">Business</option>
+                    <option value="FirstClass">First Class</option>
+                </select>
+                <span asp-validation-for="SeatClassType" class="text-danger"></span>
+
+            </div>
+
+            <h2>Payment Details</h2>
+            <div class="form-section">
+
+                <label for="CurrencyType">Currency:</label>
+                <select asp-for="CurrencyType" required>
+                    <option value="USD">United States Dollar (USD)</option>
+						<option value="EUR">Euro (EUR)</option>
+						<option value="INR">Indian Rupee (INR)</option>
+						<option value="JPY">Japanese Yen (JPY)</option>
+						<option value="CNY">Chinese Yuan (CNY)</option>
+						<option value="AUD">Australian Dollar (AUD)</option>
+						<option value="CAD">Canadian Dollar (CAD)</option>
+						<option value="CHF">Swiss Franc (CHF)</option>
+						<option value="SEK">Swedish Krona (SEK)</option>
+						<option value="NZD">New Zealand Dollar (NZD)</option>
+						<option value="ZAR">South African Rand (ZAR)</option>
+						<option value="SGD">Singapore Dollar (SGD)</option>
+						<option value="MXN">Mexican Peso (MXN)</option>
+						<option value="BRL">Brazilian Real (BRL)</option>
+						<option value="RUB">Russian Ruble (RUB)</option>
+						<option value="HKD">Hong Kong Dollar (HKD)</option>
+						<option value="KRW">South Korean Won (KRW)</option>
+						<option value="TRY">Turkish Lira (TRY)</option>
+						<option value="AED">United Arab Emirates Dirham (AED)</option>
+						<option value="SAR">Saudi Riyal (SAR)</option>
+						<option value="MYR">Malaysian Ringgit (MYR)</option>
+						<option value="PHP">Philippine Peso (PHP)</option>
+						<option value="NOK">Norwegian Krone (NOK)</option>
+						<option value="THB">Thai Baht (THB)</option>
+						<option value="DKK">Danish Krone (DKK)</option>
+						<option value="PKR">Pakistani Rupees (PKR)</option>
+						<option value="GBP">British Pound Sterling (GBP)</option>
+						<option value="LKR">Sri Lankan Rupee (LKR)</option>
+						<option value="BDT">Bangladeshi Taka (BDT)</option>
+						<option value="IRR">Iranian Rial (IRR)</option>
+						<option value="IQD">Iraqi Dinar (IQD)</option>
+						<option value="KWD">Kuwaiti Dinar (KWD)</option>
+						<option value="QAR">Qatari Riyal (QAR)</option>
+						<option value="OMR">Omani Rial (OMR)</option>
+						<option value="EGP">Egyptian Pound (EGP)</option>
+                </select>
+                <span asp-validation-for="CurrencyType" class="text-danger"></span>
+
+                <label for="PaymentMethodType">Payment Method:</label>
+                <select asp-for="PaymentMethodType" required>
+                    <option value="CreditCard">Credit Card</option>
+                    <option value="DebitCard">Debit Card</option>
+                    <option value="PayPal">PayPal</option>
+                </select>
+                <span asp-validation-for="PaymentMethodType" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="book-button">Submit Booking</button>
+        </form>
+    </div>
+</section>

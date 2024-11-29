@@ -9,7 +9,7 @@ namespace AIRWIZZ.Models
 
 		public string arrival { get; set; } 
 
-		public string departure { get; set; } 
+		public string departure { get; set; }
 
 		public DateTime flightDate { get; set; }
 

@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Login";
+    // Get the TempData messages
+    var successMessage = TempData["SuccessMessage"];
+    var errorMessage = TempData["ErrorMessage"];
+}
+
+
+<body class="loginBody">
+
+    <div style="padding-top:10%; width:60%; padding-left:38%;">
+        @if (successMessage != null)
+        {
+            <div class="alert alert-success" >
+                @successMessage
+            </div>
+        }
+        @if (errorMessage != null)
+        {
+            <div class="alert alert-success">
+                @errorMessage
+            </div>
+        }
+    </div>
+</body>
+
+

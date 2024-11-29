@@ -1,75 +1,64 @@
 ﻿using AIRWIZZ.Data.enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace AIRWIZZ.Models
 {
-    public class BookFlightModel
-    {
 
-        [Required]
-        public int passenger_id { get; set; }
+	public class BookFlightModel
+	{
+		// Passed data
+		public int Flight_Id { get; set; }
+		public int Departure_Id { get; set; }
+		public int Arrival_Id { get; set; }
 
-        [Required]
-        public int seat_id { get; set; }
+		// Passenger information
+		[Required]
+		public string? First_Name { get; set; }
 
-        [Required]
-       public int flight_id { get; set; }
+		[Required]
+		public string? Last_Name { get; set; }
 
-        [Required]
-        public string passenger_first_name { get; set; }
+		[Required]
+		public string? Passport_Number { get; set; }
 
-        [Required]
-        public string passenger_last_name { get; set; }
+		[Required]
+		public DateOnly Date_Of_Birth { get; set; }
 
-        [Required]
-        public string  passenger_passport_number { get; set; }
+		[Required]
+		public string? Nationality { get; set; }
 
-        [Required]
-        public DateOnly passenger_Date_Of_Birth { get; set; }
+		// Payment information
+		
+		public DateTime PaymentDate { get; set; } = DateTime.Now;
 
-        [Required]
-        public string  passenger_Nationality { get; set; }
+		[Required]
+		public float Amount { get; set; }
 
-        [Required]
-        public SeatClass SeatClassType { get; set; }
+		[Required]
+		public Currency CurrencyType { get; set; }
 
+		[Required]
+		public PaymentMethod PaymentMethodType { get; set; }
 
-        
+		[Required]
+		public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.Pending;
 
-        [Required]
-        public float Amount { get; set; }
+		// Seat information
+		[Required]
+		public int SeatNumber { get; set; }
 
-        [Required]
-        [EnumDataType(typeof(Currency))]
-        public Currency CurrencyType { get; set; }
+		[Required]
+		public SeatClass SeatClassType { get; set; }
 
+		
+		public bool IsAvailable { get; set; } 
 
-        [Required]
-        [EnumDataType(typeof(PaymentMethod))]
-        public PaymentMethod PaymentMethodType { get; set; }
-
-
-       
-        [EnumDataType(typeof(PaymentStatus))]
-        public PaymentStatus PaymentStatus { get; set; }
-
-
-        [EnumDataType(typeof(BookStatus))]
-        public BookStatus BookStatusResult { get; set; }
-
-        [Required]
-        public int seat_num;
-
-        
-        
+		// Additional data for dropdowns
+		//public List<SelectListItem>? SeatList { get; set; }
+	}
 
 
-        public List<SelectListItem> FlightList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> SeatList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> DepartureList { get; set; } = new List<SelectListItem>();
-        public List<SelectListItem> ArrivalList { get; set; } = new List<SelectListItem>();
-
-
-    }
 }
+

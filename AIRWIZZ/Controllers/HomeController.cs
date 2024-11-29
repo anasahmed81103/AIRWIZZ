@@ -130,6 +130,7 @@ namespace AIRWIZZ.Controllers
 
 		[HttpPost]
 		[Route("Receive_Flights_Data")]
+		[Route("Home/Receive_Flights_Data")]
 		public IActionResult Receive_Flights_Data(SearchFlightModel searchFlightModel)
 		{
 
@@ -183,40 +184,39 @@ namespace AIRWIZZ.Controllers
 		}
 
 
-		public IActionResult Book_Flight_Processing()
+		[HttpPost] // Or [HttpGet], based on your form method
+		[Route("BookFlight")]
+		[Route("Home/BookFlight")]
+		public IActionResult BookFlight(int flight_id, string arrival, string departure)
 		{
+
+			var flight = _airwizzContext.Flights.FirstOrDefault(f => f.Flight_Id == flight_id);
+
+			if (flight == null)
+			{
+				return NotFound(); // Handle case if no flight is found
+			}
+
+			// Fetch the specific departure and arrival records based on flight_id and city names
+			var departureEntity = _airwizzContext.Departures
+				.FirstOrDefault(d => d.DepartureCity == departure && d.FlightId == flight_id);
+
+			var arrivalEntity = _airwizzContext.Arrivals
+				.FirstOrDefault(a => a.ArrivalCity == arrival && a.FlightId == flight_id);
+
+			if (departureEntity == null || arrivalEntity == null)
+			{
+				return NotFound(); // Handle case if no matching records are found
+			}
+
 			var model = new BookFlightModel
 			{
-				FlightList = _airwizzContext.Flights.Select(f => new SelectListItem
-				{
-					Value = f.Flight_Id.ToString(),
-					Text = f.FlightNumber.ToString()
-				}
-				).ToList(),
 
-				SeatList = _airwizzContext.SeatPlans.Where(s => s.IsAvailable).Select(s => new SelectListItem
-				{
-					Value = s.Seat_Id.ToString(),
-					Text = $"Seat {s.SeatNumber} ({s.SeatClassType})"
-				}).ToList(),
-
-				DepartureList = _airwizzContext.Departures.Select(d => new SelectListItem
-				{
-					Value = d.Departure_id.ToString(),
-					Text = d.DepartureCity
-				}).ToList(),
-
-				ArrivalList = _airwizzContext.Arrivals.Select(a => new SelectListItem
-				{
-					Value = a.Arrival_Id.ToString(),
-					Text = a.ArrivalCity
-				}).ToList()
-
-
-
-
-
-
+				Flight_Id = flight_id,
+				Departure_Id = departureEntity.Departure_id,
+				Arrival_Id = arrivalEntity.Arrival_Id,
+				Amount = flight.TotalPrice,
+				
 			};
 
 			return View(model);
@@ -226,53 +226,66 @@ namespace AIRWIZZ.Controllers
 
 
 		[HttpPost]
-		public IActionResult Book_Flight_Details(BookFlightModel bookFlightModel)
+		[Route("BookFlightPost")]
+		[Route("Home/BookFlightPost")]
+		public IActionResult BookFlightPost(BookFlightModel bookFlightModel)
 		{
-
 			try
 			{
-				var model = new Booking
+				// Ensure the model has valid values
+				if (!ModelState.IsValid)
 				{
-					Passenger_Id = bookFlightModel.passenger_id,
-					Flight_Id = bookFlightModel.flight_id,
-					Seat_Id = bookFlightModel.seat_id,
+					throw new Exception("Currency Value not recognized!");
+					 // Return to view with validation errors
+				}
+
+				int? userId = HttpContext.Session.GetInt32("UserId");
+
+
+				// Create the Booking object and related entities
+				var booking = new Booking
+				{
+					Flight_Id = bookFlightModel.Flight_Id,
+					DepartureId = bookFlightModel.Departure_Id,
+					ArrivalId = bookFlightModel.Arrival_Id,
 					Booking_Date = DateTime.Now,
-					Book_Status_Result = BookStatus.Booked,
+					User_Id = (int)userId,
+					Book_Status_Result = BookStatus.Booked, // Assuming you want the status to be booked at the time of booking
 					Payment = new Payment
 					{
-						PaymentDate = DateTime.Now,
+						PaymentDate = bookFlightModel.PaymentDate, // You can either use DateTime.Now or the value from the form
 						Amount = bookFlightModel.Amount,
 						CurrencyType = bookFlightModel.CurrencyType,
 						PaymentMethodType = bookFlightModel.PaymentMethodType,
-						PaymentStatus = PaymentStatus.Successful,
-
+						PaymentStatus = bookFlightModel.PaymentStatus, // Assuming it's selected as 'Pending' or 'Successful'
 					},
 					SeatPlan = new SeatPlan
 					{
-						SeatNumber = bookFlightModel.seat_num,
-
+						SeatNumber = bookFlightModel.SeatNumber, // Correct seat number mapping
+						SeatClassType = bookFlightModel.SeatClassType, // Ensure correct seat class type
+						IsAvailable = false, // Assuming the seat is available or taken
+						FlightId = bookFlightModel.Flight_Id,
 					}
-
-
 				};
 
-				_airwizzContext.Bookings.Add(model);
-				_airwizzContext.SaveChanges();
+				// Add the booking to the context
+				_airwizzContext.Bookings.Add(booking);
+				_airwizzContext.SaveChanges(); // Save the changes to the database
 
+				TempData["SuccessMessage"] = "Success.";
 
-				return View(model);
-
+				return View(); // Assuming you have a confirmation page
 			}
 			catch (Exception ex)
 			{
 				ViewBag.ErrorMessage = ex.Message;
-
-				return View("Error");
-
+				TempData["ErrorMessage"] = "Fail.";
+				// Handle the exception by showing the error message
+				return View(); // Redirect to an error page
 			}
 		}
 
 
 
-		}
+	}
 }

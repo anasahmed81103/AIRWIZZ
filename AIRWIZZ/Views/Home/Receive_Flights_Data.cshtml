@@ -47,9 +47,10 @@
                         </td>
                         <td>@flight.TotalPrice<span> @Model.preference</span></td>
                         <td>
-                            <form action="@Url.Action("BookFlight", "Flight", new { flightId = flight.Flight_Id })" method="post">
+                            <form action="@Url.Action("BookFlight", "Home", new { flight_id = flight.Flight_Id, arrival = Model.arrival, departure = Model.departure })" method="post">
                                 <button type="submit" class="flight-book-button">Book Now</button>
                             </form>
+
                         </td>
                     </tr>
                 }
