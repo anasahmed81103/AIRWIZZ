@@ -292,7 +292,7 @@ namespace AIRWIZZ.Controllers
                 _airwizzContext.payments.Add(payment);
                 _airwizzContext.SaveChanges();
 
-                TempData["SuccessMessage"] = "Booking and Payment successfully processed.";
+                TempData["SuccessMessage"] = "Booking and Payment successfully processed!";
                 return View(); // Confirmation page
             }
             catch (Exception ex)
