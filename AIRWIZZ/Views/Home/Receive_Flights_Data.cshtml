@@ -1,4 +1,6 @@
 ﻿@model AIRWIZZ.Models.ResultModel
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "Flight Search Results";
@@ -27,7 +29,11 @@
                     <th> </th> <!-- Empty header for the arrow -->
                     <th style="padding-left:2%;">Arrival</th>
                     <th style="padding-left:4%;">Price</th>
-                    <th style="padding-left:6%;">Action</th>
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
+                    {
+                        <th style="padding-left:6%;">Action</th>
+                    }
+                    
                 </tr>
             </thead>
             <tbody>
@@ -46,12 +52,17 @@
                             @Model.arrival
                         </td>
                         <td>@flight.TotalPrice<span> @Model.preference</span></td>
-                        <td>
-                            <form action="@Url.Action("BookFlight", "Home", new { flight_id = flight.Flight_Id, arrival = Model.arrival, departure = Model.departure })" method="post">
-                                <button type="submit" class="flight-book-button">Book Now</button>
-                            </form>
 
-                        </td>
+                        @if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
+                        {
+                            <td>
+                                <form action="@Url.Action("BookFlight", "Home", new { flight_id = flight.Flight_Id, arrival = Model.arrival, departure = Model.departure })" method="post">
+                                    <button type="submit" class="flight-book-button">Book Now</button>
+                                </form>
+
+                            </td>
+                        }
+                        
                     </tr>
                 }
             </tbody>

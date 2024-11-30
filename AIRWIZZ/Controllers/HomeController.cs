@@ -10,6 +10,7 @@ using Microsoft.Identity.Client;
 using AIRWIZZ.Data.Entities;
 using AIRWIZZ.Data.enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace AIRWIZZ.Controllers
 {
@@ -225,67 +226,85 @@ namespace AIRWIZZ.Controllers
 
 
 
-		[HttpPost]
-		[Route("BookFlightPost")]
-		[Route("Home/BookFlightPost")]
-		public IActionResult BookFlightPost(BookFlightModel bookFlightModel)
-		{
-			try
-			{
-				// Ensure the model has valid values
-				if (!ModelState.IsValid)
-				{
-					throw new Exception("Currency Value not recognized!");
-					 // Return to view with validation errors
-				}
+        [HttpPost]
+        [Route("BookFlightPost")]
+        [Route("Home/BookFlightPost")]
+        public IActionResult BookFlightPost(BookFlightModel bookFlightModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    throw new Exception("Currency Value not recognized!");
+                }
 
-				int? userId = HttpContext.Session.GetInt32("UserId");
+                int? userId = HttpContext.Session.GetInt32("UserId");
+
+                // Create and save Passenger
+                var passenger = new Passenger
+                {
+                    First_Name = bookFlightModel.First_Name,
+                    Last_Name = bookFlightModel.Last_Name,
+                    Passport_Number = bookFlightModel.Passport_Number,
+                    Date_Of_Birth = bookFlightModel.Date_Of_Birth,
+                    Nationality = bookFlightModel.Nationality
+                };
+                _airwizzContext.Passengers.Add(passenger);
+                _airwizzContext.SaveChanges();
+
+                // Create and save SeatPlan
+                var seatPlan = new SeatPlan
+                {
+                    SeatNumber = bookFlightModel.SeatNumber,
+                    SeatClassType = bookFlightModel.SeatClassType,
+                    IsAvailable = false,
+                    FlightId = bookFlightModel.Flight_Id
+                };
+                _airwizzContext.SeatPlans.Add(seatPlan);
+                _airwizzContext.SaveChanges();
+
+                // Create and save Booking
+                var booking = new Booking
+                {
+                    Flight_Id = bookFlightModel.Flight_Id,
+                    DepartureId = bookFlightModel.Departure_Id,
+                    ArrivalId = bookFlightModel.Arrival_Id,
+                    Booking_Date = DateTime.Now,
+                    User_Id = userId.GetValueOrDefault(1),
+                    Book_Status_Result = BookStatus.Booked,
+                    Passenger_Id = passenger.Passenger_Id,
+                    Seat_Id = seatPlan.Seat_Id
+                };
+                _airwizzContext.Bookings.Add(booking);
+                _airwizzContext.SaveChanges();
+
+                // Create and save Payment
+                var payment = new Payment
+                {
+                    PaymentDate = bookFlightModel.PaymentDate,
+                    Amount = bookFlightModel.Amount,
+                    CurrencyType = bookFlightModel.CurrencyType,
+                    PaymentMethodType = bookFlightModel.PaymentMethodType,
+                    PaymentStatus = bookFlightModel.PaymentStatus,
+                    BookingId = booking.Booking_Id, // Use the generated Booking_Id
+                    UserId = userId.GetValueOrDefault(1) // Link the payment to the user
+                };
+                _airwizzContext.payments.Add(payment);
+                _airwizzContext.SaveChanges();
+
+                TempData["SuccessMessage"] = "Booking and Payment successfully processed.";
+                return View(); // Confirmation page
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                TempData["ErrorMessage"] = "An error occurred during booking.";
+                return View(); // Error page
+            }
+        }
 
 
-				// Create the Booking object and related entities
-				var booking = new Booking
-				{
-					Flight_Id = bookFlightModel.Flight_Id,
-					DepartureId = bookFlightModel.Departure_Id,
-					ArrivalId = bookFlightModel.Arrival_Id,
-					Booking_Date = DateTime.Now,
-					User_Id = (int)userId,
-					Book_Status_Result = BookStatus.Booked, // Assuming you want the status to be booked at the time of booking
-					Payment = new Payment
-					{
-						PaymentDate = bookFlightModel.PaymentDate, // You can either use DateTime.Now or the value from the form
-						Amount = bookFlightModel.Amount,
-						CurrencyType = bookFlightModel.CurrencyType,
-						PaymentMethodType = bookFlightModel.PaymentMethodType,
-						PaymentStatus = bookFlightModel.PaymentStatus, // Assuming it's selected as 'Pending' or 'Successful'
-					},
-					SeatPlan = new SeatPlan
-					{
-						SeatNumber = bookFlightModel.SeatNumber, // Correct seat number mapping
-						SeatClassType = bookFlightModel.SeatClassType, // Ensure correct seat class type
-						IsAvailable = false, // Assuming the seat is available or taken
-						FlightId = bookFlightModel.Flight_Id,
-					}
-				};
-
-				// Add the booking to the context
-				_airwizzContext.Bookings.Add(booking);
-				_airwizzContext.SaveChanges(); // Save the changes to the database
-
-				TempData["SuccessMessage"] = "Success.";
-
-				return View(); // Assuming you have a confirmation page
-			}
-			catch (Exception ex)
-			{
-				ViewBag.ErrorMessage = ex.Message;
-				TempData["ErrorMessage"] = "Fail.";
-				// Handle the exception by showing the error message
-				return View(); // Redirect to an error page
-			}
-		}
 
 
-
-	}
+    }
 }
