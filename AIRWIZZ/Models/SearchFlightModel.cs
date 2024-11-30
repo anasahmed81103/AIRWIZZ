@@ -5,7 +5,7 @@ namespace AIRWIZZ.Models
 	public class SearchFlightModel
 	{
 
-		public DateTime travel_date {  get; set; }
+		public	DateTime travel_date {  get; set; }
 
 		public string  arrival_location { get; set; }
 

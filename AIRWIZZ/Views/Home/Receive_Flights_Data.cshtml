@@ -6,73 +6,79 @@
     ViewData["Title"] = "Flight Search Results";
 }
 
-<body class="resultBody">
-    
+<section class="resultBody" style="background-color:aliceblue;">
+
     <div style="padding-top:10%;"></div>
 
-    <section class="flight-results-section">
-    <div class="flight-results-header-container">
-        <h2 class="flight-results-header">
-            Flights from @Model.departure to @Model.arrival on @Model.flightDate.ToString("MMMM dd, yyyy")
-        </h2>
-    </div>
+    <section class="flight-results-section" style="background-color:aliceblue;">
+        <div class="flight-results-header-container" style="background-color:aliceblue;">
+            <h2 class="flight-results-header">
+                Flights from @Model.departure to @Model.arrival on @Model.flightDate.ToString("MMMM dd, yyyy")
+            </h2>
+        </div>
 
-   @if (Model.Flights != null && Model.Flights.Any())
-   {
-    <div class="flight-results-table-container">
-        <table class="flight-results-table">
-            <thead>
-                <tr>
-                    <th >Flight Number</th>
-                    <th style="padding-left:1%;">Airline</th>
-                    <th style="padding-left:2%;">Departure</th>
-                    <th> </th> <!-- Empty header for the arrow -->
-                    <th style="padding-left:2%;">Arrival</th>
-                    <th style="padding-left:4%;">Price</th>
-                    @if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
-                    {
-                        <th style="padding-left:6%;">Action</th>
-                    }
-                    
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var flight in Model.Flights)
-                {
-                    <tr>
-                        <td>@flight.FlightNumber</td>
-                        <td>@flight.Airline</td>
-                        <td>
-                            @Model.departure
-                        </td>
-                        <td class="flight-arrow">
-                            &#8594; <!-- Right arrow (Unicode) -->
-                        </td>
-                        <td>
-                            @Model.arrival
-                        </td>
-                        <td>@flight.TotalPrice<span> @Model.preference</span></td>
+        @if (Model.Flights != null && Model.Flights.Any())
+        {
+            <div class="flight-results-table-container" style="background-color:aliceblue;">
+                <table class="flight-results-table" style="background-color:aliceblue;">
+                    <thead>
+                        <tr>
+                            <th >Flight Number</th>
+                            <th style="padding-left:1%;">Airline</th>
+                            <th style="padding-left:2%;">Departure</th>
+                            <th> </th> <!-- Empty header for the arrow -->
+                            <th style="padding-left:2%;">Arrival</th>
+                            <th style="padding-left:4%;">Price</th>
+                            
+                            <th style="padding-left:6%;">Action</th>
+                            
 
-                        @if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var flight in Model.Flights)
                         {
-                            <td>
-                                <form action="@Url.Action("BookFlight", "Home", new { flight_id = flight.Flight_Id, arrival = Model.arrival, departure = Model.departure })" method="post">
-                                    <button type="submit" class="flight-book-button">Book Now</button>
-                                </form>
+                            <tr>
+                                <td>@flight.FlightNumber</td>
+                                <td>@flight.Airline</td>
+                                <td>
+                                    @Model.departure
+                                </td>
+                                <td class="flight-arrow">
+                                    &#8594; <!-- Right arrow (Unicode) -->
+                                </td>
+                                <td>
+                                    @Model.arrival
+                                </td>
+                                <td>@flight.TotalPrice<span> @Model.preference</span></td>
 
-                            </td>
-                        }
+
+                                <td>
+                                    @if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
+                                    {
+                                        <form action="@Url.Action("BookFlight", "Home", new { flight_id = flight.Flight_Id, arrival = Model.arrival, departure = Model.departure })" method="post">
+                                            <button type="submit" class="flight-book-button">Book Now</button>
+                                        </form>
+                                    }
+                                    else {
+                                        <form action="@Url.Action("Login", "Authorization")">
+                                            <button type="submit" class="flight-book-button" onclick="alert('Please log in first to view booking history!')">Book Now</button>
+                                        </form>
+
+                                    }
+                                </td>
+                            
                         
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        }
 
-    else
-    {
-        <div class="no-results-container">
+        else
+        {
+            <div class="no-results-container" style="background-color:aliceblue;">
             <h3 class="no-results-title">No Flights Found</h3>
             <p class="no-results-message">
                 Unfortunately, we couldn't find any flights from <strong>@Model.departure</strong> to 
@@ -89,6 +95,10 @@
             <a href="/" class="btn btn-secondary back-to-search-button">Back to Search</a>
         </div>
     }
+
+        
 </section>
 
-</body>
+    <div style="padding-bottom:10%;"></div>
+
+</section>

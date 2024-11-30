@@ -39,7 +39,7 @@
 							<div class="single-model-search">
 								<h2>Select Travel Date</h2>
 								<div class="model-select-icon">
-									<input type="date" class="form-control" placeholder="Select Date" name="travel_date" value="@Model.travel_date.ToString("yyyy-MM-dd")" required>
+									<input type="date" class="form-control" placeholder="Select Date" name="travel_date" value="@Model.travel_date" required>
 								</div>
 							</div>
 							<div class="single-model-search">
@@ -61,6 +61,9 @@
 							</div>
 						</div>
 
+						@{
+							existingCities.Clear(); // Reset for departure cities
+						}
 						<!-- Second Column (Departure Location + Currency Preference) -->
 						<div class="col-md-4 col-sm-10">
 							<div class="single-model-search">

@@ -1,0 +1,138 @@
+-- Generate Multiple Flights for Every City to Every City for Each Day in December 2024
+DECLARE @StartDate DATETIME = '2024-12-01 00:00:00'; -- Start date
+DECLARE @EndDate DATETIME = '2024-12-31 23:59:59'; -- End date
+DECLARE @CurrentDate DATETIME = @StartDate; -- Initialize to start date
+DECLARE @FlightsPerPair INT = 3; -- Number of flights between each city pair per day
+
+-- Predefined list of airlines
+DECLARE @Airlines TABLE (AirlineName NVARCHAR(50));
+INSERT INTO @Airlines VALUES
+('PIA'), ('Emirates'), ('Qatar Airways'), ('Fly Arabia'), ('Saudi Airlines'),
+('British Airways'), ('American Airlines'), ('Thai Airways'), ('Qantas'),
+('Virgin Australia'), ('Japan Airlines');
+
+-- Predefined list of real cities
+DECLARE @Cities TABLE (CityName NVARCHAR(50));
+INSERT INTO @Cities VALUES
+('Karachi'), ('Lahore'), ('Islamabad'), ('New York'), ('London'), 
+('Sydney'), ('Melbourne'), ('Dubai'), ('Riyadh'), ('Jeddah'), 
+('Moscow'), ('Bangkok'), ('Damascus'), ('Beijing'), ('Tokyo'), 
+('Seoul'), ('LA'), ('San Francisco'), ('Birmingham'), ('Toronto');
+
+-- Loop through each day in the date range
+WHILE @CurrentDate <= @EndDate
+BEGIN
+    -- Select all cities as departure cities
+    DECLARE DepartureCursor CURSOR FOR SELECT CityName FROM @Cities;
+    DECLARE @DepartureCity NVARCHAR(50);
+
+    OPEN DepartureCursor;
+    FETCH NEXT FROM DepartureCursor INTO @DepartureCity;
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        -- Select all cities as arrival cities
+        DECLARE ArrivalCursor CURSOR FOR SELECT CityName FROM @Cities;
+        DECLARE @ArrivalCity NVARCHAR(50);
+
+        OPEN ArrivalCursor;
+        FETCH NEXT FROM ArrivalCursor INTO @ArrivalCity;
+
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+            -- Skip flights where the departure and arrival cities are the same
+            IF @DepartureCity <> @ArrivalCity
+            BEGIN
+                -- Generate multiple flights between the same pair of cities
+                DECLARE @FlightCount INT = @FlightsPerPair;
+
+                WHILE @FlightCount > 0
+                BEGIN
+                    -- Select a random airline
+                    DECLARE @AirlineIndex INT;
+                    DECLARE @AirlineName NVARCHAR(50);
+                    SET @AirlineIndex = ABS(CHECKSUM(NEWID())) % (SELECT COUNT(*) FROM @Airlines) + 1;
+                    SELECT @AirlineName = AirlineName FROM 
+                    (SELECT ROW_NUMBER() OVER (ORDER BY AirlineName) AS RowNum, AirlineName FROM @Airlines) AS SubQuery 
+                    WHERE RowNum = @AirlineIndex;
+
+                    -- Insert into Flights table
+                    INSERT INTO Flights (FlightNumber, Airline, TotalPrice)
+                    VALUES (
+                        ABS(CHECKSUM(NEWID())) % 10000 + 1000, -- Random 4-digit Flight Number
+                        @AirlineName,
+                        ROUND(ABS(CHECKSUM(NEWID())) % 50000 + 10000, -2) -- Price between 10,000 and 50,000 PKR
+                    );
+
+                    DECLARE @FlightId INT = SCOPE_IDENTITY(); -- Get last inserted Flight ID
+
+                    -- Generate random departure details for the current day
+                    DECLARE @DepartureTime DATETIME = DATEADD(MINUTE, ABS(CHECKSUM(NEWID())) % 1440, @CurrentDate); -- Random time within the day
+                    DECLARE @Duration FLOAT = ROUND(ABS(CHECKSUM(NEWID())) % 15 + 1, 2); -- Duration in hours (1-15 hours)
+
+                    -- Insert into Departures table
+                    INSERT INTO Departures (DepartureCity, DepartureTime, Duration, Price, FlightId)
+                    VALUES (
+                        @DepartureCity,
+                        @DepartureTime,
+                        @Duration,
+                        ROUND(ABS(CHECKSUM(NEWID())) % 5000 + 1000, -1), -- Price between 1,000 and 5,000 PKR
+                        @FlightId
+                    );
+
+                    -- Insert into Arrivals table with matching duration
+                    INSERT INTO Arrivals (ArrivalCity, ArrivalTime, Duration, FlightId)
+                    VALUES (
+                        @ArrivalCity,
+                        DATEADD(HOUR, @Duration, @DepartureTime), -- Arrival time = Departure time + Duration
+                        @Duration,
+                        @FlightId
+                    );
+
+                    SET @FlightCount = @FlightCount - 1;
+                END;
+            END;
+
+            FETCH NEXT FROM ArrivalCursor INTO @ArrivalCity;
+        END;
+
+        CLOSE ArrivalCursor;
+        DEALLOCATE ArrivalCursor;
+
+        FETCH NEXT FROM DepartureCursor INTO @DepartureCity;
+    END;
+
+    CLOSE DepartureCursor;
+    DEALLOCATE DepartureCursor;
+
+    -- Move to the next day
+    SET @CurrentDate = DATEADD(DAY, 1, @CurrentDate);
+END;
+
+PRINT 'Flights Generated Successfully for December 2024!';
+
+
+
+
+
+
+
+
+//////alg delete
+
+-- Delete from Bookings (related to Departures and Arrivals)
+DELETE FROM Bookings;
+
+-- Delete from Departures
+DELETE FROM Departures;
+
+-- Delete from Arrivals
+DELETE FROM Arrivals;
+
+-- Delete from Flights
+DELETE FROM Flights;
+
+PRINT 'All flights, arrivals, departures, and bookings have been deleted!';
+
+
+
