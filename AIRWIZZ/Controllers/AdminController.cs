@@ -18,39 +18,86 @@ namespace AIRWIZZ.Controllers
         }
 
 
-        public IActionResult mainPortal()
+        //public IActionResult mainPortal()
+        //{
+        //    // Fetch flights with departures and arrivals
+        //    var flights = _airwizzContext.Flights
+        //        .Include(f => f.Departures)
+        //        .Include(f => f.Arrivals)
+        //        .ToList();
+
+        //    foreach (var flight in flights)
+        //    {
+        //        flight.Departures ??= new List<Departure>();
+        //        flight.Arrivals ??= new List<Arrival>();
+        //    }
+
+        //    // Fetch bookings
+        //    var bookings = _airwizzContext.Bookings
+        //        .Include(b => b.Flight)
+        //        .Include(b => b.Departure)
+        //        .Include(b => b.Arrival)
+        //        .ToList();
+
+        //    // Fetch currency conversions and map them to the ViewModel
+        //    var currencyData = _airwizzContext.CurrencyConversions.ToList();
+        //    var currencyRates = currencyData
+        //        .Where(c => c.Currency_Code != (int)Currency.PKR) // Exclude PKR as base
+        //        .Select(c => new CurrencyRate
+        //        {
+        //            CurrencyPair = $"{((Currency)c.Currency_Code).ToString()} to PKR",
+        //            Rate = (decimal)c.ConversionRate,
+        //            LastUpdated = c.LastUpdated
+        //        }).ToList();
+
+        //    // Combine all data into the ViewModel
+        //    var viewModel = new MainPortalViewModel
+        //    {
+        //        Flights = flights,
+        //        Bookings = bookings,
+        //        CurrencyRates = currencyRates
+        //    };
+
+        //    return View(viewModel);
+        //}
+
+
+        public IActionResult MainPortal(int page = 1, int pageSize = 50)
         {
-            // Fetch flights with departures and arrivals
+            // Fetch flights with pagination
             var flights = _airwizzContext.Flights
                 .Include(f => f.Departures)
                 .Include(f => f.Arrivals)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .ToList();
 
+            
             foreach (var flight in flights)
             {
                 flight.Departures ??= new List<Departure>();
                 flight.Arrivals ??= new List<Arrival>();
             }
 
-            // Fetch bookings
+            
             var bookings = _airwizzContext.Bookings
                 .Include(b => b.Flight)
                 .Include(b => b.Departure)
                 .Include(b => b.Arrival)
                 .ToList();
 
-            // Fetch currency conversions and map them to the ViewModel
+            
             var currencyData = _airwizzContext.CurrencyConversions.ToList();
             var currencyRates = currencyData
-                .Where(c => c.Currency_Code != (int)Currency.PKR) // Exclude PKR as base
+                .Where(c => c.Currency_Code != (int)Currency.PKR)  
                 .Select(c => new CurrencyRate
                 {
-                    CurrencyPair = $"{((Currency)c.Currency_Code).ToString()} to PKR",
+                    CurrencyPair = $"{((Currency)c.Currency_Code)} to PKR",  
                     Rate = (decimal)c.ConversionRate,
                     LastUpdated = c.LastUpdated
                 }).ToList();
 
-            // Combine all data into the ViewModel
+            
             var viewModel = new MainPortalViewModel
             {
                 Flights = flights,
@@ -58,8 +105,65 @@ namespace AIRWIZZ.Controllers
                 CurrencyRates = currencyRates
             };
 
+            // Set pagination values in ViewBag
+            ViewBag.CurrentPage = page;
+            ViewBag.PageSize = pageSize;
+
+            
             return View(viewModel);
         }
+
+
+
+        public IActionResult LoadMoreFlights(int page = 1, int pageSize = 10)
+        {
+            var flights = _airwizzContext.Flights
+                .Include(f => f.Departures)
+                .Include(f => f.Arrivals)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+           
+            if (!flights.Any())
+            {
+                return Content(string.Empty);
+            }
+
+            // Initialize a variable to store the HTML for flight rows
+            string rows = string.Empty;
+
+            // Iterate through each flight and generate table rows for Departures and Arrivals
+            foreach (var flight in flights)
+            {
+                foreach (var departure in flight.Departures)
+                {
+                    foreach (var arrival in flight.Arrivals)
+                    {
+                        if (departure.DepartureCity != arrival.ArrivalCity)  
+                        {
+                            // Generate the HTML for each flight row
+                            rows += $"<tr>" +
+                                    $"<td>{flight.FlightNumber}</td>" +
+                                    $"<td>{flight.Airline}</td>" +
+                                    $"<td>{departure.DepartureCity}</td>" +
+                                    $"<td>{departure.DepartureTime:g}</td>" +
+                                    $"<td>{arrival.ArrivalCity}</td>" +
+                                    $"<td>{arrival.ArrivalTime:g}</td>" +
+                                    $"</tr>";
+                        }
+                    }
+                }
+            }
+
+            // Return the generated rows as a string to be appended to the table
+            return Content(rows);
+        }
+
+
+
+
+
 
         [HttpGet]
         public IActionResult CurrencyConversion()
@@ -79,7 +183,7 @@ namespace AIRWIZZ.Controllers
 
 
 
-        // POST: Save the conversion rates
+       
         [HttpPost]
         public IActionResult CurrencyConversion(Dictionary<string, float> rates)
         {
@@ -88,30 +192,30 @@ namespace AIRWIZZ.Controllers
                 return View();
             }
 
-            // Loop through each currency conversion rate received from the form
+            
             foreach (var rate in rates)
             {
                 // Get the currency code by converting the currency name
                 var currencyName = rate.Key;
                 var conversionRate = rate.Value;
 
-                // Find the corresponding CurrencyConversion entity in the database
+                
                 var currencyCode = Enum.Parse<Currency>(currencyName); // Convert the currency name to the enum
                 var currencyConversion = _airwizzContext.CurrencyConversions
                     .FirstOrDefault(c => c.Currency_Code == (int)currencyCode); // Find by the correct Currency_Code
 
-                // If the CurrencyConversion entity exists, update the rate
+               
                 if (currencyConversion != null)
                 {
                     currencyConversion.ConversionRate = conversionRate;
-                    currencyConversion.LastUpdated = DateTime.Now; // Optionally update the LastUpdated timestamp
+                    currencyConversion.LastUpdated = DateTime.Now; 
 
-                    // Save the changes to the database
+                    
                     _airwizzContext.SaveChanges();
                 }
             }
 
-            return RedirectToAction("CurrencyConversion"); // Redirect back to the GET method to show updated values
+            return RedirectToAction("CurrencyConversion"); 
         }
 
 
@@ -136,36 +240,36 @@ namespace AIRWIZZ.Controllers
                 };
 
                 _airwizzContext.Flights.Add(flight);
-                _airwizzContext.SaveChanges();  // Save changes to get the Flight_Id
+                _airwizzContext.SaveChanges();  
 
-                // Save arrivals
+                
                 foreach (var arrival in model.Arrivals)
                 {
                     var flightArrival = new Arrival
                     {
-                        FlightId = flight.Flight_Id,  // Correct FlightId assignment
+                        FlightId = flight.Flight_Id,  
                         ArrivalTime = arrival.ArrivalTime,
                         ArrivalCity = arrival.ArrivalCity,
-                        Duration = arrival.ArrivalDuration  // Ensure you are using 'Duration' here as per your model
+                        Duration = arrival.ArrivalDuration  
                     };
                     _airwizzContext.Arrivals.Add(flightArrival);
                 }
 
-                // Save departures
+                
                 foreach (var departure in model.Departures)
                 {
                     var flightDeparture = new Departure
                     {
-                        FlightId = flight.Flight_Id,  // Correct FlightId assignment
+                        FlightId = flight.Flight_Id,  
                         DepartureCity = departure.DepartureCity,
                         DepartureTime = departure.DepartureTime,
-                        Duration = departure.DepartureDuration,  // Ensure this matches your model
-                        Price = departure.Price  // Make sure 'Price' is included in the ViewModel
+                        Duration = departure.DepartureDuration,  
+                        Price = departure.Price 
                     };
                     _airwizzContext.Departures.Add(flightDeparture);
                 }
 
-                // Save all the changes
+                
                 _airwizzContext.SaveChanges();
 
                 TempData["SuccessMessage"] = "Flight added successfully!";
@@ -177,7 +281,7 @@ namespace AIRWIZZ.Controllers
 
 
 
-        // GET: List Flights
+        
         [HttpGet]
         public IActionResult ViewFlights()
         {
@@ -186,7 +290,7 @@ namespace AIRWIZZ.Controllers
                 .Include(f => f.Arrivals)
                 .ToList();
 
-            // Ensure collections are initialized even if empty
+            
             foreach (var flight in flights)
             {
                 flight.Departures ??= new List<Departure>();
@@ -201,7 +305,7 @@ namespace AIRWIZZ.Controllers
         [HttpGet]
         public IActionResult ManageFlights()
         {
-            var flights = _airwizzContext.Flights.ToList(); // Fetch flights from the database
+            var flights = _airwizzContext.Flights.ToList(); 
             return View(flights);
         }
 
@@ -212,7 +316,7 @@ namespace AIRWIZZ.Controllers
         {
             try
             {
-                // Retrieve the flight along with related entities
+                
                 var flight = _airwizzContext.Flights
                     .Include(f => f.Arrivals)
                     .Include(f => f.Departures)
@@ -225,7 +329,7 @@ namespace AIRWIZZ.Controllers
                     return RedirectToAction("ManageFlights");
                 }
 
-                // Explicitly remove related entities
+                
                 if (flight.Arrivals != null)
                 {
                     _airwizzContext.Arrivals.RemoveRange(flight.Arrivals);
@@ -241,10 +345,10 @@ namespace AIRWIZZ.Controllers
                     _airwizzContext.Bookings.RemoveRange(flight.Bookings);
                 }
 
-                // Remove the flight
+                
                 _airwizzContext.Flights.Remove(flight);
 
-                // Save changes
+                
                 _airwizzContext.SaveChanges();
 
                 TempData["SuccessMessage"] = "Flight and all related data deleted successfully!";
