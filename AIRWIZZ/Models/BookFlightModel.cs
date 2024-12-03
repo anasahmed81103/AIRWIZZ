@@ -19,8 +19,10 @@ namespace AIRWIZZ.Models
         [Required]
         public string? Last_Name { get; set; }
 
-        [Required]
-        public string? Passport_Number { get; set; }
+        [Required(ErrorMessage = "Passport number is required.")]
+        [StringLength(9, MinimumLength = 6, ErrorMessage = "Passport number must be between 6 and 9 characters.")]
+        public string Passport_Number { get; set; }
+
 
         [Required]
         public DateOnly Date_Of_Birth { get; set; }
@@ -56,6 +58,15 @@ namespace AIRWIZZ.Models
 
         // List of booked seat numbers to validate against
         public List<int> BookedSeats { get; set; } = new List<int>();
+
+        [Required(ErrorMessage = "Card number is required.")]
+        [CreditCard(ErrorMessage = "Please enter a valid credit card number.")]
+        [StringLength(16, MinimumLength = 13, ErrorMessage = "Card number must be between 13 and 16 digits.")]
+        public string Card_Number { get; set; }
+
+        [Required(ErrorMessage = "CVV is required.")]
+        [RegularExpression(@"^\d{3,4}$", ErrorMessage = "CVV must be 3 or 4 digits.")]
+        public string CVV { get; set; }
 
         // Additional data for dropdowns
         //public List<SelectListItem>? SeatList { get; set; }
