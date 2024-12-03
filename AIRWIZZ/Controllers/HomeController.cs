@@ -239,10 +239,10 @@ namespace AIRWIZZ.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    throw new Exception("Currency Value not recognized!");
-                }
+                //if (!ModelState.IsValid)
+                //{
+                //    throw new Exception("Currency Value not recognized!");
+                //}
 
                 int? userId = HttpContext.Session.GetInt32("UserId");
 
