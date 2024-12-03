@@ -1,4 +1,6 @@
 ﻿@model AIRWIZZ.Models.BookingHistoryModel
+@using AIRWIZZ.Data.enums
+
 
 @{
     ViewData["Title"] = "Booking History";
@@ -34,14 +36,14 @@
                                     <a href="#" class="text-white ml-auto mb-3 mb-sm-0">View All Bookings</a>
                                 </div>
                                 <div class="table-responsive border rounded p-1">
-                                    <table class="table">
+                                    <table class="table" style="width:100%;">
                                         <thead style="background-color: white; color: black;">
                                             <tr>
                                                 <th class="font-weight-bold">#</th>
                                                 <th class="font-weight-bold">Booking ID</th>
                                                 <th class="font-weight-bold">Booking Date</th>
                                                 <th class="font-weight-bold">Total Amount</th>
-                                                <th class="font-weight-bold">Currency</th>
+                                                
                                                 <th class="font-weight-bold">Flight Number</th>
                                                 <th class="font-weight-bold">Airline</th>
                                                 <th class="font-weight-bold">Passenger Name</th>
@@ -52,6 +54,7 @@
                                                 <th class="font-weight-bold">Arrival City</th>
                                                 <th class="font-weight-bold">Departure Date - Time</th>
                                                 <th class="font-weight-bold">Arrival Date - Time</th>
+                                                <th class="font-weight-bold">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody style="color: white;">
@@ -63,7 +66,7 @@
                                                     <td>@booking.Bookid</td>
                                                     <td>@booking.Bookdate.ToString("yyyy-MM-dd")</td>
                                                     <td>@booking.total_amount</td>
-                                                    <td>@booking.currency_type</td>
+                                                    <!--booking.currency_type-->
                                                     <td>@booking.FlightNumber</td>
                                                     <td>@booking.Airline</td>
                                                     <td>@booking.PassengerName</td>
@@ -74,6 +77,23 @@
                                                     <td>@booking.DestinationLocation</td>
                                                     <td>@booking.DepartureDateTime.ToString("yyyy-MM-dd HH:mm")</td>
                                                     <td>@booking.ArrivalDateTime.ToString("yyyy-MM-dd HH:mm")</td>
+                                                    <td>
+                                                        @if (booking.Booking_Status == BookStatus.Cancelled)
+                                                        {
+                                                            
+                                                            <form action="@Url.Action("DeleteBooking", "Home", new { book_id = booking.Bookid })" method="post">
+                                                                <button type="submit" class="flight-book-button">Delete Booking</button>
+                                                            </form>
+                                                        }
+                                                        else
+                                                        {
+                                                            
+                                                            <form action="@Url.Action("CancelBook", "Home", new { book_id = booking.Bookid })" method="post">
+                                                                <button type="submit" class="flight-book-button">Cancel</button>
+                                                            </form>
+                                                        }
+                                                    </td>
+                                                    
                                                 </tr>
                                             }
                                         </tbody>
