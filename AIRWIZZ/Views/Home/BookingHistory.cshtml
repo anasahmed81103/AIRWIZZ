@@ -93,17 +93,23 @@
                                                                 <button type="submit" class="flight-book-button">Cancel</button>
                                                             </form>
 
-                                                        <td>
-                                                            <form action="@Url.Action("DownloadTicket", "Home", new { book_id = booking.Bookid })" method="post">
-                                                                <button type="submit" class="flight-book-button">Download Ticket</button>
-                                                            </form>
+                                                     
 
 
-                                                        </td>
+                                                        
 
                                                         }
                                                     
-                                                       </td>
+                                                     </td>
+                                                     <td>
+                                                        @if (booking.Booking_Status != BookStatus.Cancelled)
+                                                        {
+                                                            <form action="@Url.Action("DownloadTicket", "Home", new { book_id = booking.Bookid })" method="post">
+                                                                <button type="submit" class="flight-book-button">Download Ticket</button>
+                                                            </form>
+                                                        }
+
+                                                     </td>
                                                     
                                                 </tr>
                                             }
