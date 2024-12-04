@@ -55,6 +55,7 @@
                                                 <th class="font-weight-bold">Departure Date - Time</th>
                                                 <th class="font-weight-bold">Arrival Date - Time</th>
                                                 <th class="font-weight-bold">Action</th>
+                                                <th class="font-weight-bold">Ticket</th>
                                             </tr>
                                         </thead>
                                         <tbody style="color: white;">
@@ -91,8 +92,18 @@
                                                             <form action="@Url.Action("CancelBook", "Home", new { book_id = booking.Bookid })" method="post">
                                                                 <button type="submit" class="flight-book-button">Cancel</button>
                                                             </form>
+
+                                                        <td>
+                                                            <form action="@Url.Action("DownloadTicket", "Home", new { book_id = booking.Bookid })" method="post">
+                                                                <button type="submit" class="flight-book-button">Download Ticket</button>
+                                                            </form>
+
+
+                                                        </td>
+
                                                         }
-                                                    </td>
+                                                    
+                                                       </td>
                                                     
                                                 </tr>
                                             }

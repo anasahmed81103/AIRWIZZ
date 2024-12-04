@@ -11,6 +11,8 @@ using AIRWIZZ.Data.Entities;
 using AIRWIZZ.Data.enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace AIRWIZZ.Controllers
 {
@@ -405,7 +407,119 @@ namespace AIRWIZZ.Controllers
         }
 
 
+        [HttpPost]
+        public FileResult DownloadTicket(int book_id)
+        {
+           
 
+            var booking  = _airwizzContext.Bookings.Include(b=>b.Passenger)
+                .Include(b=>b.Flight).Include(b=>b.Arrival).Include(b=>b.Departure).Include(b=>b.SeatPlan).
+               
+                FirstOrDefault(b=>b.Booking_Id==book_id);
+
+            if (booking == null)
+            {
+                throw new Exception ("Booking not found.");
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+             
+                var document = new Document(PageSize.A4, 36, 36, 36, 36); // Add margins
+                PdfWriter.GetInstance(document, memoryStream);
+
+                document.Open();
+
+                // Add a modern title section
+                var titleFont = FontFactory.GetFont("Arial", 20, Font.BOLD, BaseColor.BLACK);
+                var subTitleFont = FontFactory.GetFont("Arial", 12, Font.NORMAL, BaseColor.GRAY);
+                var contentFont = FontFactory.GetFont("Arial", 12, Font.NORMAL, BaseColor.BLACK);
+                var boldContentFont = FontFactory.GetFont("Arial", 12, Font.BOLD, BaseColor.BLACK);
+
+                // Header Section
+                document.Add(new Paragraph("Flight Booking Ticket", titleFont));
+                document.Add(new Paragraph("---------------------------------------------------", subTitleFont));
+                document.Add(new Paragraph("AirWizz Airlines", boldContentFont));
+                document.Add(new Paragraph("Your reliable travel partner", subTitleFont));
+                document.Add(new Paragraph(" ")); // Spacer
+
+                // Main Ticket Content
+                PdfPTable table = new PdfPTable(2);
+                table.WidthPercentage = 100;
+                table.SpacingBefore = 20f;
+                table.SpacingAfter = 20f;
+
+                // Styling
+                PdfPCell cell = new PdfPCell(new Phrase("Ticket Details"))
+                {
+                    Colspan = 2,
+                    HorizontalAlignment = Element.ALIGN_CENTER,
+                    Padding = 10,
+                    BackgroundColor = BaseColor.LIGHT_GRAY
+                };
+                table.AddCell(cell);
+
+                // Add booking details
+                table.AddCell(new PdfPCell(new Phrase("Booking ID:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.Booking_Id}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Booking Date:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.Booking_Date:dd-MM-yyyy}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Passenger Name:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.Passenger.First_Name} {booking.Passenger.Last_Name}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Flight Number:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.Flight.FlightNumber}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Airline:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.Flight.Airline}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Departure Location:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.Departure.DepartureCity}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Destination Location:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.Arrival.ArrivalCity}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Departure Date and Time:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.Departure.DepartureTime:yyyy-MM-dd HH:mm}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Arrival Date and Time:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.Arrival.ArrivalTime:yyyy-MM-dd HH:mm}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Seat Class:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.SeatPlan.SeatClassType}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Seat Number:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.SeatPlan.SeatNumber}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Total Amount:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.Flight.TotalPrice} ", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                table.AddCell(new PdfPCell(new Phrase("Booking Status:", boldContentFont)) { Border = Rectangle.NO_BORDER });
+                table.AddCell(new PdfPCell(new Phrase($"{booking.Book_Status_Result}", contentFont)) { Border = Rectangle.NO_BORDER });
+
+                // Add table to document
+                document.Add(table);
+
+                // Footer
+                document.Add(new Paragraph("---------------------------------------------------", subTitleFont));
+                document.Add(new Paragraph("Thank you for choosing AirWizz Airlines!", boldContentFont));
+                document.Add(new Paragraph("Have a safe and pleasant journey!", subTitleFont));
+
+
+                // Add content to the PDF
+
+
+                document.Close();
+
+                // Return the generated PDF
+                return File(memoryStream.ToArray(), "application/pdf", $"Ticket_{booking.Booking_Id}.pdf");
+            }
+           
+
+
+        }
 
 
 
