@@ -521,7 +521,11 @@ namespace AIRWIZZ.Controllers
 
         }
 
+        public IActionResult chatbot()
+        {
 
+            return View();
+        }
 
 
 
