@@ -147,13 +147,13 @@ namespace AIRWIZZ.Controllers
 
 				var preference = searchFlightModel.currency_preference;
 
-				// Fetch the currency conversion rate for the selected currency
+				
 				var conversionRate = GetConversionRate(preference);
 
-				// Apply the conversion rate to the total price of each flight
+				
 				foreach (var flight in result_flights)
 				{
-					// Convert the flight price if the currency is set and a valid rate is available
+					
 					if (conversionRate.HasValue)
 					{
 						flight.TotalPrice = flight.TotalPrice / conversionRate.Value; // Apply conversion
@@ -193,15 +193,15 @@ namespace AIRWIZZ.Controllers
         [Route("Home/BookFlight")]
         public IActionResult BookFlight(int flight_id, string arrival, string departure)
         {
-            // Fetch the flight details
+            
             var flight = _airwizzContext.Flights.FirstOrDefault(f => f.Flight_Id == flight_id);
 
             if (flight == null)
             {
-                return NotFound(); // Handle case if no flight is found
+                return NotFound(); 
             }
 
-            // Fetch the specific departure and arrival records based on flight_id and city names
+           
             var departureEntity = _airwizzContext.Departures
                 .FirstOrDefault(d => d.DepartureCity == departure && d.FlightId == flight_id);
 
@@ -210,23 +210,23 @@ namespace AIRWIZZ.Controllers
 
             if (departureEntity == null || arrivalEntity == null)
             {
-                return NotFound(); // Handle case if no matching records are found
+                return NotFound(); 
             }
 
-            // Fetch all the booked seat numbers for this flight
+            
             var bookedSeats = _airwizzContext.Bookings
                 .Where(b => b.Flight_Id == flight_id && b.Book_Status_Result != BookStatus.Cancelled) // Exclude cancelled bookings
                 .Select(b => b.SeatPlan.SeatNumber)
                 .ToList();
 
-            // Prepare the model to send to the view
+            
             var model = new BookFlightModel
             {
                 Flight_Id = flight_id,
                 Departure_Id = departureEntity.Departure_id,
                 Arrival_Id = arrivalEntity.Arrival_Id,
                 Amount = flight.TotalPrice,
-                BookedSeats = bookedSeats, // Pass the list of booked seats
+                BookedSeats = bookedSeats, 
             };
 
             return View(model);
@@ -248,7 +248,7 @@ namespace AIRWIZZ.Controllers
 
                 int? userId = HttpContext.Session.GetInt32("UserId");
 
-                // Create and save Passenger
+               
                 var passenger = new Passenger
                 {
                     First_Name = bookFlightModel.First_Name,
@@ -260,7 +260,7 @@ namespace AIRWIZZ.Controllers
                 _airwizzContext.Passengers.Add(passenger);
                 _airwizzContext.SaveChanges();
 
-                // Create and save SeatPlan
+                
                 var seatPlan = new SeatPlan
                 {
                     SeatNumber = bookFlightModel.SeatNumber,
@@ -271,7 +271,7 @@ namespace AIRWIZZ.Controllers
                 _airwizzContext.SeatPlans.Add(seatPlan);
                 _airwizzContext.SaveChanges();
 
-                // Create and save Booking
+                
                 var booking = new Booking
                 {
                     Flight_Id = bookFlightModel.Flight_Id,
@@ -286,7 +286,7 @@ namespace AIRWIZZ.Controllers
                 _airwizzContext.Bookings.Add(booking);
                 _airwizzContext.SaveChanges();
 
-                // Create and save Payment
+                
                 var payment = new Payment
                 {
                     PaymentDate = bookFlightModel.PaymentDate,
@@ -294,8 +294,8 @@ namespace AIRWIZZ.Controllers
                     CurrencyType = bookFlightModel.CurrencyType,
                     PaymentMethodType = bookFlightModel.PaymentMethodType,
                     PaymentStatus = bookFlightModel.PaymentStatus,
-                    BookingId = booking.Booking_Id, // Use the generated Booking_Id
-                    UserId = userId.GetValueOrDefault(1) // Link the payment to the user
+                    BookingId = booking.Booking_Id, 
+                    UserId = userId.GetValueOrDefault(1) 
                 };
                 _airwizzContext.payments.Add(payment);
                 _airwizzContext.SaveChanges();
@@ -320,37 +320,36 @@ namespace AIRWIZZ.Controllers
         {
             try
             {
-                // Find the booking in the database
+                
                 var booking = _airwizzContext.Bookings.FirstOrDefault(b => b.Booking_Id == book_id);
 
                 if (booking == null)
                 {
-                    // Handle case if booking is not found
                     TempData["Error"] = "Booking not found.";
                     return RedirectToAction("BookingHistory");
                 }
 
-                // Update booking status to "Canceled" or similar (assuming you have such a status in your enum)
-                booking.Book_Status_Result = BookStatus.Cancelled;  // Ensure 'Canceled' is a valid status in your enum
+                
+                booking.Book_Status_Result = BookStatus.Cancelled;  
 
-                // Optionally, update the related seat to be available again
+                
                 var seatPlan = _airwizzContext.SeatPlans.FirstOrDefault(sp => sp.Seat_Id == booking.Seat_Id);
                 if (seatPlan != null)
                 {
                     seatPlan.IsAvailable = true;  // Mark the seat as available
                 }
 
-                _airwizzContext.SaveChanges();  // Save changes to the database
+                _airwizzContext.SaveChanges();  
 
-                TempData["Message"] = "Booking canceled successfully.";  // Success message
+                TempData["Message"] = "Booking canceled successfully."; 
             }
             catch (Exception ex)
             {
-                // Handle any errors that might occur
+                
                 TempData["Error"] = $"An error occurred: {ex.Message}";
             }
 
-            // Redirect the user to the booking history page (or any other appropriate page)
+           
             return RedirectToAction("BookingHistory");
         }
 
@@ -361,14 +360,14 @@ namespace AIRWIZZ.Controllers
         {
             try
             {
-                // Find the booking from the database
+                
                 var booking = _airwizzContext.Bookings
                     .Include(b => b.SeatPlan)
                     .Include(b => b.Payment)
                     .Include(b => b.Passenger)
                     .FirstOrDefault(b => b.Booking_Id == book_id);
 
-                // If booking is not found, return an error or redirect
+                
                 if (booking == null)
                 {
                     TempData["Error"] = "Booking not found.";
@@ -382,29 +381,30 @@ namespace AIRWIZZ.Controllers
                     return RedirectToAction("BookingHistory");
                 }
 
-                // Delete related entities (if necessary, otherwise adjust this part)
+                
                 _airwizzContext.SeatPlans.Remove(booking.SeatPlan);
                 _airwizzContext.payments.Remove(booking.Payment);
                 _airwizzContext.Passengers.Remove(booking.Passenger);
 
-                // Finally, remove the booking
+              
                 _airwizzContext.Bookings.Remove(booking);
 
-                // Save changes to the database
+                
                 _airwizzContext.SaveChanges();
 
                 TempData["Success"] = "Booking deleted successfully.";
-                return RedirectToAction("BookingHistory"); // Redirect to booking history or another page
+                return RedirectToAction("BookingHistory"); 
             }
             catch (Exception ex)
             {
-                // Log the error (optional)
+                
                 _logger.LogError($"Error deleting booking: {ex.Message}");
 
                 TempData["Error"] = "An error occurred while trying to delete the booking.";
                 return RedirectToAction("BookingHistory");
             }
         }
+
 
 
         [HttpPost]
@@ -521,10 +521,13 @@ namespace AIRWIZZ.Controllers
 
         }
 
+
+
         public IActionResult chatbot()
         {
 
             return View();
+
         }
 
 
