@@ -30,6 +30,8 @@ using Microsoft.AspNetCore.Http;          // For HttpContext.Session methods (Se
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Claims; // For configuring session services in Program.cs or Startup.cs
 //using AIRWIZZ.Services.Caching;
+using System.Net.Mail;
+using System.Net;
 
 
 
@@ -82,7 +84,8 @@ namespace AIRWIZZ.Controllers
                 {
                     throw new Exception("Currency Value not recognized!");
                 }
-                else if (await _airwizzContext.Users.Where(x=> x.email == email).FirstOrDefaultAsync() != null){
+                else if (await _airwizzContext.Users.Where(x => x.email == email).FirstOrDefaultAsync() != null)
+                {
                     TempData["ErrorMessage"] = "This Email is already Used !";
                     return RedirectToAction("Signup");
                 }
@@ -91,15 +94,17 @@ namespace AIRWIZZ.Controllers
                 {
                     user_name = name,
                     email = email,
-                    password = password, 
+                    password = password,
                     currency_preference = parsedCurrency,
-                    User_role = Role.naive_user, 
+                    User_role = Role.naive_user,
                     Date_joined = DateTime.Now
                 };
 
-               
-                await _airwizzContext.Users.AddAsync(newUser); 
+
+                await _airwizzContext.Users.AddAsync(newUser);
                 await _airwizzContext.SaveChangesAsync();
+
+                //await SendRegistrationEmail(email, name);
 
                 //_logger.LogInformation($"New user registered: {email}");
 
@@ -112,6 +117,45 @@ namespace AIRWIZZ.Controllers
                 //_logger.LogError(ex, "Error occurred during user signup.");
                 TempData["ErrorMessage"] = "An error occurred while processing your request. Please try again later.";
                 return RedirectToAction("Signup");
+            }
+        }
+
+
+
+        // Helper method to send email
+        private async Task SendRegistrationEmail(string email, string name)
+        {
+            try
+            {
+                var fromAddress = new MailAddress("airwizzdeveloper@gmail.com", "AirWizz");
+                var toAddress = new MailAddress(email, name);
+                const string fromPassword = "airwizzadmin123"; // Use a secure method to store passwords
+                const string subject = "Welcome to Our Website!";
+                string body = $"Hi {name},\n\nThank you for registering at our site. We are excited to have you onboard!\n\nBest regards,\nAnas Ahmed, Ibrahim Junaid & ZainM";
+
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com", // Replace with your SMTP host
+                    Port = 587,
+                    EnableSsl = true,
+                    //DeliveryMethod = SmtpDeliveryMethod.Network,
+                    //UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+
+                using var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body
+                };
+
+                await smtp.SendMailAsync(message);
+            }
+            catch (Exception ex)
+            {
+                // Log email error
+                //_logger.LogError(ex, "Error occurred while sending registration email.");
+                throw;
             }
         }
 

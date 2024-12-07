@@ -187,6 +187,7 @@
 							<h2>About AirWizz</h2>
 							<ul>
 								<li><a href="@Url.Action("AboutUs","Home")">About Us</a></li>
+								<li><a href="@Url.Action("","Home")">About Us</a></li>
 								<li><a href="@Url.Action("GetFlightsData","FlightTracking")">Flight Tracker</a></li>
 								<li>
 									@if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
@@ -250,11 +251,13 @@
 					</div>
 					<div class="col-sm-6">
 						<div class="footer-social">
-							<a href="#"><i class="fa fa-facebook"></i></a>
-							<a href="#"><i class="fa fa-instagram"></i></a>
+							@* <a href="#"><i class="fa fa-facebook"></i></a>
+							<a href="#"><i class="fa fa-instagram"></i></a> *@
+							<a href="https://www.linkedin.com/in/anas-ahmed-51970325a/"><i class="fa fa-linkedin"></i></a>
+							<a href="https://www.linkedin.com/in/ibrahim-junaid-690b13288/"><i class="fa fa-linkedin"></i></a>
 							<a href="#"><i class="fa fa-linkedin"></i></a>
-							<a href="#"><i class="fa fa-pinterest-p"></i></a>
-							<a href="#"><i class="fa fa-behance"></i></a>
+							@* <a href="#"><i class="fa fa-pinterest-p"></i></a>
+							<a href="#"><i class="fa fa-behance"></i></a> *@
 						</div>
 					</div>
 				</div>
