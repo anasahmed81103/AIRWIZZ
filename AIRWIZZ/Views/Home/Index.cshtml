@@ -176,16 +176,14 @@
 					</div>
 				</div>
 				<div class="col-md-4 col-sm-6">
-					<div class="single-service-item">
-						<button class="btn-service" onclick="location.href='@Url.Action("chatbot", "Home")'">
-							<div class="single-service-icon">
-								<i class="flaticon-boarding-pass"></i>
-							</div>
-							<h2>24/7 Customer Support</h2>
-							<p>
-								Our dedicated customer support team is available around the clock to assist you with any inquiries or issues.
-							</p>
-						</button>
+					<div class="single-service-item" onclick="location.href='@Url.Action("chatbot", "Home")'" style="cursor: pointer;">
+						<div class="single-service-icon">
+							<i class="flaticon-boarding-pass"></i>
+						</div>
+						<h2><a href="#">24/7 Customer Support</a></h2>
+						<p>
+							Our dedicated customer support team is available around the clock to assist you with any inquiries or issues.
+						</p>
 					</div>
 				</div>
 

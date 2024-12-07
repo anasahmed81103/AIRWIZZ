@@ -924,3 +924,58 @@ resulta {
         height: 400px;
     }
 }
+
+
+
+
+
+#chatbot-button {
+    position: fixed; /* Ensure the button stays in the same position in the viewport */
+    bottom: 20px; /* Distance from the bottom of the viewport */
+    right: 20px; /* Distance from the right edge of the viewport */
+    width: 60px;
+    height: 60px;
+    background-color: #007bff; /* Button color */
+    color: #fff; /* Icon color */
+    border-radius: 50%; /* Make it circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1000; /* Ensure it appears above other elements like footer */
+    transition: all 0.3s ease;
+    font-family: Arial, sans-serif;
+}
+
+    #chatbot-button:hover {
+        background-color: #0056b3; /* Darker shade on hover */
+        transform: scale(1.1); /* Slightly enlarge on hover */
+    }
+
+    #chatbot-button i {
+        font-size: 28px; /* Adjust icon size */
+        pointer-events: none; /* Prevent pointer events on the icon */
+    }
+
+.chatbot-label {
+    position: absolute;
+    bottom: 80px; /* Position above the button */
+    right: 50%;
+    transform: translateX(50%);
+    background-color: #0056b3; /* Background for the label */
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    opacity: 0;
+    visibility: hidden;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#chatbot-button:hover .chatbot-label {
+    opacity: 1;
+    visibility: visible;
+}
