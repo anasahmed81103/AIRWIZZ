@@ -114,9 +114,10 @@
 
             <div class="form-section">
                 <label for="Passport_Number">Passport Number:</label>
-                <input asp-for="Passport_Number" type="text" placeholder="Passport Number" required />
+                <input asp-for="Passport_Number" type="text" placeholder="Passport Number" required minlength="6" maxlength="12" />
                 <span asp-validation-for="Passport_Number" class="text-danger"></span>
             </div>
+
 
 
             <h2>Seat Selection</h2>
@@ -201,30 +202,30 @@
 
 
                 <h3>Payment Gateway</h3>
-<div class="payment-gateway">
-    <!-- Card Number -->
-    <div class="form-section">
-        <label for="Card_Number">Card Number:</label>
-        <input asp-for="Card_Number" type="text" placeholder="Card Number" maxlength="16" required pattern="\d{13,16}" 
-               title="Card number must be between 13 and 16 digits." />
-        <span asp-validation-for="Card_Number" class="text-danger"></span>
-    </div>
+                <div class="payment-gateway">
+                    <!-- Card Number -->
+                    <div class="form-section">
+                        <label for="Card_Number">Card Number:</label>
+                        <input asp-for="Card_Number" type="text" placeholder="Card Number" maxlength="16" required pattern="\d{13,16}" 
+                               title="Card number must be between 13 and 16 digits." />
+                        <span asp-validation-for="Card_Number" class="text-danger"></span>
+                    </div>
 
-    <!-- Expiry Date -->
-    <div class="form-section">
-        <label for="ExpiryDate">Expiry Date:</label>
-        <input type="month" id="ExpiryDate" min="@DateTime.Now.ToString("yyyy-MM")" required />
-        <span class="text-danger" id="expiry-error"></span>
-    </div>
+                    <!-- Expiry Date -->
+                    <div class="form-section">
+                        <label for="ExpiryDate">Expiry Date:</label>
+                        <input type="month" id="ExpiryDate" min="@DateTime.Now.ToString("yyyy-MM")" required />
+                        <span class="text-danger" id="expiry-error"></span>
+                    </div>
 
-    <!-- CVV -->
-    <div class="form-section">
-        <label for="CVV">CVV:</label>
-        <input asp-for="CVV" type="password" placeholder="CVV" maxlength="4" required pattern="\d{3,4}" 
-               title="CVV must be 3 or 4 digits." />
-        <span asp-validation-for="CVV" class="text-danger"></span>
-    </div>
-</div>
+                    <!-- CVV -->
+                    <div class="form-section">
+                        <label for="CVV">CVV:</label>
+                        <input asp-for="CVV" type="password" placeholder="CVV" maxlength="4" required pattern="\d{3,4}" 
+                               title="CVV must be 3 or 4 digits." />
+                        <span asp-validation-for="CVV" class="text-danger"></span>
+                    </div>
+                </div>
 
 
 
