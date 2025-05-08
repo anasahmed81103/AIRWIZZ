@@ -1,0 +1,126 @@
+*---------------------------------------------------------------------*
+add script:
+
+
+-- Define cities
+DECLARE @Cities TABLE (CityName NVARCHAR(100));
+INSERT INTO @Cities (CityName) VALUES 
+('Karachi'), ('Islamabad'), ('Dubai'), ('Doha'), ('Jeddah'),
+('Istanbul'), ('London'), ('New York'), ('Toronto'), ('Paris'),
+('Frankfurt'), ('Bangkok'), ('Kuala Lumpur'), ('Beijing'), ('Tokyo'),
+('Seoul'), ('Muscat'), ('Cairo'), ('Singapore'), ('Sydney'),
+('Melbourne'), ('Jakarta'), ('Amsterdam'), ('Zurich'), ('Rome');
+
+-- Define airlines
+DECLARE @Airlines TABLE (Name NVARCHAR(100));
+INSERT INTO @Airlines VALUES 
+('Air Wizz'), ('Emirates'), ('Qatar Airways'), ('Turkish Airlines'),
+('British Airways'), ('Etihad'), ('PIA'), ('Singapore Airlines'),
+('Lufthansa'), ('Air France'), ('KLM'), ('American Airlines');
+
+-- Date range
+DECLARE @StartDate DATE = '2025-05-01';
+DECLARE @EndDate DATE = '2025-05-31';
+DECLARE @Date DATE = @StartDate;
+
+-- Variables
+DECLARE @DepartureCity NVARCHAR(100), @ArrivalCity NVARCHAR(100);
+DECLARE @DepTime TIME, @ArrTime TIME;
+DECLARE @Duration FLOAT, @Price FLOAT;
+DECLARE @FlightId INT, @FlightNo INT;
+DECLARE @Airline NVARCHAR(100);
+DECLARE @FlightsPerPair INT;
+DECLARE @i INT;
+
+WHILE @Date <= @EndDate
+BEGIN
+    DECLARE dep_cursor CURSOR FOR SELECT CityName FROM @Cities;
+    OPEN dep_cursor;
+    FETCH NEXT FROM dep_cursor INTO @DepartureCity;
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        DECLARE arr_cursor CURSOR FOR SELECT CityName FROM @Cities WHERE CityName <> @DepartureCity;
+        OPEN arr_cursor;
+        FETCH NEXT FROM arr_cursor INTO @ArrivalCity;
+
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+            SET @FlightsPerPair = 2 + (ABS(CHECKSUM(NEWID())) % 2); -- 2 or 3 flights
+            SET @i = 1;
+
+            WHILE @i <= @FlightsPerPair
+            BEGIN
+                -- Generate values
+                SET @DepTime = CAST(DATEADD(MINUTE, (ABS(CHECKSUM(NEWID())) % 960), '06:00') AS TIME); -- 6am–10pm
+                SET @Duration = ROUND(1.5 + RAND() * 13.5, 2); -- 1.5–15 hrs
+                SET @ArrTime = DATEADD(MINUTE, @Duration * 60, CAST(@DepTime AS DATETIME));
+                SET @Price = ROUND(20000 + (@Duration * 14000) + (RAND() * 15000), 0); -- base + duration * rate
+                SET @FlightNo = 1000 + ABS(CHECKSUM(NEWID())) % 9000;
+                SELECT TOP 1 @Airline = Name FROM @Airlines ORDER BY NEWID();
+
+                -- Insert Flight
+                INSERT INTO Flights (FlightNumber, Airline, TotalPrice)
+                VALUES (@FlightNo, @Airline, @Price + 15000); -- TotalPrice > base
+
+                SET @FlightId = SCOPE_IDENTITY();
+
+                -- Insert Departure
+                INSERT INTO Departures (
+                    DepartureCity, DepartureTime, Duration, Price, FlightId
+                )
+                VALUES (
+                    @DepartureCity,
+                    DATEADD(MINUTE, DATEDIFF(MINUTE, 0, CAST(@Date AS DATETIME)), CAST(@DepTime AS DATETIME)),
+                    @Duration,
+                    @Price,
+                    @FlightId
+                );
+
+                -- Insert Arrival
+                INSERT INTO Arrivals (
+                    ArrivalCity, ArrivalTime, Duration, FlightId
+                )
+                VALUES (
+                    @ArrivalCity,
+                    DATEADD(MINUTE, DATEDIFF(MINUTE, 0, CAST(@Date AS DATETIME)), CAST(@ArrTime AS DATETIME)),
+                    @Duration,
+                    @FlightId
+                );
+
+                SET @i = @i + 1;
+            END
+
+            FETCH NEXT FROM arr_cursor INTO @ArrivalCity;
+        END
+        CLOSE arr_cursor;
+        DEALLOCATE arr_cursor;
+
+        FETCH NEXT FROM dep_cursor INTO @DepartureCity;
+    END
+    CLOSE dep_cursor;
+    DEALLOCATE dep_cursor;
+
+    SET @Date = DATEADD(DAY, 1, @Date);
+END
+
+
+
+
+*-------------------------------------------------------------*
+delete script:
+
+
+-- Delete dependent bookings first
+DELETE FROM [dbo].[Bookings];
+
+-- Then delete arrivals, departures, and flights
+DELETE FROM [dbo].[Arrivals];
+DELETE FROM [dbo].[Departures];
+DELETE FROM [dbo].[Flights];
+
+-- Optional: reset identity counters
+DBCC CHECKIDENT ('dbo.Flights', RESEED, 0);
+DBCC CHECKIDENT ('dbo.Arrivals', RESEED, 0);
+DBCC CHECKIDENT ('dbo.Departures', RESEED, 0);
+
