@@ -1,39 +1,106 @@
-AirWizz - Flight Booking System
-Overview
-AirWizz is a flight booking system designed to provide users with an easy and efficient way to book flights, manage their profiles, and view flight history. It includes essential features such as flight search, booking management, profile creation, and real-time currency conversion. This system also offers an admin portal to manage flight details and user data.
+# ✈️ AirWizz Flight System (ASP.NET)
 
-The project uses .NET Core with SQL Server for the back-end and HTML/CSS for the front-end. The database is designed using Entity Framework, ensuring a smooth integration between the application and the database.
+AirWizz is a comprehensive flight management system built using ASP.NET. It allows users to **search, book, track flights in real-time**, and manage bookings. Admins can manage flights, currencies, and user data. A DialogFlow-powered chatbot is also integrated for interactive navigation.
 
-Features
-Flight Search: Users can search for flights based on departure and arrival cities, dates, and other criteria.
+---
 
-Booking History: Users can view their past bookings, including flight details.
+## 🌟 Features
 
-User Profile: Users can create, update, and manage their personal profile.
+- 🔍 Search for available flights
+- 🎫 Book and cancel flights
+- 📥 Download your ticket as a PDF
+- ✈️ Track **100+ real-time flights** using AviationStack API
+- 🔐 Admin panel for:
+  - Adding, updating, and deleting flights
+  - Managing currency conversions
+- 🤖 Google Dialogflow-integrated chatbot for smooth user interaction
 
-Admin Portal: Admins can manage flight data, users, and bookings.
+---
 
-Currency Conversion: The system includes real-time currency conversion for different countries.
+## 📁 Project Setup Instructions
 
-Technologies
-Backend: .NET Core (C#)
+### 1. 🔧 Configure Database Connection
 
-Database: SQL Server with Entity Framework
+Open Program.cs and appsettings.json , and **update the connection string** to match your local SQL Server setup:
 
-Frontend: HTML, CSS
+json
+"ConnectionStrings": {
+  "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=AirWizzDB;Trusted_Connection=True;"
+}
 
-Database: Oracle SQL Developer for database design and queries.
 
-Authentication: Custom user authentication system for profile management.
 
-Getting Started
-Prerequisites
-Before running the project, ensure you have the following installed:
+### 2. 🗄️ Setup the Database
+Open SQL Server Management Studio (SSMS) and create a new database (e.g., AirWizzDB).
 
-Visual Studio or Visual Studio Code (with C# support)
+In Visual Studio, open Package Manager Console and run:
 
-.NET Core SDK (version 3.1 or higher)
+Update-Database
 
-SQL Server (or SQL Server Express)
+This will create all the necessary tables based on Entity Framework migrations.
 
-SQL Server Management Studio (optional, for database management)
+
+
+
+### 3. 🌐 Configure Flight Tracking API
+   
+To enable real-time flight tracking, add your AviationStack API key in:
+/Services/FlightTrackingService.cs
+
+Replace the placeholder key with your own API key.
+
+
+
+### 4. 💱 Setup Currency Conversion
+
+Manually add currency data into the Currencies table (only once).
+
+Ensure all currency codes (e.g., PKR, USD, EUR) are defined in the CurrencyConversions ENUM:
+
+public enum CurrencyConversions
+{
+    USD = 1,
+    EUR = 2,
+    PKR = 3,
+    // Add others as needed
+}
+
+
+
+
+### 5. 🔐 Admin Access
+
+To access the admin dashboard:
+
+Go to the Users section in the database or app.
+
+Create a new user with the following credentials:
+
+Email: admin@airwizz.com
+Password: 123
+
+Assign admin privileges as needed.
+
+
+
+
+
+### 🧠 Technologies Used
+
+ASP.NET Core MVC
+
+Entity Framework Core
+
+SQL Server
+
+AviationStack API (for real-time flight tracking)
+
+Google DialogFlow (chatbot integration)
+
+Razor Pages & Bootstrap (for frontend)
+
+
+
+
+
+
